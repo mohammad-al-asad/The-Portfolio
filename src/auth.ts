@@ -1,8 +1,23 @@
-// src/auth.ts
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
+
+declare module "next-auth" {
+  interface User {
+    role?: string;
+    id?: string;
+  }
+  interface Session {
+    user: {
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role?: string;
+      id?: string;
+    };
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -40,7 +55,7 @@ export const authOptions: NextAuthOptions = {
         ) {
           return {
             id: "1",
-            name: "Admin User",
+            name: "M.A. Asad",
             email: credentials.email,
             role: "admin",
           };
@@ -65,7 +80,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       // Only allow specific emails for Google provider
       if (account?.provider === "google") {
         const allowedEmails = (process.env.ALLOWED_EMAILS || "").split(",");

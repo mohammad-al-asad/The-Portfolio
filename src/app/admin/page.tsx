@@ -2,23 +2,23 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Activity, Mail, Briefcase, Users } from 'lucide-react';
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import AdminLayout from '@/components/AdminLayout';
 import Chart from '@/components/Chart';
 
 export default function AdminDashboard() {
-//   const { data: session } = useSession();
+  const { data: session } = useSession();
   
-//   if (!session) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <div className="text-center">
-//           <h1 className="text-2xl font-bold mb-4">Unauthorized Access</h1>
-//           <p>Please login to access the admin panel</p>
-//         </div>
-//       </div>
-//     );
-//   }
+  if (!session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Unauthorized Access</h1>
+          <p>Please login to access the admin panel</p>
+        </div>
+      </div>
+    );
+  }
 
   const stats = [
     { title: 'Total Visitors', value: '24.5K', icon: <Users className="h-6 w-6" />, change: '+12%' },

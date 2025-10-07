@@ -61,8 +61,8 @@ export default function FeaturedProjects() {
           >
             <div className="p-6 pb-0">
               <div className="relative w-full h-56 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
-              <Image src="/diceGame.png" alt={project.title} fill/>
-            </div>
+                <Image src="/diceGame.png" alt={project.title} fill />
+              </div>
             </div>
             <CardContent className="px-6 py-2">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
