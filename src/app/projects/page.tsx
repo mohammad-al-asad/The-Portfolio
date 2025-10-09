@@ -218,10 +218,10 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-light dark:bg-gradient-dark py-12">
-      <div className="container mx-auto md:px-4 px-1">
+    <div className="min-h-screen bg-gradient-light dark:bg-gradient-dark md:py-18">
+      <div className="container mx-auto">
         {/* Header - With Gradient Accent */}
-        <div className="md:mb-10 mb-8">
+        <div className="md:mb-10 mb-8 md:mt-5">
           <div className="flex py-4 px-6 gap-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
             <Link href="/">
               <Button

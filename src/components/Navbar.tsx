@@ -13,15 +13,48 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { useEffect, useState } from "react";
 // import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
+  const [isSide, setIsSide] = useState(false);
   const pathname = usePathname();
 
   //   const { data: session } = useSession();
   const session = true;
 
   const isAdminPanel = pathname.startsWith("/admin");
+
+  useEffect(() => {
+    const handleResize = () => {
+      // if screen width <= 768px => mobile mode
+      if (window.innerWidth <= 768) {
+        setIsSide(true);
+      } else {
+        setIsSide(false);
+      }
+    };
+
+    const handleScroll = () => {
+      // if user scrolls down at least 100px, switch to top mode
+      if (window.scrollY > 100) {
+        setIsSide(true);
+      } else if (window.innerWidth > 768) {
+        setIsSide(false);
+      }
+    };
+
+    // run once at start
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const navItems = [
     { name: "Home", path: "/", icon: <Home size={18} /> },
@@ -51,53 +84,78 @@ const Navbar = () => {
   const items = isAdminPanel ? adminNavItems : navItems;
 
   return (
-    <nav className="sticky top-0 z-50 dark:bg-gray-900/80 backdrop-blur-sm border-b dark:border-gray-800 bg-white/80 border-gray-200">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link
+    <nav
+      className={`fixed md:top-6 z-50 top-[10%] ${
+        isSide ? "left-0 md:top-8" : "w-full"
+      }`}
+    >
+      <div className="container mx-auto">
+        <div
+          className={`${
+            isSide ? "" : "flex h-fit w-full justify-center gap-5"
+          }`}
+        >
+          {/* <Link
             href={isAdminPanel ? "/admin" : "/"}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 bg-gradient-to-r from-blue-400/15 to-purple-600/15 backdrop-blur-2xl p-2 rounded-4xl"
           >
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 w-8 h-8 rounded-lg" />
             <span className="text-xl font-bold text-foreground">
               {isAdminPanel ? "Admin Panel" : "DevFolio"}
             </span>
-          </Link>
+          </Link> */}
 
-          <div className="hidden md:flex space-x-1">
+          <div
+            className={`${
+              isSide ? "flex flex-col px-0 py-2" : "px-2 py-1"
+            } transition-all duration-500 w-fit bg-gradient-to-r from-blue-400/15 to-purple-600/15 rounded-xl backdrop-blur-sm flex space-x-1`}
+          >
             {items.map((item) => (
               <Button
                 key={item.path}
                 asChild
                 variant="ghost"
-                className="flex items-center gap-2 text-foreground"
+                className={`flex items-center transition-all duration-300 gap-2 text-foreground rounded-xl ${
+                  isSide ? "size-9" : ""
+                }`}
               >
                 <Link href={item.path}>
                   {item.icon}
-                  {item.name}
+                  {!isSide ? item.name : ""}
                 </Link>
               </Button>
             ))}
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className={`flex items-center space-x-2`}>
             {session ? (
-              <>
+              <div
+                className={`${
+                  isSide
+                    ? "flex-col gap-2 mt-2 px-1 py-2 items-center"
+                    : "gap-2"
+                } flex`}
+              >
                 <ThemeToggle />
-                <Button variant="outline" asChild>
+                <Button
+                  variant="outline"
+                  className={`${isSide ? "size-9" : ""}`}
+                  asChild
+                >
                   <Link href={isAdminPanel ? "/" : "/admin"}>
                     {isAdminPanel ? (
                       <>
-                        <Home size={16} className="mr-1" /> Portfolio
+                        <Home size={16} className="mr-1" />
+                        {!isSide ? "Portfolio" : ""}
                       </>
                     ) : (
                       <>
-                        <Lock size={16} className="mr-1" /> Admin
+                        <Lock className="w-5 h-5" /> {!isSide ? "Admin" : ""}
                       </>
                     )}
                   </Link>
                 </Button>
-              </>
+              </div>
             ) : (
               <Button asChild variant="default">
                 <Link href="/admin/login">Admin Login</Link>

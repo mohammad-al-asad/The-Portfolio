@@ -52,20 +52,47 @@ export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [tagInput, setTagInput] = useState("");
+  const [techInput, setTechInput] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const addTechnology = () => {
+    if (techInput.trim()) {
+      const currentTechs = form.getValues("technologies");
+      if (!currentTechs.includes(techInput.trim())) {
+        form.setValue("technologies", [...currentTechs, techInput.trim()], {
+          shouldValidate: true,
+        });
+        setTechInput("");
+      }
+    }
+  };
+
+  const removeTechnology = (techToRemove: string) => {
+    const currentTechs = form.getValues("technologies");
+    form.setValue(
+      "technologies",
+      currentTechs.filter((tech) => tech !== techToRemove),
+      { shouldValidate: true }
+    );
+  };
 
   // Initialize form
-  const form = useForm<ProjectFormData>({
+  const form = useForm({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       title: "",
       description: "",
-      tags: [],
+      detailedDescription: "",
       imageUrl: "",
       imagePath: "",
+      tags: [],
+      technologies: [],
+      features: [],
       liveUrl: "",
       githubUrl: "",
+      completionDate: "",
+      teamSize: "",
       featured: false,
     },
   });
@@ -102,8 +129,6 @@ export default function AdminProjectsPage() {
   };
 
   const onSubmit = async (data: ProjectFormData) => {
-    console.log("asadf");
-    
     try {
       const url = editingProject
         ? `/api/projects/${editingProject.id}`
@@ -134,21 +159,31 @@ export default function AdminProjectsPage() {
 
   const handleEdit = (project: Project) => {
     setEditingProject(project);
+
     form.reset({
-      title: project.title,
-      description: project.description,
-      tags: project.tags,
-      imageUrl: project.imageUrl,
-      imagePath: project.imagePath,
-      liveUrl: project.liveUrl || "",
-      githubUrl: project.githubUrl || "",
-      featured: project.featured || false,
+      title: project.title ?? "",
+      description: project.description ?? "",
+      detailedDescription: project.detailedDescription ?? "",
+      tags: project.tags ?? [],
+      technologies: project.technologies ?? [],
+      features: project.features ?? [],
+      imageUrl: project.imageUrl ?? "",
+      imagePath: project.imagePath ?? "",
+      liveUrl: project.liveUrl ?? "",
+      githubUrl: project.githubUrl ?? "",
+      completionDate: project.completionDate ?? "",
+      teamSize: project.teamSize ?? "",
+      featured: project.featured ?? false,
     });
+
+    // reset temporary input fields
+    setTagInput("");
+    setTechInput("");
     setIsDialogOpen(true);
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this project?")){
+    if (confirm("Are you sure you want to delete this project?")) {
       try {
         // First get the project to get the image path
         const projectResponse = await fetch(`/api/projects/${id}`);
@@ -222,15 +257,22 @@ export default function AdminProjectsPage() {
     form.reset({
       title: "",
       description: "",
+      detailedDescription: "",
       tags: [],
+      technologies: [],
+      features: [],
       imageUrl: "",
       imagePath: "",
       liveUrl: "",
       githubUrl: "",
+      completionDate: "",
+      teamSize: "",
       featured: false,
     });
+
     setEditingProject(null);
     setTagInput("");
+    setTechInput("");
   };
 
   if (status === "loading" || loading) {
@@ -246,13 +288,14 @@ export default function AdminProjectsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 md:px-10 py-8 pt-20 md:pt-40">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          Manage Projects
+        <h1 className="text-3xl flex gap-3 font-bold text-gray-900 dark:text-white">
+          <span className="hidden md:block">Manage</span> Projects
         </h1>
         <Button onClick={() => setIsDialogOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" /> Add New Project
+          <Plus className="md:mr-2 h-4 w-4" />
+          Add <span className="hidden md:block">New Project</span>
         </Button>
       </div>
 
@@ -383,6 +426,24 @@ export default function AdminProjectsPage() {
 
               <FormField
                 control={form.control}
+                name="detailedDescription"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Detailed Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write a detailed explanation..."
+                        rows={4}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="imageUrl"
                 render={({ field }) => (
                   <FormItem>
@@ -446,6 +507,36 @@ export default function AdminProjectsPage() {
                 )}
               />
 
+              {/* Completion Date */}
+              <FormField
+                control={form.control}
+                name="completionDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Completion Date</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Team Size */}
+              <FormField
+                control={form.control}
+                name="teamSize"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Team Size</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g., 4 developers" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="tags"
@@ -475,6 +566,48 @@ export default function AdminProjectsPage() {
                           <button
                             type="button"
                             onClick={() => removeTag(tag)}
+                            className="ml-1 rounded-full hover:bg-black/20"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Technologies */}
+              <FormField
+                control={form.control}
+                name="technologies"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Technologies</FormLabel>
+                    <div className="flex gap-2 mb-2">
+                      <Input
+                        value={techInput}
+                        onChange={(e) => setTechInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addTechnology();
+                          }
+                        }}
+                        placeholder="Enter a technology and press Add"
+                      />
+                      <Button type="button" onClick={addTechnology}>
+                        Add
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {field.value.map((tech, index) => (
+                        <Badge key={index} className="flex items-center gap-1">
+                          {tech}
+                          <button
+                            type="button"
+                            onClick={() => removeTechnology(tech)}
                             className="ml-1 rounded-full hover:bg-black/20"
                           >
                             <X className="h-3 w-3" />

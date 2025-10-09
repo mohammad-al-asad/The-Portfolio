@@ -29,7 +29,7 @@ export default async function RootLayout({
             <EdgeStoreProvider>
               <div className="min-h-screen bg-gradient-light dark:bg-gradient-dark text-gray-900 dark:text-white">
                 <Navbar />
-                <main className="container mx-auto px-4 py-8">{children}</main>
+                <main className="container mx-auto">{children}</main>
                 <Toaster />
               </div>
             </EdgeStoreProvider>

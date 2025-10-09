@@ -13,7 +13,6 @@ export async function GET() {
     }
 
     const projects = await prisma.projects.findMany();
-    console.log(projects);
 
     return NextResponse.json(projects);
   } catch {

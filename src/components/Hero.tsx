@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="pt-16 md:pt-24">
+    <section>
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">
           Crafting{" "}
@@ -18,7 +18,11 @@ export default function Hero() {
           applications with cutting-edge technologies.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button variant="outline" size="lg" className="text-lg hover:text-white text-background bg-foreground dark:bg-foreground hover:bg-accent-foreground dark:hover:bg-muted-foreground dark:hover:text-black dark:border-input hover:border-muted-foreground">
+          <Button
+            variant="outline"
+            size="lg"
+            className="text-lg hover:text-white text-background bg-foreground dark:bg-foreground hover:bg-accent-foreground dark:hover:bg-muted-foreground dark:hover:text-black dark:border-input hover:border-muted-foreground"
+          >
             <Link href="/projects" className="flex items-center">
               View Projects <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
@@ -44,7 +48,9 @@ export default function Hero() {
               {[...Array(6)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-gray-800/50 border border-gray-700 rounded-lg p-4"
+                  className={`bg-gray-800/50 border border-gray-700 rounded-lg p-4 ${
+                    i >= 4 ? "hidden md:block" : ""
+                  }`}
                 >
                   <div className="h-4 w-16 bg-gray-700 rounded mb-3"></div>
                   <div className="h-3 w-full bg-gray-700 rounded mb-2"></div>

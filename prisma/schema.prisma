@@ -15,15 +15,21 @@ datasource db {
 }
 
 model projects {
-  id          String   @id @default(uuid()) @map("_id")
-  title       String
-  description String
-  tags        String[]
-  imageUrl    String
-  imagePath   String
-  liveUrl     String?
-  githubUrl   String?
-  featured    Boolean?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String   @id @map("_id") @default(uuid())
+  title             String
+  description       String
+  detailedDescription String?
+  tags              String[]
+  technologies      String[]
+  features          String[]
+  imageUrl          String
+  imagePath         String
+  liveUrl           String?
+  githubUrl         String
+  completionDate    String?
+  teamSize          String?
+  featured          Boolean @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
+
