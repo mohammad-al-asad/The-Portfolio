@@ -25,7 +25,6 @@ export async function GET() {
 
 // POST a new project
 export async function POST(request: NextRequest) {
-  console.log("project");
   try {
     const session = await getServerSession(authOptions);
 

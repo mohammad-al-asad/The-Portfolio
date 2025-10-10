@@ -8,26 +8,22 @@ import {
   Briefcase,
   Mail,
   Settings,
-  Lock,
   ChartNoAxesCombined,
   GraduationCap,
+  UserStar,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useEffect, useState } from "react";
-// import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
   const [isSide, setIsSide] = useState(false);
   const pathname = usePathname();
 
-  //   const { data: session } = useSession();
-  const session = true;
-
   const isAdminPanel = pathname.startsWith("/admin");
 
   useEffect(() => {
     const handleResize = () => {
-      // if screen width <= 768px => mobile mode
+      // if screen width <= 768px => side mode
       if (window.innerWidth <= 768) {
         setIsSide(true);
       } else {
@@ -36,7 +32,7 @@ const Navbar = () => {
     };
 
     const handleScroll = () => {
-      // if user scrolls down at least 100px, switch to top mode
+      // if user scrolls down at least 100px, side to top mode
       if (window.scrollY > 100) {
         setIsSide(true);
       } else if (window.innerWidth > 768) {
@@ -86,13 +82,15 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed md:top-6 z-50 top-[10%] ${
-        isSide ? "left-0 md:top-8" : "w-full"
+        isSide ? "left-0 md:top-20" : "w-full"
       }`}
     >
-      <div className="container mx-auto">
+      <div>
         <div
-          className={`${
-            isSide ? "" : "flex h-fit w-full justify-center gap-5"
+          className={`flex ${
+            isSide
+              ? "flex-col"
+              : "h-fit w-full gap-5 justify-center items-center"
           }`}
         >
           {/* <Link
@@ -127,40 +125,30 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className={`flex items-center space-x-2`}>
-            {session ? (
-              <div
-                className={`${
-                  isSide
-                    ? "flex-col gap-2 mt-2 px-1 py-2 items-center"
-                    : "gap-2"
-                } flex`}
-              >
-                <ThemeToggle />
-                <Button
-                  variant="outline"
-                  className={`${isSide ? "size-9" : ""}`}
-                  asChild
-                >
-                  <Link href={isAdminPanel ? "/" : "/admin"}>
-                    {isAdminPanel ? (
-                      <>
-                        <Home size={16} className="mr-1" />
-                        {!isSide ? "Portfolio" : ""}
-                      </>
-                    ) : (
-                      <>
-                        <Lock className="w-5 h-5" /> {!isSide ? "Admin" : ""}
-                      </>
-                    )}
-                  </Link>
-                </Button>
-              </div>
-            ) : (
-              <Button asChild variant="default">
-                <Link href="/admin/login">Admin Login</Link>
-              </Button>
-            )}
+          <div
+            className={`${
+              isSide ? "flex-col gap-2 mt-2 py-2 items-center" : "gap-2"
+            } flex`}
+          >
+            <ThemeToggle />
+            <Button
+              variant="outline"
+              className={`${isSide ? "size-9" : ""}`}
+              asChild
+            >
+              <Link href={isAdminPanel ? "/" : "/admin"}>
+                {isAdminPanel ? (
+                  <>
+                    <Home size={16} className="mr-1" />
+                    {!isSide ? "Portfolio" : ""}
+                  </>
+                ) : (
+                  <>
+                    <UserStar className="w-5 h-5" /> {!isSide ? "Admin" : ""}
+                  </>
+                )}
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

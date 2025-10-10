@@ -22,12 +22,12 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="no-scrollbar" suppressHydrationWarning>
       <SessionProvider session={session}>
         <body className={inter.className}>
           <ThemeProvider>
             <EdgeStoreProvider>
-              <div className="min-h-screen bg-gradient-light dark:bg-gradient-dark text-gray-900 dark:text-white">
+              <div className="min-h-screen text-gray-900 dark:text-white">
                 <Navbar />
                 <main className="container mx-auto">{children}</main>
                 <Toaster />

@@ -8,15 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -35,23 +26,20 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { EdgestoreUploader } from "@/components/EdgestoreUploader";
-import { Plus, Edit, Trash2, Save, X } from "lucide-react";
+import { Plus, Save, X } from "lucide-react";
 import { projectSchema, type ProjectFormData } from "@/lib/validations/project";
 import { useEdgeStore } from "@/lib/edgestore";
-
-interface Project extends ProjectFormData {
-  id?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import AdminProjectTable from "@/components/AdminProjectTable";
+import { projects } from "../../../../generated/prisma";
+import PageHeader from "@/components/PageHeader";
 
 export default function AdminProjectsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { edgestore } = useEdgeStore();
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<projects[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [editingProject, setEditingProject] = useState<projects | null>(null);
   const [tagInput, setTagInput] = useState("");
   const [techInput, setTechInput] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -157,7 +145,7 @@ export default function AdminProjectsPage() {
     }
   };
 
-  const handleEdit = (project: Project) => {
+  const handleEdit = (project: projects) => {
     setEditingProject(project);
 
     form.reset({
@@ -277,7 +265,7 @@ export default function AdminProjectsPage() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex mt-20 justify-center">
         <div className="text-center">Loading...</div>
       </div>
     );
@@ -288,87 +276,24 @@ export default function AdminProjectsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 md:px-10 py-8 pt-20 md:pt-40">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl flex gap-3 font-bold text-gray-900 dark:text-white">
-          <span className="hidden md:block">Manage</span> Projects
-        </h1>
-        <Button onClick={() => setIsDialogOpen(true)}>
-          <Plus className="md:mr-2 h-4 w-4" />
-          Add <span className="hidden md:block">New Project</span>
-        </Button>
-      </div>
+    <div className="container mx-auto">
+      <PageHeader>
+        <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+          <h1 className="text-xl [word-spacing:3px] md:text-2xl flex gap-3 font-bold text-gray-900 dark:text-white">
+            Manage Projects
+          </h1>
+          <Button onClick={() => setIsDialogOpen(true)}>
+            <Plus className="md:mr-2 h-4 w-4" />
+            Add <span className="hidden md:block">New Project</span>
+          </Button>
+        </div>
+      </PageHeader>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Projects List</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {projects.length === 0 ? (
-            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-              No projects found. Add your first project!
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Tags</TableHead>
-                  <TableHead>Featured</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {projects.map((project) => (
-                  <TableRow key={project.id}>
-                    <TableCell className="font-medium">
-                      {project.title}
-                    </TableCell>
-                    <TableCell className="max-w-xs truncate">
-                      {project.description}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-1">
-                        {project.tags.map((tag, index) => (
-                          <Badge key={index} variant="secondary">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {project.featured ? (
-                        <Badge variant="default">Featured</Badge>
-                      ) : (
-                        <Badge variant="outline">Regular</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEdit(project)}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => handleDelete(project.id!)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
+      <AdminProjectTable
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        projects={projects}
+      />
 
       {/* Add/Edit Project Dialog */}
       <Dialog
