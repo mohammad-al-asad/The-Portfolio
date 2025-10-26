@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 
 // GET a specific achievement
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
    const id = (await params).id;
@@ -40,8 +40,9 @@ export async function GET(
 // UPDATE a specific achievement
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -52,7 +53,7 @@ export async function PUT(
     const body = await request.json();
 
     const achievement = await prisma.achievements.update({
-      where: { id: params.id },
+      where: { id: id },
       data: body,
     });
 
@@ -72,8 +73,9 @@ export async function PUT(
 // DELETE a specific achievement
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -82,7 +84,7 @@ export async function DELETE(
     }
     // Delete
     await prisma.achievements.delete({
-      where: { id: params.id },
+      where: { id: id },
     });
 
     return NextResponse.json({ message: "Achievement deleted successfully" });

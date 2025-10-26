@@ -7,8 +7,9 @@ import { prisma } from "@/lib/db";
 // GET a specific education
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -18,7 +19,7 @@ export async function GET(
 
     const education = await prisma.educations.findUnique({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 
@@ -42,8 +43,9 @@ export async function GET(
 // UPDATE an education
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -55,7 +57,7 @@ export async function PUT(
 
     const updatedEducation = await prisma.educations.update({
       where: {
-        id: params.id,
+        id: id,
       },
       data: body,
     });
@@ -83,8 +85,9 @@ export async function PUT(
 // DELETE an education
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -94,7 +97,7 @@ export async function DELETE(
     // Delete Education
     await prisma.educations.delete({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 

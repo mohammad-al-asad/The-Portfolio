@@ -7,8 +7,9 @@ import { prisma } from "@/lib/db";
 // GET a specific project
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -18,7 +19,7 @@ export async function GET(
 
     const project = await prisma.projects.findUnique({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 
@@ -38,8 +39,9 @@ export async function GET(
 // UPDATE a project
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -50,7 +52,7 @@ export async function PUT(
     const body = await request.json();
     const project = await prisma.projects.update({
       where: {
-        id: params.id,
+        id: id,
       },
       data:body,
     });
@@ -81,8 +83,9 @@ export async function PUT(
 // DELETE a project
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -92,7 +95,7 @@ export async function DELETE(
 
     const deletedproject = await prisma.projects.delete({
   where: {
-    id: params.id,
+    id: id,
   },
 })
 
