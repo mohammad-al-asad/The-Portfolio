@@ -6,7 +6,7 @@ import { prisma } from "@/lib/db";
 // GET a specific achievement
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Record<string, string> }
 ) {
   const { params } = context;
   try {
