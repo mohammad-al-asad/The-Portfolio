@@ -7,6 +7,9 @@ const edgeStoreRouter = es.router({
   projectImages: es.imageBucket().beforeDelete(() => {
     return true; // allow delete
   }),
+  qualificationImages: es.imageBucket().beforeDelete(() => {
+    return true; // allow delete
+  }),
 });
 
 export type EdgeStoreRouter = typeof edgeStoreRouter;

@@ -263,14 +263,6 @@ export default function AdminProjectsPage() {
     setTechInput("");
   };
 
-  if (status === "loading" || loading) {
-    return (
-      <div className="min-h-screen flex mt-20 justify-center">
-        <div className="text-center">Loading...</div>
-      </div>
-    );
-  }
-
   if (!session || session.user.role !== "admin") {
     return null;
   }
@@ -278,7 +270,7 @@ export default function AdminProjectsPage() {
   return (
     <div className="container mx-auto">
       <PageHeader>
-        <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
           <h1 className="text-xl [word-spacing:3px] md:text-2xl flex gap-3 font-bold text-gray-900 dark:text-white">
             Manage Projects
           </h1>
@@ -290,6 +282,7 @@ export default function AdminProjectsPage() {
       </PageHeader>
 
       <AdminProjectTable
+        loading={loading}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
         projects={projects}
@@ -566,22 +559,10 @@ export default function AdminProjectsPage() {
                 )}
               />
 
-              <div className="flex justify-end gap-2 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    setIsDialogOpen(false);
-                    resetForm();
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">
+                <Button type="submit" className="w-full">
                   <Save className="mr-2 h-4 w-4" />
                   {editingProject ? "Update Project" : "Create Project"}
                 </Button>
-              </div>
             </form>
           </Form>
         </DialogContent>

@@ -10,89 +10,89 @@ import {
 import { Edit, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { projects } from "../../generated/prisma";
+import { educations } from "../../generated/prisma";
 import AdminTableSkeleton from "./AdminTableSkeleton";
 
-function AdminProjectTable({
-  projects,
+function AdminEducationTable({
+  educations,
   handleEdit,
   handleDelete,
   loading,
 }: {
-  projects: projects[];
+  educations: educations[];
   handleDelete: (id: string) => void;
-  handleEdit: (project: projects) => void;
+  handleEdit: (education: educations) => void;
   loading: boolean;
 }) {
+
   if (loading) {
     return (
-      <AdminTableSkeleton title="Projects List">
-        <TableHead>Title</TableHead>
-        <TableHead>Description</TableHead>
-        <TableHead>Tags</TableHead>
-        <TableHead>Featured</TableHead>
+      <AdminTableSkeleton title="Educations List">
+        <TableHead>Institution</TableHead>
+        <TableHead>Degree</TableHead>
+        <TableHead>Period</TableHead>
+        <TableHead>Location</TableHead>
+        <TableHead>GPA</TableHead>
+        <TableHead>Courses</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
   }
-
   return (
     <Card className="mt-[10%] md:mt-[3%]">
       <CardHeader>
-        <CardTitle>Projects List</CardTitle>
+        <CardTitle>Educations List</CardTitle>
       </CardHeader>
       <CardContent>
-        {projects.length === 0 ? (
+        {!loading && educations.length === 0 ? (
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-            No projects found. Add your first project!
+            No educations found. Add your first education!
           </div>
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Tags</TableHead>
-                <TableHead>Featured</TableHead>
+                <TableHead>Institution</TableHead>
+                <TableHead>Degree</TableHead>
+                <TableHead>Period</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>GPA</TableHead>
+                <TableHead>Courses</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {projects.map((project) => (
-                <TableRow key={project.id}>
-                  <TableCell className="font-medium">{project.title}</TableCell>
-                  <TableCell className="max-w-xs truncate">
-                    {project.description}
+              {educations.map((education) => (
+                <TableRow key={education.id}>
+                  <TableCell className="font-medium">
+                    {education.institution}
                   </TableCell>
+                  <TableCell>{education.degree}</TableCell>
+                  <TableCell>{education.period}</TableCell>
+                  <TableCell>{education.location}</TableCell>
+                  <TableCell>{education.gpa || "-"}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {project.tags.map((tag, index) => (
+                      {education.courses.map((course, index) => (
                         <Badge key={index} variant="secondary">
-                          {tag}
+                          {course}
                         </Badge>
                       ))}
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    {project.featured ? (
-                      <Badge variant="default">Featured</Badge>
-                    ) : (
-                      <Badge variant="outline">Regular</Badge>
-                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleEdit(project)}
+                        onClick={() => handleEdit(education)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
                         variant="destructive"
                         size="sm"
-                        onClick={() => handleDelete(project.id!)}
+                        onClick={() => handleDelete(education.id!)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -108,4 +108,4 @@ function AdminProjectTable({
   );
 }
 
-export default AdminProjectTable;
+export default AdminEducationTable;

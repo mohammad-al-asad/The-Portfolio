@@ -10,89 +10,87 @@ import {
 import { Edit, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { projects } from "../../generated/prisma";
+import { achievements } from "../../generated/prisma";
 import AdminTableSkeleton from "./AdminTableSkeleton";
 
-function AdminProjectTable({
-  projects,
+function AdminAchievementTable({
+  achievements,
   handleEdit,
   handleDelete,
   loading,
 }: {
-  projects: projects[];
+  achievements: achievements[];
   handleDelete: (id: string) => void;
-  handleEdit: (project: projects) => void;
+  handleEdit: (achievement: achievements) => void;
   loading: boolean;
 }) {
   if (loading) {
     return (
-      <AdminTableSkeleton title="Projects List">
+      <AdminTableSkeleton title="Achievements List">
         <TableHead>Title</TableHead>
+        <TableHead>Organization</TableHead>
+        <TableHead>Year</TableHead>
         <TableHead>Description</TableHead>
-        <TableHead>Tags</TableHead>
-        <TableHead>Featured</TableHead>
+        <TableHead>Technologies</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
   }
-
   return (
     <Card className="mt-[10%] md:mt-[3%]">
       <CardHeader>
-        <CardTitle>Projects List</CardTitle>
+        <CardTitle>Achievements List</CardTitle>
       </CardHeader>
       <CardContent>
-        {projects.length === 0 ? (
+        {achievements.length === 0 ? (
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-            No projects found. Add your first project!
+            No achievements found. Add your first achievement!
           </div>
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
+                <TableHead>Organization</TableHead>
+                <TableHead>Year</TableHead>
                 <TableHead>Description</TableHead>
-                <TableHead>Tags</TableHead>
-                <TableHead>Featured</TableHead>
+                <TableHead>Technologies</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {projects.map((project) => (
-                <TableRow key={project.id}>
-                  <TableCell className="font-medium">{project.title}</TableCell>
+              {achievements.map((achievement) => (
+                <TableRow key={achievement.id}>
+                  <TableCell className="font-medium">
+                    {achievement.title}
+                  </TableCell>
+                  <TableCell>{achievement.organization}</TableCell>
+                  <TableCell>{achievement.year}</TableCell>
                   <TableCell className="max-w-xs truncate">
-                    {project.description}
+                    {achievement.description}
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {project.tags.map((tag, index) => (
+                      {achievement.technologies.map((tech, index) => (
                         <Badge key={index} variant="secondary">
-                          {tag}
+                          {tech}
                         </Badge>
                       ))}
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    {project.featured ? (
-                      <Badge variant="default">Featured</Badge>
-                    ) : (
-                      <Badge variant="outline">Regular</Badge>
-                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleEdit(project)}
+                        onClick={() => handleEdit(achievement)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button
                         variant="destructive"
                         size="sm"
-                        onClick={() => handleDelete(project.id!)}
+                        onClick={() => handleDelete(achievement.id!)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -108,4 +106,4 @@ function AdminProjectTable({
   );
 }
 
-export default AdminProjectTable;
+export default AdminAchievementTable;

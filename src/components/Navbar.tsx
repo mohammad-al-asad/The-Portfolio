@@ -74,6 +74,11 @@ const Navbar = () => {
       path: "/admin/projects",
       icon: <Briefcase size={18} />,
     },
+    {
+      name: "Qualifications",
+      path: "/admin/qualifications",
+      icon: <GraduationCap size={18} />,
+    },
     { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
   ];
 

@@ -29,7 +29,7 @@ export default function Chart() {
       legend: {
         position: 'top' as const,
         labels: {
-          color: '#e2e8f0',
+          color: '#788494',
         }
       },
     },
@@ -39,7 +39,7 @@ export default function Chart() {
           color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
-          color: '#94a3b8',
+          color: '#788494',
         }
       },
       y: {
@@ -47,7 +47,7 @@ export default function Chart() {
           color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
-          color: '#94a3b8',
+          color: '#788494',
         }
       }
     }
@@ -62,14 +62,14 @@ export default function Chart() {
         label: 'Visitors',
         data: [6500, 8100, 7200, 9800, 11500, 10500, 13200],
         borderColor: 'rgb(59, 130, 246)',
-        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+        backgroundColor: 'transparent',
         tension: 0.3,
       },
       {
         label: 'Page Views',
         data: [12000, 15000, 14200, 16500, 18000, 19500, 22000],
         borderColor: 'rgb(139, 92, 246)',
-        backgroundColor: 'rgba(139, 92, 246, 0.5)',
+        backgroundColor: 'transparent',
         tension: 0.3,
       },
     ],

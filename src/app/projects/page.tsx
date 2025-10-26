@@ -33,7 +33,7 @@ export default function ProjectsPage() {
       <div className="container mx-auto">
         {/* Header - With Gradient Accent */}
         <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
             <Link href="/">
               <Button
                 variant="outline"

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,120 +19,127 @@ import {
   ExternalLink,
 } from "lucide-react";
 import Image from "next/image";
+import { achievements, educations } from "../../generated/prisma";
+import LoadingScreen from "./LoadingScreen";
 
 // Education data with certificate images
-const education = [
-  {
-    institution: "Stanford University",
-    degree: "Master of Science in Computer Science",
-    period: "2018 - 2020",
-    location: "Stanford, CA",
-    description:
-      "Specialized in Artificial Intelligence and Machine Learning. Completed thesis on neural network optimization.",
-    detailedDescription:
-      "My graduate studies focused on advanced algorithms and machine learning techniques. I completed a thesis on 'Optimizing Neural Networks for Edge Devices' which was published in the Journal of Artificial Intelligence Research. During this time, I also served as a teaching assistant for Advanced Algorithms and participated in multiple research projects with Google's AI research team.",
-    gpa: "3.9/4.0",
-    courses: [
-      "Advanced Machine Learning",
-      "Neural Networks",
-      "Computer Vision",
-      "Natural Language Processing",
-    ],
-    certificateImage: "/stanford-certificate.jpg",
-    icon: (
-      <GraduationCap className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-    ),
-  },
-  {
-    institution: "MIT",
-    degree: "Bachelor of Science in Software Engineering",
-    period: "2014 - 2018",
-    location: "Cambridge, MA",
-    description:
-      "Dean's List for 6 semesters. President of Computer Science Student Association.",
-    detailedDescription:
-      "My undergraduate education provided a strong foundation in software engineering principles and practices. I led the Computer Science Student Association, organizing tech talks and hackathons that attracted over 500 participants. My senior project was a distributed computing framework that was later adopted by a local startup.",
-    gpa: "3.8/4.0",
-    courses: [
-      "Data Structures",
-      "Algorithms",
-      "Software Engineering",
-      "Database Systems",
-      "Computer Networks",
-    ],
-    certificateImage: "/mit-degree.jpg",
-    icon: (
-      <GraduationCap className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-    ),
-  },
-];
+// const education = [
+//   {
+//     institution: "Stanford University",
+//     degree: "Master of Science in Computer Science",
+//     period: "2018 - 2020",
+//     location: "Stanford, CA",
+//     description:
+//       "Specialized in Artificial Intelligence and Machine Learning. Completed thesis on neural network optimization.",
+//     detailedDescription:
+//       "My graduate studies focused on advanced algorithms and machine learning techniques. I completed a thesis on 'Optimizing Neural Networks for Edge Devices' which was published in the Journal of Artificial Intelligence Research. During this time, I also served as a teaching assistant for Advanced Algorithms and participated in multiple research projects with Google's AI research team.",
+//     gpa: "3.9/4.0",
+//     courses: [
+//       "Advanced Machine Learning",
+//       "Neural Networks",
+//       "Computer Vision",
+//       "Natural Language Processing",
+//     ],
+//     certificateImage: "/stanford-certificate.jpg",
+//     icon: (
+//       <GraduationCap className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+//     ),
+//   },
+//   {
+//     institution: "MIT",
+//     degree: "Bachelor of Science in Software Engineering",
+//     period: "2014 - 2018",
+//     location: "Cambridge, MA",
+//     description:
+//       "Dean's List for 6 semesters. President of Computer Science Student Association.",
+//     detailedDescription:
+//       "My undergraduate education provided a strong foundation in software engineering principles and practices. I led the Computer Science Student Association, organizing tech talks and hackathons that attracted over 500 participants. My senior project was a distributed computing framework that was later adopted by a local startup.",
+//     gpa: "3.8/4.0",
+//     courses: [
+//       "Data Structures",
+//       "Algorithms",
+//       "Software Engineering",
+//       "Database Systems",
+//       "Computer Networks",
+//     ],
+//     certificateImage: "/mit-degree.jpg",
+//     icon: (
+//       <GraduationCap className="h-6 w-6 text-purple-500 dark:text-purple-400" />
+//     ),
+//   },
+// ];
 
 // Achievements data with certificate images
-const achievements = [
-  {
-    title: "Google Developer Challenge Winner",
-    organization: "Google LLC",
-    year: "2022",
-    description:
-      "Awarded top prize in annual developer challenge with over 5,000 participants worldwide.",
-    detailedDescription:
-      "Won first place in the Google Developer Challenge with my project 'EcoRoute', an AI-powered navigation system that optimizes routes for electric vehicles to minimize energy consumption. The system reduced energy usage by 23% in simulated tests and was praised for its innovative use of machine learning and mapping APIs.",
-    certificateImage: "/google-challenge-certificate.jpg",
-    technologies: ["React", "TensorFlow.js", "Google Maps API", "Node.js"],
-    icon: <Award className="h-6 w-6 text-yellow-500 dark:text-yellow-400" />,
-  },
-  {
-    title: "AWS Certified Solutions Architect",
-    organization: "Amazon Web Services",
-    year: "2020",
-    description:
-      "Professional certification demonstrating expertise in cloud architecture.",
-    detailedDescription:
-      "Earned the AWS Certified Solutions Architect - Professional certification, validating advanced technical skills and experience in designing distributed systems on AWS. The certification covers topics such as network design, data storage, security, scalability, and cloud migration strategies.",
-    technologies: ["AWS", "Cloud Architecture", "DevOps", "Security"],
-    icon: <Award className="h-6 w-6 text-orange-500 dark:text-orange-400" />,
-  },
-];
+// const achievements = [
+//   {
+//     title: "Google Developer Challenge Winner",
+//     organization: "Google LLC",
+//     year: "2022",
+//     description:
+//       "Awarded top prize in annual developer challenge with over 5,000 participants worldwide.",
+//     detailedDescription:
+//       "Won first place in the Google Developer Challenge with my project 'EcoRoute', an AI-powered navigation system that optimizes routes for electric vehicles to minimize energy consumption. The system reduced energy usage by 23% in simulated tests and was praised for its innovative use of machine learning and mapping APIs.",
+//     certificateImage: "/google-challenge-certificate.jpg",
+//     technologies: ["React", "TensorFlow.js", "Google Maps API", "Node.js"],
+//     icon: <Award className="h-6 w-6 text-yellow-500 dark:text-yellow-400" />,
+//   },
+//   {
+//     title: "AWS Certified Solutions Architect",
+//     organization: "Amazon Web Services",
+//     year: "2020",
+//     description:
+//       "Professional certification demonstrating expertise in cloud architecture.",
+//     detailedDescription:
+//       "Earned the AWS Certified Solutions Architect - Professional certification, validating advanced technical skills and experience in designing distributed systems on AWS. The certification covers topics such as network design, data storage, security, scalability, and cloud migration strategies.",
+//     technologies: ["AWS", "Cloud Architecture", "DevOps", "Security"],
+//     icon: <Award className="h-6 w-6 text-orange-500 dark:text-orange-400" />,
+//   },
+// ];
 
 export default function EducationAndAchievements() {
   const [selectedItem, setSelectedItem] = useState<ModalItem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [education, setEducation] = useState<educations[] | null>(null);
+  const [achievement, setAchievement] = useState<achievements[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  interface EducationItem {
-    institution: string;
-    degree: string;
-    period: string;
-    location: string;
-    description: string;
-    detailedDescription: string;
-    gpa: string;
-    courses: string[];
-    certificateImage?: string;
-    icon: React.ReactNode;
-    type?: "education";
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [eduRes, achRes] = await Promise.all([
+          fetch("/api/educations"),
+          fetch("/api/achievements"),
+        ]);
+        if (eduRes.ok && achRes.ok) {
+          const [eduData, achData] = await Promise.all([
+            eduRes.json(),
+            achRes.json(),
+          ]);
+          setEducation(eduData);
+          setAchievement(achData);
+        }
+      } catch (error) {
+        console.error("Error fetching qualifications:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  interface AchievementItem {
-    title: string;
-    organization: string;
-    year: string;
-    description: string;
-    detailedDescription: string;
-    certificateImage?: string;
-    technologies?: string[];
-    icon: React.ReactNode;
-    type?: "achievement";
-  }
+    fetchData();
+  }, []);
 
   type ModalItem =
-    | (EducationItem & { type: "education" })
-    | (AchievementItem & { type: "achievement" });
+    | (educations & { type: "education" })
+    | (achievements & { type: "achievement" });
 
-  const openModal = (item: EducationItem | AchievementItem) => {
-    setSelectedItem(item as ModalItem);
+  const openModal = (item: ModalItem) => {
+    setSelectedItem(item);
     setModalOpen(true);
   };
 
+  if (loading) {
+    return <LoadingScreen />;
+  }
   return (
     <section id="qualifications" className="py-16">
       <SectionHeader
@@ -149,7 +156,7 @@ export default function EducationAndAchievements() {
           </h3>
 
           <div className="space-y-6">
-            {education.map((item, index) => (
+            {education?.map((item, index) => (
               <Card
                 key={index}
                 className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors duration-300 shadow-sm dark:shadow-none group"
@@ -158,7 +165,7 @@ export default function EducationAndAchievements() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:scale-110 transition-transform">
-                        {item.icon}
+                        <GraduationCap className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-lg text-gray-900 dark:text-white">
@@ -215,7 +222,7 @@ export default function EducationAndAchievements() {
           </h3>
 
           <div className="space-y-6">
-            {achievements.map((item, index) => (
+            {achievement?.map((item, index) => (
               <Card
                 key={index}
                 className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-yellow-500 dark:hover:border-yellow-400 transition-colors duration-300 shadow-sm dark:shadow-none group"
@@ -224,7 +231,7 @@ export default function EducationAndAchievements() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:scale-110 transition-transform">
-                        {item.icon}
+                        <Award className="h-6 w-6 text-orange-500 dark:text-orange-400" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-lg text-gray-900 dark:text-white">
@@ -326,7 +333,7 @@ export default function EducationAndAchievements() {
                   </div>
                 </div>
 
-                {selectedItem.certificateImage && (
+                {selectedItem.imageUrl && (
                   <div>
                     <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-4">
                       Certificate
@@ -334,7 +341,7 @@ export default function EducationAndAchievements() {
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                       <div className="relative w-full h-64">
                         <Image
-                          src={selectedItem.certificateImage}
+                          src={selectedItem.imageUrl}
                           alt={selectedItem.degree}
                           fill
                           className="object-contain"
@@ -381,7 +388,7 @@ export default function EducationAndAchievements() {
                   </div>
                 )}
 
-                {selectedItem.certificateImage && (
+                {selectedItem.imageUrl && (
                   <div>
                     <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-4">
                       Certificate
@@ -389,7 +396,7 @@ export default function EducationAndAchievements() {
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                       <div className="relative w-full h-64">
                         <Image
-                          src={selectedItem.certificateImage}
+                          src={selectedItem.imageUrl}
                           alt={selectedItem.title}
                           fill
                           className="object-contain"

@@ -7,9 +7,11 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { projects } from "../../generated/prisma";
 import SingleProject from "./SingleProject";
+import LoadingScreen from "./LoadingScreen";
 
 export default function FeaturedProjects() {
   const [featuredProjects, setFeaturedProjects] = useState<projects[]>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async function () {
@@ -23,9 +25,15 @@ export default function FeaturedProjects() {
         }
       } catch (error) {
         console.log("Failed to fetch", error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
   return (
     <section id="projects">
       <SectionHeader

@@ -28,7 +28,9 @@ export default function Hero() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" className="text-lg">
-            Download CV <Download className="ml-2 h-4 w-4" />
+            <a href="../The CV.pdf" target="_blank" rel="noopener noreferrer" className="flex gap-1 items-center">
+              Download CV <Download className="ml-2 h-4 w-4" />
+            </a>
           </Button>
         </div>
       </div>
