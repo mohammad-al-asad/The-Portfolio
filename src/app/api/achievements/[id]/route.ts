@@ -5,10 +5,10 @@ import { prisma } from "@/lib/db";
 
 // GET a specific achievement
 export async function GET(
-  request: NextRequest,
-  context: { params: Record<string, string> }
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { params } = context;
+   const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -17,7 +17,7 @@ export async function GET(
     }
 
     const achievement = await prisma.achievements.findUnique({
-      where: { id: params.id },
+      where: { id: id },
     });
 
     if (!achievement) {
