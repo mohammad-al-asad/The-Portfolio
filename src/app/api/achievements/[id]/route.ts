@@ -6,8 +6,9 @@ import { prisma } from "@/lib/db";
 // GET a specific achievement
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
+  const { params } = context;
   try {
     const session = await getServerSession(authOptions);
 
