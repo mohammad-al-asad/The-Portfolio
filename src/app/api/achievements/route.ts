@@ -6,12 +6,6 @@ import { prisma } from "@/lib/db";
 // GET all achievements
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const achievements = await prisma.achievements.findMany();
 
     return NextResponse.json(achievements);

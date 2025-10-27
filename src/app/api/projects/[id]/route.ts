@@ -9,14 +9,8 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-   const id = (await params).id;
+  const id = (await params).id;
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const project = await prisma.projects.findUnique({
       where: {
         id: id,
@@ -41,7 +35,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-   const id = (await params).id;
+  const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -54,7 +48,7 @@ export async function PUT(
       where: {
         id: id,
       },
-      data:body,
+      data: body,
     });
 
     if (!project) {
@@ -85,7 +79,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-   const id = (await params).id;
+  const id = (await params).id;
   try {
     const session = await getServerSession(authOptions);
 
@@ -94,10 +88,10 @@ export async function DELETE(
     }
 
     const deletedproject = await prisma.projects.delete({
-  where: {
-    id: id,
-  },
-})
+      where: {
+        id: id,
+      },
+    });
 
     if (!deletedproject) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
