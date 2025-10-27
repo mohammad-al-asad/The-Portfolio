@@ -10,7 +10,7 @@ export const educationSchema = z.object({
   detailedDescription: z.string().optional(),
   gpa: z.string().optional(),
   courses: z.array(z.string()).min(1, "At least one course is required"),
-  imageUrl: z.string().url("Invalid image URL").or(z.literal("")),
+  imageUrl: z.url("Invalid image URL").or(z.literal("")),
   imagePath: z.string(),
 });
 
@@ -21,7 +21,7 @@ export const achievementSchema = z.object({
   year: z.string().min(4, "Please provide a valid year or range"),
   description: z.string().min(10, "Description should be more than 10 characters"),
   detailedDescription: z.string().optional(),
-  imageUrl: z.string().url("Invalid image URL").or(z.literal("")),
+  imageUrl: z.url("Invalid image URL").or(z.literal("")),
   imagePath: z.string(),
   technologies: z.array(z.string()).min(1, "Add at least one technology"),
 });

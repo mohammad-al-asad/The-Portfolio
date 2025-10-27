@@ -15,7 +15,7 @@ export async function GET() {
     const projects = await prisma.projects.findMany({
       where: {
         featured: true,
-      },
+      }
     });
 
     return NextResponse.json(projects);

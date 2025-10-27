@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
-  output   = "../generated/prisma"
+  output        = "../generated/prisma"
 }
 
 datasource db {
@@ -20,6 +20,8 @@ model projects {
   title               String
   description         String
   detailedDescription String?
+  categoryId          String
+  category            categories @relation(fields: [categoryId], references: [id])
   tags                String[]
   technologies        String[]
   features            String[]
@@ -32,6 +34,13 @@ model projects {
   featured            Boolean  @default(false)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+}
+
+model categories {
+  id          String     @id @default(uuid()) @map("_id")
+  name        String
+  description String
+  project     projects[]
 }
 
 model educations {

@@ -118,6 +118,7 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   title: 'title',
   description: 'description',
   detailedDescription: 'detailedDescription',
+  categoryId: 'categoryId',
   tags: 'tags',
   technologies: 'technologies',
   features: 'features',
@@ -130,6 +131,12 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   featured: 'featured',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CategoriesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
 };
 
 exports.Prisma.EducationsScalarFieldEnum = {
@@ -175,6 +182,7 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   projects: 'projects',
+  categories: 'categories',
   educations: 'educations',
   achievements: 'achievements'
 };

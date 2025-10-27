@@ -64,7 +64,7 @@ function AdminAchievementTable({
                   <TableCell className="font-medium">
                     {achievement.title}
                   </TableCell>
-                  <TableCell>{achievement.organization}</TableCell>
+                  <TableCell className="max-w-xs truncate">{achievement.organization}</TableCell>
                   <TableCell>{achievement.year}</TableCell>
                   <TableCell className="max-w-xs truncate">
                     {achievement.description}

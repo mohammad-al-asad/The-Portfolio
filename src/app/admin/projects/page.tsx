@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+
 import {
   Form,
   FormControl,
@@ -37,41 +38,22 @@ export default function AdminProjectsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { edgestore } = useEdgeStore();
+
   const [projects, setProjects] = useState<projects[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProject, setEditingProject] = useState<projects | null>(null);
   const [tagInput, setTagInput] = useState("");
   const [techInput, setTechInput] = useState("");
+  const [featureInput, setFeatureInput] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const addTechnology = () => {
-    if (techInput.trim()) {
-      const currentTechs = form.getValues("technologies");
-      if (!currentTechs.includes(techInput.trim())) {
-        form.setValue("technologies", [...currentTechs, techInput.trim()], {
-          shouldValidate: true,
-        });
-        setTechInput("");
-      }
-    }
-  };
-
-  const removeTechnology = (techToRemove: string) => {
-    const currentTechs = form.getValues("technologies");
-    form.setValue(
-      "technologies",
-      currentTechs.filter((tech) => tech !== techToRemove),
-      { shouldValidate: true }
-    );
-  };
-
-  // Initialize form
-  const form = useForm({
-    resolver: zodResolver(projectSchema),
+  const form = useForm<ProjectFormData>({
+    resolver: zodResolver(projectSchema) as Resolver<ProjectFormData>,
     defaultValues: {
       title: "",
       description: "",
       detailedDescription: "",
+      categoryId: "",
       imageUrl: "",
       imagePath: "",
       tags: [],
@@ -85,7 +67,7 @@ export default function AdminProjectsPage() {
     },
   });
 
-  // Redirect if not authenticated
+  // redirect non-admins
   useEffect(() => {
     if (status === "loading") return;
     if (!session || session.user.role !== "admin") {
@@ -93,7 +75,7 @@ export default function AdminProjectsPage() {
     }
   }, [session, status, router]);
 
-  // Fetch projects
+  // fetch projects
   useEffect(() => {
     if (session?.user.role === "admin") {
       fetchProjects();
@@ -102,15 +84,13 @@ export default function AdminProjectsPage() {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch("/api/projects");
-      if (response.ok) {
-        const data = await response.json();
+      const res = await fetch("/api/projects");
+      if (res.ok) {
+        const data = await res.json();
         setProjects(data);
-      } else {
-        console.error("Failed to fetch projects");
-      }
-    } catch (error) {
-      console.error("Error fetching projects:", error);
+      } else console.error("Failed to fetch projects");
+    } catch (err) {
+      console.error("Error fetching projects:", err);
     } finally {
       setLoading(false);
     }
@@ -121,33 +101,29 @@ export default function AdminProjectsPage() {
       const url = editingProject
         ? `/api/projects/${editingProject.id}`
         : "/api/projects";
-
       const method = editingProject ? "PUT" : "POST";
 
-      const response = await fetch(url, {
+      const res = await fetch(url, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
+      if (res.ok) {
         await fetchProjects();
         resetForm();
         setIsDialogOpen(false);
       } else {
-        const errorData = await response.json();
-        console.error("Failed to save project:", errorData);
+        const err = await res.json();
+        console.error("Failed to save project:", err);
       }
-    } catch (error) {
-      console.error("Error saving project:", error);
+    } catch (err) {
+      console.error("Error saving project:", err);
     }
   };
 
   const handleEdit = (project: projects) => {
     setEditingProject(project);
-
     form.reset({
       title: project.title ?? "",
       description: project.description ?? "",
@@ -155,6 +131,7 @@ export default function AdminProjectsPage() {
       tags: project.tags ?? [],
       technologies: project.technologies ?? [],
       features: project.features ?? [],
+      categoryId: project.categoryId ?? "",
       imageUrl: project.imageUrl ?? "",
       imagePath: project.imagePath ?? "",
       liveUrl: project.liveUrl ?? "",
@@ -163,81 +140,101 @@ export default function AdminProjectsPage() {
       teamSize: project.teamSize ?? "",
       featured: project.featured ?? false,
     });
-
-    // reset temporary input fields
     setTagInput("");
     setTechInput("");
+    setFeatureInput("");
     setIsDialogOpen(true);
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this project?")) {
-      try {
-        // First get the project to get the image path
-        const projectResponse = await fetch(`/api/projects/${id}`);
-        if (projectResponse.ok) {
-          const project = await projectResponse.json();
-
-          // Delete the image from Edgestore
-          if (project.imagePath) {
-            await edgestore.projectImages.delete({
-              url: project.imageUrl,
-            });
-          }
-
-          // Then delete the project from the database
-          const deleteResponse = await fetch(`/api/projects/${id}`, {
-            method: "DELETE",
-          });
-
-          if (deleteResponse.ok) {
-            await fetchProjects();
-          } else {
-            console.error("Failed to delete project");
-          }
+    if (!confirm("Are you sure you want to delete this project?")) return;
+    try {
+      const projectRes = await fetch(`/api/projects/${id}`);
+      if (projectRes.ok) {
+        const project = await projectRes.json();
+        if (project.imagePath) {
+          await edgestore.projectImages.delete({ url: project.imageUrl });
         }
-      } catch (error) {
-        console.error("Error deleting project:", error);
+        const del = await fetch(`/api/projects/${id}`, { method: "DELETE" });
+        if (del.ok) fetchProjects();
+        else console.error("Failed to delete project");
       }
+    } catch (err) {
+      console.error("Error deleting project:", err);
     }
   };
 
   const removeImage = async () => {
     const imagePath = form.getValues("imagePath");
+    
     if (imagePath) {
       try {
         await edgestore.projectImages.delete({
           url: form.getValues("imageUrl"),
         });
-      } catch (error) {
-        console.error("Error deleting image:", error);
+      } catch (err) {
+        console.error("Error deleting image:", err);
       }
     }
-
     form.setValue("imageUrl", "");
     form.setValue("imagePath", "");
   };
 
   const addTag = () => {
-    if (tagInput.trim()) {
-      const currentTags = form.getValues("tags");
-      if (!currentTags.includes(tagInput.trim())) {
-        form.setValue("tags", [...currentTags, tagInput.trim()], {
-          shouldValidate: true,
-        });
-        setTagInput("");
-      }
+    if (!tagInput.trim()) return;
+    const current = form.getValues("tags");
+    if (!current.includes(tagInput.trim())) {
+      form.setValue("tags", [...current, tagInput.trim()], {
+        shouldValidate: true,
+      });
+      setTagInput("");
     }
   };
-
-  const removeTag = (tagToRemove: string) => {
-    const currentTags = form.getValues("tags");
+  const removeTag = (t: string) => {
+    const current = form.getValues("tags");
     form.setValue(
       "tags",
-      currentTags.filter((tag) => tag !== tagToRemove),
-      {
+      current.filter((x) => x !== t),
+      { shouldValidate: true }
+    );
+  };
+
+  const addTechnology = () => {
+    if (!techInput.trim()) return;
+    const current = form.getValues("technologies");
+    if (!current.includes(techInput.trim())) {
+      form.setValue("technologies", [...current, techInput.trim()], {
         shouldValidate: true,
-      }
+      });
+      setTechInput("");
+    }
+  };
+  const removeTechnology = (t: string) => {
+    const current = form.getValues("technologies");
+    form.setValue(
+      "technologies",
+      current.filter((x) => x !== t),
+      { shouldValidate: true }
+    );
+  };
+
+  const addFeature = () => {
+    if (!featureInput.trim()) return;
+    const current = form.getValues("features");
+    if (current && !current.includes(featureInput.trim())) {
+      form.setValue("features", [...current, featureInput.trim()], {
+        shouldValidate: true,
+      });
+      setFeatureInput("");
+    }
+  };
+  const removeFeature = (f: string) => {
+    const current = form.getValues("features");
+
+    form.setValue(
+      "features",
+      current?.filter((x) => x !== f),
+      { shouldValidate: true }
     );
   };
 
@@ -246,32 +243,31 @@ export default function AdminProjectsPage() {
       title: "",
       description: "",
       detailedDescription: "",
+      categoryId: "",
+      imageUrl: "",
+      imagePath: "",
       tags: [],
       technologies: [],
       features: [],
-      imageUrl: "",
-      imagePath: "",
       liveUrl: "",
       githubUrl: "",
       completionDate: "",
       teamSize: "",
       featured: false,
     });
-
     setEditingProject(null);
     setTagInput("");
     setTechInput("");
+    setFeatureInput("");
   };
 
-  if (!session || session.user.role !== "admin") {
-    return null;
-  }
+  if (!session || session.user.role !== "admin") return null;
 
   return (
     <div className="container mx-auto">
       <PageHeader>
         <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl [word-spacing:3px] md:text-2xl flex gap-3 font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
             Manage Projects
           </h1>
           <Button onClick={() => setIsDialogOpen(true)}>
@@ -288,7 +284,7 @@ export default function AdminProjectsPage() {
         projects={projects}
       />
 
-      {/* Add/Edit Project Dialog */}
+      {/* Add/Edit Dialog */}
       <Dialog
         open={isDialogOpen}
         onOpenChange={(open) => {
@@ -332,8 +328,8 @@ export default function AdminProjectsPage() {
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Project description"
-                        rows={4}
+                        rows={3}
+                        placeholder="Short description..."
                         {...field}
                       />
                     </FormControl>
@@ -350,8 +346,25 @@ export default function AdminProjectsPage() {
                     <FormLabel>Detailed Description</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Write a detailed explanation..."
                         rows={4}
+                        placeholder="Detailed info..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Category ID..."
                         {...field}
                       />
                     </FormControl>
@@ -381,25 +394,12 @@ export default function AdminProjectsPage() {
                 )}
               />
 
-              {/* Hidden field for imagePath */}
-              <FormField
-                control={form.control}
-                name="imagePath"
-                render={({ field }) => (
-                  <FormItem className="hidden">
-                    <FormControl>
-                      <Input type="hidden" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
               <FormField
                 control={form.control}
                 name="liveUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Live URL (optional)</FormLabel>
+                    <FormLabel>Live URL</FormLabel>
                     <FormControl>
                       <Input placeholder="https://example.com" {...field} />
                     </FormControl>
@@ -413,10 +413,10 @@ export default function AdminProjectsPage() {
                 name="githubUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>GitHub URL (optional)</FormLabel>
+                    <FormLabel>GitHub URL</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="https://github.com/username/repo"
+                        placeholder="https://github.com/user/repo"
                         {...field}
                       />
                     </FormControl>
@@ -425,7 +425,6 @@ export default function AdminProjectsPage() {
                 )}
               />
 
-              {/* Completion Date */}
               <FormField
                 control={form.control}
                 name="completionDate"
@@ -440,7 +439,6 @@ export default function AdminProjectsPage() {
                 )}
               />
 
-              {/* Team Size */}
               <FormField
                 control={form.control}
                 name="teamSize"
@@ -448,13 +446,14 @@ export default function AdminProjectsPage() {
                   <FormItem>
                     <FormLabel>Team Size</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., 4 developers" {...field} />
+                      <Input placeholder="e.g., 3 developers" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
+              {/* Tags */}
               <FormField
                 control={form.control}
                 name="tags"
@@ -478,20 +477,20 @@ export default function AdminProjectsPage() {
                       </Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {field.value.map((tag, index) => (
-                        <Badge key={index} className="flex items-center gap-1">
+                      {field.value.map((tag, i) => (
+                        <Badge key={i} className="flex items-center gap-1">
                           {tag}
                           <button
                             type="button"
                             onClick={() => removeTag(tag)}
-                            className="ml-1 rounded-full hover:bg-black/20"
+                            className="p-1 rounded-full hover:bg-black/20 cursor-pointer"
                           >
                             <X className="h-3 w-3" />
                           </button>
+                          {/* <X className="h-3 w-3 cursor-pointer z-50"  /> */}
                         </Badge>
                       ))}
                     </div>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -520,20 +519,60 @@ export default function AdminProjectsPage() {
                       </Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {field.value.map((tech, index) => (
-                        <Badge key={index} className="flex items-center gap-1">
+                      {field.value.map((tech, i) => (
+                        <Badge key={i} className="flex items-center gap-1">
                           {tech}
                           <button
                             type="button"
                             onClick={() => removeTechnology(tech)}
-                            className="ml-1 rounded-full hover:bg-black/20"
+                            className="p-1 rounded-full hover:bg-black/20 cursor-pointer"
                           >
                             <X className="h-3 w-3" />
                           </button>
                         </Badge>
                       ))}
                     </div>
-                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Features */}
+              <FormField
+                control={form.control}
+                name="features"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Features</FormLabel>
+                    <div className="flex gap-2 mb-2">
+                      <Input
+                        value={featureInput}
+                        onChange={(e) => setFeatureInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addFeature();
+                          }
+                        }}
+                        placeholder="Enter a feature and press Add"
+                      />
+                      <Button type="button" onClick={addFeature}>
+                        Add
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {field.value?.map((f, i) => (
+                        <Badge key={i} className="flex items-center gap-1">
+                          {f}
+                          <button
+                            type="button"
+                            onClick={() => removeFeature(f)}
+                            className="p-1 rounded-full hover:bg-black/20 cursor-pointer"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
                   </FormItem>
                 )}
               />
@@ -542,27 +581,27 @@ export default function AdminProjectsPage() {
                 control={form.control}
                 name="featured"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormItem className="flex items-center gap-3 border p-4 rounded-md">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <div className="space-y-1 leading-none">
+                    <div>
                       <FormLabel>Featured Project</FormLabel>
                       <p className="text-sm text-muted-foreground">
-                        Feature this project on the homepage
+                        Show this project on homepage highlights.
                       </p>
                     </div>
                   </FormItem>
                 )}
               />
 
-                <Button type="submit" className="w-full">
-                  <Save className="mr-2 h-4 w-4" />
-                  {editingProject ? "Update Project" : "Create Project"}
-                </Button>
+              <Button type="submit" className="w-full">
+                <Save className="mr-2 h-4 w-4" />
+                {editingProject ? "Update Project" : "Create Project"}
+              </Button>
             </form>
           </Form>
         </DialogContent>

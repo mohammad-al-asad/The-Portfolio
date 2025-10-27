@@ -27,12 +27,12 @@ function SingleProject({ project }: { project: projects }) {
         className="bg-white py-0 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors duration-300 shadow-sm dark:shadow-none group cursor-pointer"
         onClick={() => openModal(project)}
       >
-        <div className="p-6 pb-0">
-          <div className="relative w-full h-56 overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
-            <Image src={project.imageUrl} alt={project.title} fill />
+        <div className="px-3 pt-4">
+          <div className="relative w-full h-56 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+            <Image priority src={project.imageUrl} alt={project.title} fill />
           </div>
         </div>
-        <CardContent className="px-6 py-2">
+        <CardContent className="px-6">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
             {project.title}
           </h3>
@@ -90,9 +90,9 @@ function SingleProject({ project }: { project: projects }) {
               <div className="mt-6 space-y-6">
                 {/* Project Image */}
                 <div>
-                  <div className="relative w-full h-64 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="relative w-full h-64 overflow-hidden rounded-lg border bg-white border-gray-200 dark:border-gray-700">
                     <Image
-                      src="/diceGame.png"
+                      src={selectedProject.imageUrl}
                       alt={selectedProject.title}
                       fill
                     />

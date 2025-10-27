@@ -2,7 +2,7 @@ import Hero from '@/components/Hero';
 import Skills from '@/components/Skills';
 import FeaturedProjects from '@/components/FeaturedProjects';
 import Stats from '@/components/Stats';
-import EducationAndAchievements from '@/components/EducationAndAchievements';
+import EducationAndAchievements from '@/components/Qualification';
 import Contact from '@/components/Contact';
 
 export default function Home() {

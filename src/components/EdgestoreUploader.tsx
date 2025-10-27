@@ -49,7 +49,6 @@ export function EdgestoreUploader({
         });
 
         onChange(res.url, typeof res.path === "string" ? res.path : "");
-        console.log(res);
         // Always return an object with url property to satisfy UploadFn type
         return res;
       } catch (error) {
@@ -97,7 +96,7 @@ export function EdgestoreUploader({
           height={200}
           disabled={disabled || uploading}
           dropzoneOptions={{
-            maxSize: 5 * 1024 * 1024, // 5MB
+            maxSize: 50 * 1024 * 1024, // 10MB
             accept: {
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
@@ -119,7 +118,7 @@ export function EdgestoreUploader({
         Drag and drop an image or click to browse
       </p>
       <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
-        PNG, JPG, GIF up to 5MB
+        PNG, JPG, GIF up to 50MB
       </p>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { FormState, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -172,20 +172,30 @@ export default function AdminQualificationsPage() {
     );
   };
 
-  const removeImage = async () => {
-    const imagePath = achievementForm.getValues("imagePath");
-    if (imagePath) {
+  const removeImage = async (
+    form:
+      | ReturnType<typeof useForm<AchievementFormData>>
+      | ReturnType<typeof useForm<EducationFormData>>
+  ) => {
+    const formFields = form.getValues();
+    const imageUrl = formFields.imageUrl;
+    if (imageUrl) {
       try {
         await edgestore.qualificationImages.delete({
-          url: achievementForm.getValues("imageUrl"),
+          url: imageUrl,
         });
       } catch (error) {
         console.error("Error deleting image:", error);
       }
     }
 
-    achievementForm.setValue("imageUrl", "");
-    achievementForm.setValue("imagePath", "");
+    if ('title' in formFields) {
+      (form as ReturnType<typeof useForm<AchievementFormData>>).setValue("imageUrl", "");
+      (form as ReturnType<typeof useForm<AchievementFormData>>).setValue("imagePath", "");
+    } else {
+      (form as ReturnType<typeof useForm<EducationFormData>>).setValue("imageUrl", "");
+      (form as ReturnType<typeof useForm<EducationFormData>>).setValue("imagePath", "");
+    }
   };
 
   const resetForm = () => {
@@ -483,7 +493,7 @@ export default function AdminQualificationsPage() {
                             field.onChange(url);
                             educationForm.setValue("imagePath", path);
                           }}
-                          onRemove={removeImage}
+                          onRemove={() => removeImage(educationForm)}
                         />
                       </FormControl>
                       <FormMessage />
@@ -667,7 +677,7 @@ export default function AdminQualificationsPage() {
                             field.onChange(url);
                             achievementForm.setValue("imagePath", path);
                           }}
-                          onRemove={removeImage}
+                          onRemove={() => removeImage(achievementForm)}
                         />
                       </FormControl>
                       <FormMessage />

@@ -12,7 +12,9 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const projects = await prisma.projects.findMany();
+    const projects = await prisma.projects.findMany({
+      include: { category: true },
+    });
 
     return NextResponse.json(projects);
   } catch {
