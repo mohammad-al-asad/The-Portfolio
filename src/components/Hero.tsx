@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
@@ -10,37 +10,34 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const socialLinks = [
     {
-      icon: <FaGithub size={23}/>,
+      icon: <FaGithub size={23} />,
       href: "https://github.com/mohammad-al-asad",
       label: "GitHub",
-   },
+    },
     {
-      icon: <FaLinkedinIn size={23}/>,
+      icon: <FaLinkedinIn size={23} />,
       href: "https://www.linkedin.com/in/mohammad-al-asad/",
       label: "LinkedIn",
-
     },
     {
-      icon: <FaTwitter size={23}/>,
+      icon: <FaTwitter size={23} />,
       href: "https://x.com/maasad11914",
       label: "Twitter",
-
     },
     {
-      icon: <FaFacebookF size={23}/>,
+      icon: <FaFacebookF size={23} />,
       href: "https://www.facebook.com/maasad11914",
       label: "Facebook",
-
     },
     {
-      icon: <FaInstagram size={23}/>,
+      icon: <FaInstagram size={23} />,
       href: "https://www.instagram.com/maasad11914",
       label: "Instagram",
-
     },
   ];
 
@@ -49,7 +46,12 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-8">
           {/* Text Content Side */}
-          <div className="text-center lg:text-left order-1 ">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-center lg:text-left order-1 "
+          >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Crafting{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
@@ -70,9 +72,9 @@ export default function Hero() {
                   View Projects <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
+              <Button
+                size="lg"
+                variant="outline"
                 className="text-lg border-2 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
               >
                 <a
@@ -85,10 +87,14 @@ export default function Hero() {
                 </a>
               </Button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Image Side */}
-          <div className="relative order-2 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          className="relative order-2 flex justify-center">
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
               {/* Floating Social Icons */}
               {socialLinks.map((social, index) => {
@@ -105,7 +111,7 @@ export default function Hero() {
                     rel="noopener noreferrer"
                     className="absolute left-[56%] top-[56%] -translate-x-1/2 -translate-y-1/2 z-20 group"
                     style={{
-                      transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
+                      transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
                     }}
                     aria-label={social.label}
                   >
@@ -118,12 +124,15 @@ export default function Hero() {
 
               {/* Gradient Orbits */}
               <div className="absolute inset-0 rounded-full border-2 border-blue-400/10 animate-pulse-slow" />
-              <div className="absolute inset-4 rounded-full border-2 border-purple-400/10 animate-pulse-slow" style={{animationDelay: '1s'}} />
+              <div
+                className="absolute inset-4 rounded-full border-2 border-purple-400/10 animate-pulse-slow"
+                style={{ animationDelay: "1s" }}
+              />
 
               {/* Main Image Container */}
               <div className="relative w-full h-full rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-4 shadow-2xl">
                 <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-background shadow-inner">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-600/20 z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-purple-600/10 z-10" />
                   <Image
                     quality={100}
                     src="/hero.png"
@@ -133,16 +142,19 @@ export default function Hero() {
                     priority
                   />
                 </div>
-                
+
                 {/* Floating elements */}
                 <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full animate-bounce" />
-                <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '0.5s'}} />
+                <div
+                  className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.5s" }}
+                />
               </div>
 
               {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10 animate-pulse" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

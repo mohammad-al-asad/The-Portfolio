@@ -1,4 +1,3 @@
-// src/components/skills.tsx
 import { Badge } from '@/components/ui/badge';
 import { SectionHeader } from '@/components/SectionHeader';
 
