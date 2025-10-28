@@ -3,7 +3,7 @@ import Skills from '@/components/Skills';
 import FeaturedProjects from '@/components/FeaturedProjects';
 import Stats from '@/components/Stats';
 import EducationAndAchievements from '@/components/Qualification';
-import Contact from '@/components/Contact';
+import Contact from '@/components/Footer';
 
 export default function Home() {
   return (

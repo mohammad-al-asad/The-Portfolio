@@ -68,19 +68,17 @@ export default function AdminProjectsPage() {
   });
 
   // redirect non-admins
-  useEffect(() => {
-    if (status === "loading") return;
-    if (!session || session.user.role !== "admin") {
-      router.push("/admin/login");
-    }
-  }, [session, status, router]);
+  // useEffect(() => {
+  //   if (status === "loading") return;
+  //   if (!session || session.user.role !== "admin") {
+  //     router.push("/admin/login");
+  //   }
+  // }, [session, status, router]);
 
   // fetch projects
   useEffect(() => {
-    if (session?.user.role === "admin") {
-      fetchProjects();
-    }
-  }, [session]);
+    fetchProjects();
+  }, []);
 
   const fetchProjects = async () => {
     try {
@@ -95,8 +93,12 @@ export default function AdminProjectsPage() {
       setLoading(false);
     }
   };
+  console.log(projects);
 
   const onSubmit = async (data: ProjectFormData) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     try {
       const url = editingProject
         ? `/api/projects/${editingProject.id}`
@@ -147,6 +149,9 @@ export default function AdminProjectsPage() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     if (!confirm("Are you sure you want to delete this project?")) return;
     try {
       const projectRes = await fetch(`/api/projects/${id}`);
@@ -165,8 +170,11 @@ export default function AdminProjectsPage() {
   };
 
   const removeImage = async () => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     const imagePath = form.getValues("imagePath");
-    
+
     if (imagePath) {
       try {
         await edgestore.projectImages.delete({
@@ -260,8 +268,6 @@ export default function AdminProjectsPage() {
     setTechInput("");
     setFeatureInput("");
   };
-
-  if (!session || session.user.role !== "admin") return null;
 
   return (
     <div className="container mx-auto">
@@ -363,10 +369,7 @@ export default function AdminProjectsPage() {
                   <FormItem>
                     <FormLabel>Category</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Category ID..."
-                        {...field}
-                      />
+                      <Input placeholder="Category ID..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

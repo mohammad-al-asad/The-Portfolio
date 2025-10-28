@@ -24,6 +24,11 @@ export type projects = $Result.DefaultSelection<Prisma.$projectsPayload>
  */
 export type categories = $Result.DefaultSelection<Prisma.$categoriesPayload>
 /**
+ * Model admins
+ * 
+ */
+export type admins = $Result.DefaultSelection<Prisma.$adminsPayload>
+/**
  * Model educations
  * 
  */
@@ -138,6 +143,16 @@ export class PrismaClient<
     * ```
     */
   get categories(): Prisma.categoriesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.admins`: Exposes CRUD operations for the **admins** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Admins
+    * const admins = await prisma.admins.findMany()
+    * ```
+    */
+  get admins(): Prisma.adminsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.educations`: Exposes CRUD operations for the **educations** model.
@@ -601,6 +616,7 @@ export namespace Prisma {
   export const ModelName: {
     projects: 'projects',
     categories: 'categories',
+    admins: 'admins',
     educations: 'educations',
     achievements: 'achievements'
   };
@@ -621,7 +637,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "projects" | "categories" | "educations" | "achievements"
+      modelProps: "projects" | "categories" | "admins" | "educations" | "achievements"
       txIsolationLevel: never
     }
     model: {
@@ -770,6 +786,80 @@ export namespace Prisma {
           count: {
             args: Prisma.categoriesCountArgs<ExtArgs>
             result: $Utils.Optional<CategoriesCountAggregateOutputType> | number
+          }
+        }
+      }
+      admins: {
+        payload: Prisma.$adminsPayload<ExtArgs>
+        fields: Prisma.adminsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.adminsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.adminsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>
+          }
+          findFirst: {
+            args: Prisma.adminsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.adminsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>
+          }
+          findMany: {
+            args: Prisma.adminsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>[]
+          }
+          create: {
+            args: Prisma.adminsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>
+          }
+          createMany: {
+            args: Prisma.adminsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.adminsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>
+          }
+          update: {
+            args: Prisma.adminsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>
+          }
+          deleteMany: {
+            args: Prisma.adminsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.adminsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.adminsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$adminsPayload>
+          }
+          aggregate: {
+            args: Prisma.AdminsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdmins>
+          }
+          groupBy: {
+            args: Prisma.adminsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdminsGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.adminsFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.adminsAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.adminsCountArgs<ExtArgs>
+            result: $Utils.Optional<AdminsCountAggregateOutputType> | number
           }
         }
       }
@@ -1002,6 +1092,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     projects?: projectsOmit
     categories?: categoriesOmit
+    admins?: adminsOmit
     educations?: educationsOmit
     achievements?: achievementsOmit
   }
@@ -3197,6 +3288,927 @@ export namespace Prisma {
 
 
   /**
+   * Model admins
+   */
+
+  export type AggregateAdmins = {
+    _count: AdminsCountAggregateOutputType | null
+    _min: AdminsMinAggregateOutputType | null
+    _max: AdminsMaxAggregateOutputType | null
+  }
+
+  export type AdminsMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    password: string | null
+  }
+
+  export type AdminsMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    password: string | null
+  }
+
+  export type AdminsCountAggregateOutputType = {
+    id: number
+    name: number
+    email: number
+    password: number
+    _all: number
+  }
+
+
+  export type AdminsMinAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    password?: true
+  }
+
+  export type AdminsMaxAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    password?: true
+  }
+
+  export type AdminsCountAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    password?: true
+    _all?: true
+  }
+
+  export type AdminsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which admins to aggregate.
+     */
+    where?: adminsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of admins to fetch.
+     */
+    orderBy?: adminsOrderByWithRelationInput | adminsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: adminsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned admins
+    **/
+    _count?: true | AdminsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdminsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdminsMaxAggregateInputType
+  }
+
+  export type GetAdminsAggregateType<T extends AdminsAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdmins]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdmins[P]>
+      : GetScalarType<T[P], AggregateAdmins[P]>
+  }
+
+
+
+
+  export type adminsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: adminsWhereInput
+    orderBy?: adminsOrderByWithAggregationInput | adminsOrderByWithAggregationInput[]
+    by: AdminsScalarFieldEnum[] | AdminsScalarFieldEnum
+    having?: adminsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdminsCountAggregateInputType | true
+    _min?: AdminsMinAggregateInputType
+    _max?: AdminsMaxAggregateInputType
+  }
+
+  export type AdminsGroupByOutputType = {
+    id: string
+    name: string
+    email: string
+    password: string
+    _count: AdminsCountAggregateOutputType | null
+    _min: AdminsMinAggregateOutputType | null
+    _max: AdminsMaxAggregateOutputType | null
+  }
+
+  type GetAdminsGroupByPayload<T extends adminsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdminsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdminsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdminsGroupByOutputType[P]>
+            : GetScalarType<T[P], AdminsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type adminsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    password?: boolean
+  }, ExtArgs["result"]["admins"]>
+
+
+
+  export type adminsSelectScalar = {
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    password?: boolean
+  }
+
+  export type adminsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password", ExtArgs["result"]["admins"]>
+
+  export type $adminsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "admins"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      email: string
+      password: string
+    }, ExtArgs["result"]["admins"]>
+    composites: {}
+  }
+
+  type adminsGetPayload<S extends boolean | null | undefined | adminsDefaultArgs> = $Result.GetResult<Prisma.$adminsPayload, S>
+
+  type adminsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<adminsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdminsCountAggregateInputType | true
+    }
+
+  export interface adminsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['admins'], meta: { name: 'admins' } }
+    /**
+     * Find zero or one Admins that matches the filter.
+     * @param {adminsFindUniqueArgs} args - Arguments to find a Admins
+     * @example
+     * // Get one Admins
+     * const admins = await prisma.admins.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends adminsFindUniqueArgs>(args: SelectSubset<T, adminsFindUniqueArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Admins that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {adminsFindUniqueOrThrowArgs} args - Arguments to find a Admins
+     * @example
+     * // Get one Admins
+     * const admins = await prisma.admins.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends adminsFindUniqueOrThrowArgs>(args: SelectSubset<T, adminsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Admins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {adminsFindFirstArgs} args - Arguments to find a Admins
+     * @example
+     * // Get one Admins
+     * const admins = await prisma.admins.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends adminsFindFirstArgs>(args?: SelectSubset<T, adminsFindFirstArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Admins that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {adminsFindFirstOrThrowArgs} args - Arguments to find a Admins
+     * @example
+     * // Get one Admins
+     * const admins = await prisma.admins.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends adminsFindFirstOrThrowArgs>(args?: SelectSubset<T, adminsFindFirstOrThrowArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Admins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {adminsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Admins
+     * const admins = await prisma.admins.findMany()
+     * 
+     * // Get first 10 Admins
+     * const admins = await prisma.admins.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const adminsWithIdOnly = await prisma.admins.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends adminsFindManyArgs>(args?: SelectSubset<T, adminsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Admins.
+     * @param {adminsCreateArgs} args - Arguments to create a Admins.
+     * @example
+     * // Create one Admins
+     * const Admins = await prisma.admins.create({
+     *   data: {
+     *     // ... data to create a Admins
+     *   }
+     * })
+     * 
+     */
+    create<T extends adminsCreateArgs>(args: SelectSubset<T, adminsCreateArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Admins.
+     * @param {adminsCreateManyArgs} args - Arguments to create many Admins.
+     * @example
+     * // Create many Admins
+     * const admins = await prisma.admins.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends adminsCreateManyArgs>(args?: SelectSubset<T, adminsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Admins.
+     * @param {adminsDeleteArgs} args - Arguments to delete one Admins.
+     * @example
+     * // Delete one Admins
+     * const Admins = await prisma.admins.delete({
+     *   where: {
+     *     // ... filter to delete one Admins
+     *   }
+     * })
+     * 
+     */
+    delete<T extends adminsDeleteArgs>(args: SelectSubset<T, adminsDeleteArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Admins.
+     * @param {adminsUpdateArgs} args - Arguments to update one Admins.
+     * @example
+     * // Update one Admins
+     * const admins = await prisma.admins.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends adminsUpdateArgs>(args: SelectSubset<T, adminsUpdateArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Admins.
+     * @param {adminsDeleteManyArgs} args - Arguments to filter Admins to delete.
+     * @example
+     * // Delete a few Admins
+     * const { count } = await prisma.admins.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends adminsDeleteManyArgs>(args?: SelectSubset<T, adminsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {adminsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Admins
+     * const admins = await prisma.admins.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends adminsUpdateManyArgs>(args: SelectSubset<T, adminsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Admins.
+     * @param {adminsUpsertArgs} args - Arguments to update or create a Admins.
+     * @example
+     * // Update or create a Admins
+     * const admins = await prisma.admins.upsert({
+     *   create: {
+     *     // ... data to create a Admins
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Admins we want to update
+     *   }
+     * })
+     */
+    upsert<T extends adminsUpsertArgs>(args: SelectSubset<T, adminsUpsertArgs<ExtArgs>>): Prisma__adminsClient<$Result.GetResult<Prisma.$adminsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Admins that matches the filter.
+     * @param {adminsFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const admins = await prisma.admins.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: adminsFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Admins.
+     * @param {adminsAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const admins = await prisma.admins.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: adminsAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {adminsCountArgs} args - Arguments to filter Admins to count.
+     * @example
+     * // Count the number of Admins
+     * const count = await prisma.admins.count({
+     *   where: {
+     *     // ... the filter for the Admins we want to count
+     *   }
+     * })
+    **/
+    count<T extends adminsCountArgs>(
+      args?: Subset<T, adminsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdminsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdminsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdminsAggregateArgs>(args: Subset<T, AdminsAggregateArgs>): Prisma.PrismaPromise<GetAdminsAggregateType<T>>
+
+    /**
+     * Group by Admins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {adminsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends adminsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: adminsGroupByArgs['orderBy'] }
+        : { orderBy?: adminsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, adminsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdminsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the admins model
+   */
+  readonly fields: adminsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for admins.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__adminsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the admins model
+   */
+  interface adminsFieldRefs {
+    readonly id: FieldRef<"admins", 'String'>
+    readonly name: FieldRef<"admins", 'String'>
+    readonly email: FieldRef<"admins", 'String'>
+    readonly password: FieldRef<"admins", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * admins findUnique
+   */
+  export type adminsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * Filter, which admins to fetch.
+     */
+    where: adminsWhereUniqueInput
+  }
+
+  /**
+   * admins findUniqueOrThrow
+   */
+  export type adminsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * Filter, which admins to fetch.
+     */
+    where: adminsWhereUniqueInput
+  }
+
+  /**
+   * admins findFirst
+   */
+  export type adminsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * Filter, which admins to fetch.
+     */
+    where?: adminsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of admins to fetch.
+     */
+    orderBy?: adminsOrderByWithRelationInput | adminsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for admins.
+     */
+    cursor?: adminsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of admins.
+     */
+    distinct?: AdminsScalarFieldEnum | AdminsScalarFieldEnum[]
+  }
+
+  /**
+   * admins findFirstOrThrow
+   */
+  export type adminsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * Filter, which admins to fetch.
+     */
+    where?: adminsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of admins to fetch.
+     */
+    orderBy?: adminsOrderByWithRelationInput | adminsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for admins.
+     */
+    cursor?: adminsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` admins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of admins.
+     */
+    distinct?: AdminsScalarFieldEnum | AdminsScalarFieldEnum[]
+  }
+
+  /**
+   * admins findMany
+   */
+  export type adminsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * Filter, which admins to fetch.
+     */
+    where?: adminsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of admins to fetch.
+     */
+    orderBy?: adminsOrderByWithRelationInput | adminsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing admins.
+     */
+    cursor?: adminsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` admins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` admins.
+     */
+    skip?: number
+    distinct?: AdminsScalarFieldEnum | AdminsScalarFieldEnum[]
+  }
+
+  /**
+   * admins create
+   */
+  export type adminsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a admins.
+     */
+    data: XOR<adminsCreateInput, adminsUncheckedCreateInput>
+  }
+
+  /**
+   * admins createMany
+   */
+  export type adminsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many admins.
+     */
+    data: adminsCreateManyInput | adminsCreateManyInput[]
+  }
+
+  /**
+   * admins update
+   */
+  export type adminsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a admins.
+     */
+    data: XOR<adminsUpdateInput, adminsUncheckedUpdateInput>
+    /**
+     * Choose, which admins to update.
+     */
+    where: adminsWhereUniqueInput
+  }
+
+  /**
+   * admins updateMany
+   */
+  export type adminsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update admins.
+     */
+    data: XOR<adminsUpdateManyMutationInput, adminsUncheckedUpdateManyInput>
+    /**
+     * Filter which admins to update
+     */
+    where?: adminsWhereInput
+    /**
+     * Limit how many admins to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * admins upsert
+   */
+  export type adminsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the admins to update in case it exists.
+     */
+    where: adminsWhereUniqueInput
+    /**
+     * In case the admins found by the `where` argument doesn't exist, create a new admins with this data.
+     */
+    create: XOR<adminsCreateInput, adminsUncheckedCreateInput>
+    /**
+     * In case the admins was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<adminsUpdateInput, adminsUncheckedUpdateInput>
+  }
+
+  /**
+   * admins delete
+   */
+  export type adminsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+    /**
+     * Filter which admins to delete.
+     */
+    where: adminsWhereUniqueInput
+  }
+
+  /**
+   * admins deleteMany
+   */
+  export type adminsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which admins to delete
+     */
+    where?: adminsWhereInput
+    /**
+     * Limit how many admins to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * admins findRaw
+   */
+  export type adminsFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * admins aggregateRaw
+   */
+  export type adminsAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * admins without action
+   */
+  export type adminsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the admins
+     */
+    select?: adminsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the admins
+     */
+    omit?: adminsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model educations
    */
 
@@ -5242,6 +6254,16 @@ export namespace Prisma {
   export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
 
 
+  export const AdminsScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    password: 'password'
+  };
+
+  export type AdminsScalarFieldEnum = (typeof AdminsScalarFieldEnum)[keyof typeof AdminsScalarFieldEnum]
+
+
   export const EducationsScalarFieldEnum: {
     id: 'id',
     institution: 'institution',
@@ -5509,6 +6531,53 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"categories"> | string
     name?: StringWithAggregatesFilter<"categories"> | string
     description?: StringWithAggregatesFilter<"categories"> | string
+  }
+
+  export type adminsWhereInput = {
+    AND?: adminsWhereInput | adminsWhereInput[]
+    OR?: adminsWhereInput[]
+    NOT?: adminsWhereInput | adminsWhereInput[]
+    id?: StringFilter<"admins"> | string
+    name?: StringFilter<"admins"> | string
+    email?: StringFilter<"admins"> | string
+    password?: StringFilter<"admins"> | string
+  }
+
+  export type adminsOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+  }
+
+  export type adminsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: adminsWhereInput | adminsWhereInput[]
+    OR?: adminsWhereInput[]
+    NOT?: adminsWhereInput | adminsWhereInput[]
+    name?: StringFilter<"admins"> | string
+    email?: StringFilter<"admins"> | string
+    password?: StringFilter<"admins"> | string
+  }, "id">
+
+  export type adminsOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    _count?: adminsCountOrderByAggregateInput
+    _max?: adminsMaxOrderByAggregateInput
+    _min?: adminsMinOrderByAggregateInput
+  }
+
+  export type adminsScalarWhereWithAggregatesInput = {
+    AND?: adminsScalarWhereWithAggregatesInput | adminsScalarWhereWithAggregatesInput[]
+    OR?: adminsScalarWhereWithAggregatesInput[]
+    NOT?: adminsScalarWhereWithAggregatesInput | adminsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"admins"> | string
+    name?: StringWithAggregatesFilter<"admins"> | string
+    email?: StringWithAggregatesFilter<"admins"> | string
+    password?: StringWithAggregatesFilter<"admins"> | string
   }
 
   export type educationsWhereInput = {
@@ -5860,6 +6929,51 @@ export namespace Prisma {
   export type categoriesUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type adminsCreateInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+  }
+
+  export type adminsUncheckedCreateInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+  }
+
+  export type adminsUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type adminsUncheckedUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type adminsCreateManyInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+  }
+
+  export type adminsUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type adminsUncheckedUpdateManyInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type educationsCreateInput = {
@@ -6263,6 +7377,27 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+  }
+
+  export type adminsCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+  }
+
+  export type adminsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+  }
+
+  export type adminsMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
   }
 
   export type educationsCountOrderByAggregateInput = {

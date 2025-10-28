@@ -43,6 +43,13 @@ model categories {
   project     projects[]
 }
 
+model admins {
+  id       String @id @default(uuid()) @map("_id")
+  name     String
+  email    String
+  password String
+}
+
 model educations {
   id                  String   @id @default(uuid()) @map("_id")
   institution         String

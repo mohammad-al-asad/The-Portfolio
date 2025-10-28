@@ -139,6 +139,13 @@ exports.Prisma.CategoriesScalarFieldEnum = {
   description: 'description'
 };
 
+exports.Prisma.AdminsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password'
+};
+
 exports.Prisma.EducationsScalarFieldEnum = {
   id: 'id',
   institution: 'institution',
@@ -183,6 +190,7 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   projects: 'projects',
   categories: 'categories',
+  admins: 'admins',
   educations: 'educations',
   achievements: 'achievements'
 };

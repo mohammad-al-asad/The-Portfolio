@@ -26,13 +26,13 @@ export async function middleware(req: NextRequest) {
   }
 
   // Protect admin routes
-  if (isAdminPath) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/admin/login", req.url));
-    }
+  // if (isAdminPath) {
+  //   if (!token) {
+  //     return NextResponse.redirect(new URL("/admin/login", req.url));
+  //   }
     
-    return NextResponse.next();
-  }
+  //   return NextResponse.next();
+  // }
 
   return NextResponse.next();
 }

@@ -22,80 +22,6 @@ import Image from "next/image";
 import { achievements, educations } from "../../generated/prisma";
 import LoadingScreen from "./LoadingScreen";
 
-// Education data with certificate images
-// const education = [
-//   {
-//     institution: "Stanford University",
-//     degree: "Master of Science in Computer Science",
-//     period: "2018 - 2020",
-//     location: "Stanford, CA",
-//     description:
-//       "Specialized in Artificial Intelligence and Machine Learning. Completed thesis on neural network optimization.",
-//     detailedDescription:
-//       "My graduate studies focused on advanced algorithms and machine learning techniques. I completed a thesis on 'Optimizing Neural Networks for Edge Devices' which was published in the Journal of Artificial Intelligence Research. During this time, I also served as a teaching assistant for Advanced Algorithms and participated in multiple research projects with Google's AI research team.",
-//     gpa: "3.9/4.0",
-//     courses: [
-//       "Advanced Machine Learning",
-//       "Neural Networks",
-//       "Computer Vision",
-//       "Natural Language Processing",
-//     ],
-//     certificateImage: "/stanford-certificate.jpg",
-//     icon: (
-//       <GraduationCap className="h-6 w-6 text-blue-500 dark:text-blue-400" />
-//     ),
-//   },
-//   {
-//     institution: "MIT",
-//     degree: "Bachelor of Science in Software Engineering",
-//     period: "2014 - 2018",
-//     location: "Cambridge, MA",
-//     description:
-//       "Dean's List for 6 semesters. President of Computer Science Student Association.",
-//     detailedDescription:
-//       "My undergraduate education provided a strong foundation in software engineering principles and practices. I led the Computer Science Student Association, organizing tech talks and hackathons that attracted over 500 participants. My senior project was a distributed computing framework that was later adopted by a local startup.",
-//     gpa: "3.8/4.0",
-//     courses: [
-//       "Data Structures",
-//       "Algorithms",
-//       "Software Engineering",
-//       "Database Systems",
-//       "Computer Networks",
-//     ],
-//     certificateImage: "/mit-degree.jpg",
-//     icon: (
-//       <GraduationCap className="h-6 w-6 text-purple-500 dark:text-purple-400" />
-//     ),
-//   },
-// ];
-
-// Achievements data with certificate images
-// const achievements = [
-//   {
-//     title: "Google Developer Challenge Winner",
-//     organization: "Google LLC",
-//     year: "2022",
-//     description:
-//       "Awarded top prize in annual developer challenge with over 5,000 participants worldwide.",
-//     detailedDescription:
-//       "Won first place in the Google Developer Challenge with my project 'EcoRoute', an AI-powered navigation system that optimizes routes for electric vehicles to minimize energy consumption. The system reduced energy usage by 23% in simulated tests and was praised for its innovative use of machine learning and mapping APIs.",
-//     certificateImage: "/google-challenge-certificate.jpg",
-//     technologies: ["React", "TensorFlow.js", "Google Maps API", "Node.js"],
-//     icon: <Award className="h-6 w-6 text-yellow-500 dark:text-yellow-400" />,
-//   },
-//   {
-//     title: "AWS Certified Solutions Architect",
-//     organization: "Amazon Web Services",
-//     year: "2020",
-//     description:
-//       "Professional certification demonstrating expertise in cloud architecture.",
-//     detailedDescription:
-//       "Earned the AWS Certified Solutions Architect - Professional certification, validating advanced technical skills and experience in designing distributed systems on AWS. The certification covers topics such as network design, data storage, security, scalability, and cloud migration strategies.",
-//     technologies: ["AWS", "Cloud Architecture", "DevOps", "Security"],
-//     icon: <Award className="h-6 w-6 text-orange-500 dark:text-orange-400" />,
-//   },
-// ];
-
 export default function Qualification() {
   const [selectedItem, setSelectedItem] = useState<ModalItem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -164,7 +90,7 @@ export default function Qualification() {
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:scale-110 transition-transform">
+                      <div className="p-2 self-start mt-1 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:scale-110 transition-transform">
                         <GraduationCap className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                       </div>
                       <div>
@@ -230,14 +156,14 @@ export default function Qualification() {
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:scale-110 transition-transform">
+                      <div className="p-2 self-start mt-1 bg-gray-100 dark:bg-gray-700 rounded-lg group-hover:scale-110 transition-transform">
                         <Award className="h-6 w-6 text-orange-500 dark:text-orange-400" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-lg text-gray-900 dark:text-white">
                           {item.title}
                         </h4>
-                        <p className="text-gray-700 dark:text-gray-300">
+                        <p className="text-gray-700 dark:text-gray-300 ">
                           {item.organization}
                         </p>
                       </div>

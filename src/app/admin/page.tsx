@@ -2,33 +2,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  Activity,
   Mail,
   Briefcase,
   Users,
   Settings,
   Plus,
   CircleUser,
+  GraduationCap,
 } from "lucide-react";
-// import { useSession } from "next-auth/react";
 import Chart from "@/components/Chart";
 import PageHeader from "@/components/PageHeader";
 import Link from "next/link";
 
 export default function AdminDashboard() {
-  // const { data: session } = useSession();
-
-  // if (!session) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center">
-  //       <div className="text-center">
-  //         <h1 className="text-2xl font-bold mb-4">Unauthorized Access</h1>
-  //         <p>Please login to access the admin panel</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   const stats = [
     {
       title: "Total Visitors",
@@ -44,17 +30,17 @@ export default function AdminDashboard() {
       link: "/admin/projects",
     },
     {
+      title: "Achivement",
+      value: "5",
+      icon: <GraduationCap className="h-6 w-6" />,
+      change: "+1",
+    },
+    {
       title: "Messages",
       value: "42",
       icon: <Mail className="h-6 w-6" />,
       change: "+5",
       link: "/admin/messages",
-    },
-    {
-      title: "Engagement",
-      value: "78%",
-      icon: <Activity className="h-6 w-6" />,
-      change: "+4%",
     },
   ];
 

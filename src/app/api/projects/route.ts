@@ -6,12 +6,6 @@ import { prisma } from "@/lib/db";
 // GET all projects
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const projects = await prisma.projects.findMany({
       include: { category: true },
     });

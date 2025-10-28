@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FormState, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ import AdminEducationTable from "@/components/AdminEducationTable";
 import AdminAchievementTable from "@/components/AdminAchievementTable";
 
 export default function AdminQualificationsPage() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const { edgestore } = useEdgeStore();
 
@@ -88,20 +88,10 @@ export default function AdminQualificationsPage() {
     },
   });
 
-  // Redirect if not admin
-  useEffect(() => {
-    if (status === "loading") return;
-    if (!session || session.user.role !== "admin") {
-      router.push("/admin/login");
-    }
-  }, [session, status, router]);
-
   // Fetch existing data
   useEffect(() => {
-    if (session?.user.role === "admin") {
-      fetchData();
-    }
-  }, [session]);
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -177,6 +167,9 @@ export default function AdminQualificationsPage() {
       | ReturnType<typeof useForm<AchievementFormData>>
       | ReturnType<typeof useForm<EducationFormData>>
   ) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     const formFields = form.getValues();
     const imageUrl = formFields.imageUrl;
     if (imageUrl) {
@@ -189,12 +182,24 @@ export default function AdminQualificationsPage() {
       }
     }
 
-    if ('title' in formFields) {
-      (form as ReturnType<typeof useForm<AchievementFormData>>).setValue("imageUrl", "");
-      (form as ReturnType<typeof useForm<AchievementFormData>>).setValue("imagePath", "");
+    if ("title" in formFields) {
+      (form as ReturnType<typeof useForm<AchievementFormData>>).setValue(
+        "imageUrl",
+        ""
+      );
+      (form as ReturnType<typeof useForm<AchievementFormData>>).setValue(
+        "imagePath",
+        ""
+      );
     } else {
-      (form as ReturnType<typeof useForm<EducationFormData>>).setValue("imageUrl", "");
-      (form as ReturnType<typeof useForm<EducationFormData>>).setValue("imagePath", "");
+      (form as ReturnType<typeof useForm<EducationFormData>>).setValue(
+        "imageUrl",
+        ""
+      );
+      (form as ReturnType<typeof useForm<EducationFormData>>).setValue(
+        "imagePath",
+        ""
+      );
     }
   };
 
@@ -225,6 +230,9 @@ export default function AdminQualificationsPage() {
 
   // Handle Delete for Education
   const handleEducationDelete = async (id: string) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     if (confirm("Are you sure you want to delete this education?")) {
       try {
         // First get the education to get the image path
@@ -280,6 +288,9 @@ export default function AdminQualificationsPage() {
 
   // Handle Delete for Achievement
   const handleAchievementDelete = async (id: string) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     if (confirm("Are you sure you want to delete this achievement?")) {
       try {
         // First get the achievement to get the image path
@@ -333,6 +344,9 @@ export default function AdminQualificationsPage() {
 
   // Submit Edducation handlers
   const onEducationSubmit = async (data: EducationFormData) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     try {
       const url = editingItem
         ? `/api/educations/${editingItem.id}`
@@ -355,6 +369,9 @@ export default function AdminQualificationsPage() {
 
   // Submit Achievement handlers
   const onAchievementSubmit = async (data: AchievementFormData) => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
     try {
       const url = editingItem
         ? `/api/achievements/${editingItem.id}`
@@ -375,7 +392,6 @@ export default function AdminQualificationsPage() {
     }
   };
 
-  if (!session || session.user.role !== "admin") return null;
 
   return (
     <div className="container mx-auto">

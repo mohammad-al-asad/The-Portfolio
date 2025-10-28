@@ -40,18 +40,23 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        const SERVER_URL = process.env.SERVER_URL;
+        const res = await fetch(`${SERVER_URL}/api/auth/login`, {
+          method: "POST",
+          body: JSON.stringify({
+            email: credentials?.email,
+          }),
+        });
+        const { email, password } = await res.json();
+
         if (!credentials?.email || !credentials.password) {
           return null;
         }
 
-        // In production, replace this with database call
-        const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-        const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
-        
         if (
-          credentials.email === ADMIN_EMAIL &&
-          ADMIN_PASSWORD_HASH &&
-          (await bcrypt.compare(credentials.password, ADMIN_PASSWORD_HASH))
+          credentials.email === email &&
+          password &&
+          (await bcrypt.compare(credentials.password, password))
         ) {
           return {
             id: "1",
