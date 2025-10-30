@@ -60,7 +60,8 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
-            className="text-center lg:text-left order-1 "
+            viewport={{ once: true }}
+            className="text-center lg:text-left order-1 transition-all"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Crafting{" "}
@@ -103,8 +104,9 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            className="relative order-2 flex justify-center"
+            transition={{ duration: 1}}
+            viewport={{once:true}}
+            className="relative order-2 flex justify-center transition-all"
           >
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
               {/* Floating Social Icons */}
@@ -129,7 +131,7 @@ export default function Hero() {
                     <motion.div
                       initial={{ scale: "1%" }}
                       whileInView={{ scale: "100%" }}
-                      transition={{ duration: 1 }}
+                      transition={{ duration: 0.5 }}
                       className="w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 shadow-lg hover:shadow-xl"
                     >
                       {social.icon}

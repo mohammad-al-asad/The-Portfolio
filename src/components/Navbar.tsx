@@ -79,7 +79,8 @@ const Navbar = () => {
       path: "/admin/qualifications",
       icon: <GraduationCap size={18} />,
     },
-    { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
+    // { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
+    { name: "Messages", path: "#", icon: <Mail size={18} /> },
   ];
 
   const items = isAdminPanel ? adminNavItems : navItems;

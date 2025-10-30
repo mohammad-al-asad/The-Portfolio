@@ -55,7 +55,8 @@ export default function AdminDashboard() {
       value: "42",
       icon: <Mail className="h-6 w-6" />,
       change: "+5",
-      link: "/admin/messages",
+      // link: "/admin/messages",
+      link: "#",
     },
   ];
     async function fetchResume() {
@@ -178,7 +179,7 @@ export default function AdminDashboard() {
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar">
           <DialogHeader>
             <DialogTitle>Upload Your Resume</DialogTitle>
-            <DialogDescription>Choose a file of your resume</DialogDescription>
+            <DialogDescription>Choose a pdf file of your resume</DialogDescription>
           </DialogHeader>
           <EdgestoreCVUploader
             onRemove={removeResume}
