@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { FaXTwitter } from "react-icons/fa6";
 import {
   FaFacebookF,
   FaGithub,
   FaInstagram,
   FaLinkedinIn,
-  FaTwitter,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -16,30 +16,36 @@ import { useEffect, useState } from "react";
 export default function Hero() {
   const socialLinks = [
     {
-      icon: <FaGithub size={23} />,
+      icon: <FaGithub size={24} />,
       href: "https://github.com/mohammad-al-asad",
       label: "GitHub",
+      className:"group-hover:bg-gray-500 group-hover:border-gray-500"
     },
     {
-      icon: <FaLinkedinIn size={23} />,
-      href: "https://www.linkedin.com/in/mohammad-al-asad/",
+      icon: <FaLinkedinIn size={24} />,
+      href: "https://www.linkedin.com/in/mohammad-al-asad",
+      className:"group-hover:border-blue-500 group-hover:bg-blue-500",
       label: "LinkedIn",
     },
     {
-      icon: <FaTwitter size={23} />,
-      href: "https://x.com/maasad11914",
-      label: "Twitter",
-    },
-    {
-      icon: <FaFacebookF size={23} />,
-      href: "https://www.facebook.com/maasad11914",
-      label: "Facebook",
-    },
-    {
-      icon: <FaInstagram size={23} />,
+      icon: <FaInstagram size={24} />,
       href: "https://www.instagram.com/maasad11914",
+      className:"group-hover:border-none hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600",
       label: "Instagram",
     },
+    {
+      icon: <FaFacebookF size={24} />,
+      href: "https://www.facebook.com/maasad11914",
+      className:"group-hover:border-blue-500 group-hover:bg-blue-500",
+      label: "Facebook",
+    },
+    
+    {
+      icon: <FaXTwitter size={24} />,
+      href: "https://x.com/maasad11914",
+      className:"dark:group-hover:border-white hover:border-black group-hover:bg-black",
+      label: "Twitter",
+    }
   ];
   const [resumeUrl, setResumeUrl] = useState("");
   async function fetchResume() {
@@ -52,7 +58,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="py-8">
+    <section className="pb-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-8">
           {/* Text Content Side */}
@@ -112,7 +118,7 @@ export default function Hero() {
               {/* Floating Social Icons */}
               {socialLinks.map((social, index) => {
                 const angle = (index * 360) / socialLinks.length;
-                const radius = 180; // Distance from center
+                const radius = 175; // Distance from center
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
 
@@ -132,7 +138,7 @@ export default function Hero() {
                       initial={{ scale: "1%" }}
                       whileInView={{ scale: "100%" }}
                       transition={{ duration: 0.5 }}
-                      className="w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 shadow-lg hover:shadow-xl"
+                      className={`w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${social.className}`}
                     >
                       {social.icon}
                     </motion.div>
