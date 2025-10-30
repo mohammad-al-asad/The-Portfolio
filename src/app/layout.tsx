@@ -12,8 +12,9 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DevFolio - Professional Portfolio",
-  description: "A modern portfolio for creative professionals",
+  title: "Mohammad Al Asad",
+  description:
+    "Full-stack developer specializing in building modern, responsive web applications with cutting-edge technologies.",
 };
 export default async function RootLayout({
   children,

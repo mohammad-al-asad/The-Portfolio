@@ -13,8 +13,23 @@ import {
 import Chart from "@/components/Chart";
 import PageHeader from "@/components/PageHeader";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
+import { EdgestoreCVUploader } from "@/components/EdgeStoreResumeUploader";
+import { useEdgeStore } from "@/lib/edgestore";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function AdminDashboard() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState("");
+
   const stats = [
     {
       title: "Total Visitors",
@@ -43,6 +58,43 @@ export default function AdminDashboard() {
       link: "/admin/messages",
     },
   ];
+    async function fetchResume() {
+      const res = await fetch("/api/resume");
+      const resume = await res.json();
+      setResumeUrl(resume.resumeUrl);
+    }
+    useEffect(() => {
+      fetchResume();
+    }, []);
+
+  const { edgestore } = useEdgeStore();
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const removeResume = async () => {
+    if (!session) {
+      return router.push("/admin/login");
+    }
+    if (!confirm("Are you sure you want to delete this resume?")) return;
+
+    if (resumeUrl) {
+      
+      try {
+        await edgestore.resumeFiles.delete({
+          url: resumeUrl,
+        });
+        await fetch("/api/resume", {
+          method: "DELETE",
+          body: JSON.stringify({
+            resumeUrl,
+          }),
+        });
+      } catch (err) {
+        console.error("Error deleting image:", err);
+      }
+    }
+    setResumeUrl("");
+  };
 
   return (
     <div className="space-y-6">
@@ -53,9 +105,9 @@ export default function AdminDashboard() {
             <Settings size={23} />
             Dashboard
           </h1>
-          <Button>
+          <Button onClick={() => setIsDialogOpen(true)}>
             <Plus className="h-4 w-4" />
-            <span className="hidden md:block">Upload</span> New Resume
+            <span className="hidden md:block">Upload</span> Resume
           </Button>
         </div>
       </PageHeader>
@@ -115,6 +167,28 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+      {/* Add/Edit Dialog */}
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          // if (!open) resetForm();
+        }}
+      >
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar">
+          <DialogHeader>
+            <DialogTitle>Upload Your Resume</DialogTitle>
+            <DialogDescription>Choose a file of your resume</DialogDescription>
+          </DialogHeader>
+          <EdgestoreCVUploader
+            onRemove={removeResume}
+            value={resumeUrl}
+            onChange={(url) => {
+              setResumeUrl(url);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

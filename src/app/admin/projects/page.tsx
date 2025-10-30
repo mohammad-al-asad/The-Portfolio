@@ -35,7 +35,7 @@ import { projects } from "../../../../generated/prisma";
 import PageHeader from "@/components/PageHeader";
 
 export default function AdminProjectsPage() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const { edgestore } = useEdgeStore();
 
@@ -66,14 +66,6 @@ export default function AdminProjectsPage() {
       featured: false,
     },
   });
-
-  // redirect non-admins
-  // useEffect(() => {
-  //   if (status === "loading") return;
-  //   if (!session || session.user.role !== "admin") {
-  //     router.push("/admin/login");
-  //   }
-  // }, [session, status, router]);
 
   // fetch projects
   useEffect(() => {
@@ -173,12 +165,13 @@ export default function AdminProjectsPage() {
     if (!session) {
       return router.push("/admin/login");
     }
-    const imagePath = form.getValues("imagePath");
+    if (!confirm("Are you sure you want to delete this project image?")) return;
+    const imageUrl = form.getValues("imageUrl");
 
-    if (imagePath) {
+    if (imageUrl) {
       try {
         await edgestore.projectImages.delete({
-          url: form.getValues("imageUrl"),
+          url: imageUrl,
         });
       } catch (err) {
         console.error("Error deleting image:", err);

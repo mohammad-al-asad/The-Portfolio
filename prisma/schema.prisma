@@ -43,6 +43,11 @@ model categories {
   project     projects[]
 }
 
+model resumes {
+  id        String @id @default(uuid()) @map("_id")
+  resumeUrl String
+}
+
 model admins {
   id       String @id @default(uuid()) @map("_id")
   name     String

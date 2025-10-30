@@ -11,6 +11,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
   const socialLinks = [
@@ -40,6 +41,15 @@ export default function Hero() {
       label: "Instagram",
     },
   ];
+  const [resumeUrl, setResumeUrl] = useState("");
+  async function fetchResume() {
+    const res = await fetch("/api/resume");
+    const resume = await res.json();
+    setResumeUrl(resume.resumeUrl);
+  }
+  useEffect(() => {
+    fetchResume();
+  }, []);
 
   return (
     <section className="py-8">
@@ -78,7 +88,7 @@ export default function Hero() {
                 className="text-lg border-2 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
               >
                 <a
-                  href="../The CV.pdf"
+                  href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex gap-1 items-center"
@@ -94,7 +104,8 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
-          className="relative order-2 flex justify-center">
+            className="relative order-2 flex justify-center"
+          >
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
               {/* Floating Social Icons */}
               {socialLinks.map((social, index) => {
@@ -115,9 +126,14 @@ export default function Hero() {
                     }}
                     aria-label={social.label}
                   >
-                    <div className="w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 shadow-lg hover:shadow-xl">
+                    <motion.div
+                      initial={{ scale: "1%" }}
+                      whileInView={{ scale: "100%" }}
+                      transition={{ duration: 1 }}
+                      className="w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 shadow-lg hover:shadow-xl"
+                    >
                       {social.icon}
-                    </div>
+                    </motion.div>
                   </a>
                 );
               })}

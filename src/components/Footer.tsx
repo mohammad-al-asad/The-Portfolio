@@ -13,7 +13,7 @@ export default function Footer() {
     },
     {
       icon: <FaLinkedinIn />,
-      href: "https://www.linkedin.com/in/mohammad-al-asad/",
+      href: "https://www.linkedin.com/in/mohammad-al-asad",
       label: "LinkedIn",
     },
     {

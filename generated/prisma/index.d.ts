@@ -24,6 +24,11 @@ export type projects = $Result.DefaultSelection<Prisma.$projectsPayload>
  */
 export type categories = $Result.DefaultSelection<Prisma.$categoriesPayload>
 /**
+ * Model resumes
+ * 
+ */
+export type resumes = $Result.DefaultSelection<Prisma.$resumesPayload>
+/**
  * Model admins
  * 
  */
@@ -143,6 +148,16 @@ export class PrismaClient<
     * ```
     */
   get categories(): Prisma.categoriesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.resumes`: Exposes CRUD operations for the **resumes** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Resumes
+    * const resumes = await prisma.resumes.findMany()
+    * ```
+    */
+  get resumes(): Prisma.resumesDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.admins`: Exposes CRUD operations for the **admins** model.
@@ -616,6 +631,7 @@ export namespace Prisma {
   export const ModelName: {
     projects: 'projects',
     categories: 'categories',
+    resumes: 'resumes',
     admins: 'admins',
     educations: 'educations',
     achievements: 'achievements'
@@ -637,7 +653,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "projects" | "categories" | "admins" | "educations" | "achievements"
+      modelProps: "projects" | "categories" | "resumes" | "admins" | "educations" | "achievements"
       txIsolationLevel: never
     }
     model: {
@@ -786,6 +802,80 @@ export namespace Prisma {
           count: {
             args: Prisma.categoriesCountArgs<ExtArgs>
             result: $Utils.Optional<CategoriesCountAggregateOutputType> | number
+          }
+        }
+      }
+      resumes: {
+        payload: Prisma.$resumesPayload<ExtArgs>
+        fields: Prisma.resumesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.resumesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.resumesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>
+          }
+          findFirst: {
+            args: Prisma.resumesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.resumesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>
+          }
+          findMany: {
+            args: Prisma.resumesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>[]
+          }
+          create: {
+            args: Prisma.resumesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>
+          }
+          createMany: {
+            args: Prisma.resumesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.resumesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>
+          }
+          update: {
+            args: Prisma.resumesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>
+          }
+          deleteMany: {
+            args: Prisma.resumesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.resumesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.resumesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$resumesPayload>
+          }
+          aggregate: {
+            args: Prisma.ResumesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResumes>
+          }
+          groupBy: {
+            args: Prisma.resumesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResumesGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.resumesFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.resumesAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.resumesCountArgs<ExtArgs>
+            result: $Utils.Optional<ResumesCountAggregateOutputType> | number
           }
         }
       }
@@ -1092,6 +1182,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     projects?: projectsOmit
     categories?: categoriesOmit
+    resumes?: resumesOmit
     admins?: adminsOmit
     educations?: educationsOmit
     achievements?: achievementsOmit
@@ -3284,6 +3375,905 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: categoriesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model resumes
+   */
+
+  export type AggregateResumes = {
+    _count: ResumesCountAggregateOutputType | null
+    _min: ResumesMinAggregateOutputType | null
+    _max: ResumesMaxAggregateOutputType | null
+  }
+
+  export type ResumesMinAggregateOutputType = {
+    id: string | null
+    resumeUrl: string | null
+  }
+
+  export type ResumesMaxAggregateOutputType = {
+    id: string | null
+    resumeUrl: string | null
+  }
+
+  export type ResumesCountAggregateOutputType = {
+    id: number
+    resumeUrl: number
+    _all: number
+  }
+
+
+  export type ResumesMinAggregateInputType = {
+    id?: true
+    resumeUrl?: true
+  }
+
+  export type ResumesMaxAggregateInputType = {
+    id?: true
+    resumeUrl?: true
+  }
+
+  export type ResumesCountAggregateInputType = {
+    id?: true
+    resumeUrl?: true
+    _all?: true
+  }
+
+  export type ResumesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which resumes to aggregate.
+     */
+    where?: resumesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of resumes to fetch.
+     */
+    orderBy?: resumesOrderByWithRelationInput | resumesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: resumesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` resumes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned resumes
+    **/
+    _count?: true | ResumesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResumesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResumesMaxAggregateInputType
+  }
+
+  export type GetResumesAggregateType<T extends ResumesAggregateArgs> = {
+        [P in keyof T & keyof AggregateResumes]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResumes[P]>
+      : GetScalarType<T[P], AggregateResumes[P]>
+  }
+
+
+
+
+  export type resumesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: resumesWhereInput
+    orderBy?: resumesOrderByWithAggregationInput | resumesOrderByWithAggregationInput[]
+    by: ResumesScalarFieldEnum[] | ResumesScalarFieldEnum
+    having?: resumesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResumesCountAggregateInputType | true
+    _min?: ResumesMinAggregateInputType
+    _max?: ResumesMaxAggregateInputType
+  }
+
+  export type ResumesGroupByOutputType = {
+    id: string
+    resumeUrl: string
+    _count: ResumesCountAggregateOutputType | null
+    _min: ResumesMinAggregateOutputType | null
+    _max: ResumesMaxAggregateOutputType | null
+  }
+
+  type GetResumesGroupByPayload<T extends resumesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResumesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResumesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResumesGroupByOutputType[P]>
+            : GetScalarType<T[P], ResumesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type resumesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resumeUrl?: boolean
+  }, ExtArgs["result"]["resumes"]>
+
+
+
+  export type resumesSelectScalar = {
+    id?: boolean
+    resumeUrl?: boolean
+  }
+
+  export type resumesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "resumeUrl", ExtArgs["result"]["resumes"]>
+
+  export type $resumesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "resumes"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      resumeUrl: string
+    }, ExtArgs["result"]["resumes"]>
+    composites: {}
+  }
+
+  type resumesGetPayload<S extends boolean | null | undefined | resumesDefaultArgs> = $Result.GetResult<Prisma.$resumesPayload, S>
+
+  type resumesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<resumesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResumesCountAggregateInputType | true
+    }
+
+  export interface resumesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['resumes'], meta: { name: 'resumes' } }
+    /**
+     * Find zero or one Resumes that matches the filter.
+     * @param {resumesFindUniqueArgs} args - Arguments to find a Resumes
+     * @example
+     * // Get one Resumes
+     * const resumes = await prisma.resumes.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends resumesFindUniqueArgs>(args: SelectSubset<T, resumesFindUniqueArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Resumes that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {resumesFindUniqueOrThrowArgs} args - Arguments to find a Resumes
+     * @example
+     * // Get one Resumes
+     * const resumes = await prisma.resumes.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends resumesFindUniqueOrThrowArgs>(args: SelectSubset<T, resumesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Resumes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {resumesFindFirstArgs} args - Arguments to find a Resumes
+     * @example
+     * // Get one Resumes
+     * const resumes = await prisma.resumes.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends resumesFindFirstArgs>(args?: SelectSubset<T, resumesFindFirstArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Resumes that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {resumesFindFirstOrThrowArgs} args - Arguments to find a Resumes
+     * @example
+     * // Get one Resumes
+     * const resumes = await prisma.resumes.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends resumesFindFirstOrThrowArgs>(args?: SelectSubset<T, resumesFindFirstOrThrowArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Resumes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {resumesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Resumes
+     * const resumes = await prisma.resumes.findMany()
+     * 
+     * // Get first 10 Resumes
+     * const resumes = await prisma.resumes.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const resumesWithIdOnly = await prisma.resumes.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends resumesFindManyArgs>(args?: SelectSubset<T, resumesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Resumes.
+     * @param {resumesCreateArgs} args - Arguments to create a Resumes.
+     * @example
+     * // Create one Resumes
+     * const Resumes = await prisma.resumes.create({
+     *   data: {
+     *     // ... data to create a Resumes
+     *   }
+     * })
+     * 
+     */
+    create<T extends resumesCreateArgs>(args: SelectSubset<T, resumesCreateArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Resumes.
+     * @param {resumesCreateManyArgs} args - Arguments to create many Resumes.
+     * @example
+     * // Create many Resumes
+     * const resumes = await prisma.resumes.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends resumesCreateManyArgs>(args?: SelectSubset<T, resumesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Resumes.
+     * @param {resumesDeleteArgs} args - Arguments to delete one Resumes.
+     * @example
+     * // Delete one Resumes
+     * const Resumes = await prisma.resumes.delete({
+     *   where: {
+     *     // ... filter to delete one Resumes
+     *   }
+     * })
+     * 
+     */
+    delete<T extends resumesDeleteArgs>(args: SelectSubset<T, resumesDeleteArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Resumes.
+     * @param {resumesUpdateArgs} args - Arguments to update one Resumes.
+     * @example
+     * // Update one Resumes
+     * const resumes = await prisma.resumes.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends resumesUpdateArgs>(args: SelectSubset<T, resumesUpdateArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Resumes.
+     * @param {resumesDeleteManyArgs} args - Arguments to filter Resumes to delete.
+     * @example
+     * // Delete a few Resumes
+     * const { count } = await prisma.resumes.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends resumesDeleteManyArgs>(args?: SelectSubset<T, resumesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Resumes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {resumesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Resumes
+     * const resumes = await prisma.resumes.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends resumesUpdateManyArgs>(args: SelectSubset<T, resumesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Resumes.
+     * @param {resumesUpsertArgs} args - Arguments to update or create a Resumes.
+     * @example
+     * // Update or create a Resumes
+     * const resumes = await prisma.resumes.upsert({
+     *   create: {
+     *     // ... data to create a Resumes
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Resumes we want to update
+     *   }
+     * })
+     */
+    upsert<T extends resumesUpsertArgs>(args: SelectSubset<T, resumesUpsertArgs<ExtArgs>>): Prisma__resumesClient<$Result.GetResult<Prisma.$resumesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Resumes that matches the filter.
+     * @param {resumesFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const resumes = await prisma.resumes.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: resumesFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Resumes.
+     * @param {resumesAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const resumes = await prisma.resumes.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: resumesAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Resumes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {resumesCountArgs} args - Arguments to filter Resumes to count.
+     * @example
+     * // Count the number of Resumes
+     * const count = await prisma.resumes.count({
+     *   where: {
+     *     // ... the filter for the Resumes we want to count
+     *   }
+     * })
+    **/
+    count<T extends resumesCountArgs>(
+      args?: Subset<T, resumesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResumesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Resumes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResumesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResumesAggregateArgs>(args: Subset<T, ResumesAggregateArgs>): Prisma.PrismaPromise<GetResumesAggregateType<T>>
+
+    /**
+     * Group by Resumes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {resumesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends resumesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: resumesGroupByArgs['orderBy'] }
+        : { orderBy?: resumesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, resumesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResumesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the resumes model
+   */
+  readonly fields: resumesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for resumes.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__resumesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the resumes model
+   */
+  interface resumesFieldRefs {
+    readonly id: FieldRef<"resumes", 'String'>
+    readonly resumeUrl: FieldRef<"resumes", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * resumes findUnique
+   */
+  export type resumesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * Filter, which resumes to fetch.
+     */
+    where: resumesWhereUniqueInput
+  }
+
+  /**
+   * resumes findUniqueOrThrow
+   */
+  export type resumesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * Filter, which resumes to fetch.
+     */
+    where: resumesWhereUniqueInput
+  }
+
+  /**
+   * resumes findFirst
+   */
+  export type resumesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * Filter, which resumes to fetch.
+     */
+    where?: resumesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of resumes to fetch.
+     */
+    orderBy?: resumesOrderByWithRelationInput | resumesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for resumes.
+     */
+    cursor?: resumesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` resumes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of resumes.
+     */
+    distinct?: ResumesScalarFieldEnum | ResumesScalarFieldEnum[]
+  }
+
+  /**
+   * resumes findFirstOrThrow
+   */
+  export type resumesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * Filter, which resumes to fetch.
+     */
+    where?: resumesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of resumes to fetch.
+     */
+    orderBy?: resumesOrderByWithRelationInput | resumesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for resumes.
+     */
+    cursor?: resumesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` resumes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of resumes.
+     */
+    distinct?: ResumesScalarFieldEnum | ResumesScalarFieldEnum[]
+  }
+
+  /**
+   * resumes findMany
+   */
+  export type resumesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * Filter, which resumes to fetch.
+     */
+    where?: resumesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of resumes to fetch.
+     */
+    orderBy?: resumesOrderByWithRelationInput | resumesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing resumes.
+     */
+    cursor?: resumesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` resumes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` resumes.
+     */
+    skip?: number
+    distinct?: ResumesScalarFieldEnum | ResumesScalarFieldEnum[]
+  }
+
+  /**
+   * resumes create
+   */
+  export type resumesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * The data needed to create a resumes.
+     */
+    data: XOR<resumesCreateInput, resumesUncheckedCreateInput>
+  }
+
+  /**
+   * resumes createMany
+   */
+  export type resumesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many resumes.
+     */
+    data: resumesCreateManyInput | resumesCreateManyInput[]
+  }
+
+  /**
+   * resumes update
+   */
+  export type resumesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * The data needed to update a resumes.
+     */
+    data: XOR<resumesUpdateInput, resumesUncheckedUpdateInput>
+    /**
+     * Choose, which resumes to update.
+     */
+    where: resumesWhereUniqueInput
+  }
+
+  /**
+   * resumes updateMany
+   */
+  export type resumesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update resumes.
+     */
+    data: XOR<resumesUpdateManyMutationInput, resumesUncheckedUpdateManyInput>
+    /**
+     * Filter which resumes to update
+     */
+    where?: resumesWhereInput
+    /**
+     * Limit how many resumes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * resumes upsert
+   */
+  export type resumesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * The filter to search for the resumes to update in case it exists.
+     */
+    where: resumesWhereUniqueInput
+    /**
+     * In case the resumes found by the `where` argument doesn't exist, create a new resumes with this data.
+     */
+    create: XOR<resumesCreateInput, resumesUncheckedCreateInput>
+    /**
+     * In case the resumes was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<resumesUpdateInput, resumesUncheckedUpdateInput>
+  }
+
+  /**
+   * resumes delete
+   */
+  export type resumesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
+    /**
+     * Filter which resumes to delete.
+     */
+    where: resumesWhereUniqueInput
+  }
+
+  /**
+   * resumes deleteMany
+   */
+  export type resumesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which resumes to delete
+     */
+    where?: resumesWhereInput
+    /**
+     * Limit how many resumes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * resumes findRaw
+   */
+  export type resumesFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * resumes aggregateRaw
+   */
+  export type resumesAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * resumes without action
+   */
+  export type resumesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the resumes
+     */
+    select?: resumesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the resumes
+     */
+    omit?: resumesOmit<ExtArgs> | null
   }
 
 
@@ -6254,6 +7244,14 @@ export namespace Prisma {
   export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
 
 
+  export const ResumesScalarFieldEnum: {
+    id: 'id',
+    resumeUrl: 'resumeUrl'
+  };
+
+  export type ResumesScalarFieldEnum = (typeof ResumesScalarFieldEnum)[keyof typeof ResumesScalarFieldEnum]
+
+
   export const AdminsScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -6531,6 +7529,43 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"categories"> | string
     name?: StringWithAggregatesFilter<"categories"> | string
     description?: StringWithAggregatesFilter<"categories"> | string
+  }
+
+  export type resumesWhereInput = {
+    AND?: resumesWhereInput | resumesWhereInput[]
+    OR?: resumesWhereInput[]
+    NOT?: resumesWhereInput | resumesWhereInput[]
+    id?: StringFilter<"resumes"> | string
+    resumeUrl?: StringFilter<"resumes"> | string
+  }
+
+  export type resumesOrderByWithRelationInput = {
+    id?: SortOrder
+    resumeUrl?: SortOrder
+  }
+
+  export type resumesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: resumesWhereInput | resumesWhereInput[]
+    OR?: resumesWhereInput[]
+    NOT?: resumesWhereInput | resumesWhereInput[]
+    resumeUrl?: StringFilter<"resumes"> | string
+  }, "id">
+
+  export type resumesOrderByWithAggregationInput = {
+    id?: SortOrder
+    resumeUrl?: SortOrder
+    _count?: resumesCountOrderByAggregateInput
+    _max?: resumesMaxOrderByAggregateInput
+    _min?: resumesMinOrderByAggregateInput
+  }
+
+  export type resumesScalarWhereWithAggregatesInput = {
+    AND?: resumesScalarWhereWithAggregatesInput | resumesScalarWhereWithAggregatesInput[]
+    OR?: resumesScalarWhereWithAggregatesInput[]
+    NOT?: resumesScalarWhereWithAggregatesInput | resumesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"resumes"> | string
+    resumeUrl?: StringWithAggregatesFilter<"resumes"> | string
   }
 
   export type adminsWhereInput = {
@@ -6929,6 +7964,37 @@ export namespace Prisma {
   export type categoriesUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type resumesCreateInput = {
+    id?: string
+    resumeUrl: string
+  }
+
+  export type resumesUncheckedCreateInput = {
+    id?: string
+    resumeUrl: string
+  }
+
+  export type resumesUpdateInput = {
+    resumeUrl?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type resumesUncheckedUpdateInput = {
+    resumeUrl?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type resumesCreateManyInput = {
+    id?: string
+    resumeUrl: string
+  }
+
+  export type resumesUpdateManyMutationInput = {
+    resumeUrl?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type resumesUncheckedUpdateManyInput = {
+    resumeUrl?: StringFieldUpdateOperationsInput | string
   }
 
   export type adminsCreateInput = {
@@ -7377,6 +8443,21 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+  }
+
+  export type resumesCountOrderByAggregateInput = {
+    id?: SortOrder
+    resumeUrl?: SortOrder
+  }
+
+  export type resumesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    resumeUrl?: SortOrder
+  }
+
+  export type resumesMinOrderByAggregateInput = {
+    id?: SortOrder
+    resumeUrl?: SortOrder
   }
 
   export type adminsCountOrderByAggregateInput = {

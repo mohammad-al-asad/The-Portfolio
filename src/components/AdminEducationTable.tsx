@@ -24,7 +24,6 @@ function AdminEducationTable({
   handleEdit: (education: educations) => void;
   loading: boolean;
 }) {
-
   if (loading) {
     return (
       <AdminTableSkeleton title="Educations List">
@@ -73,11 +72,23 @@ function AdminEducationTable({
                   <TableCell>{education.gpa || "-"}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {education.courses.map((course, index) => (
-                        <Badge key={index} variant="secondary">
-                          {course}
-                        </Badge>
-                      ))}
+                      {education.courses.map((course, index) => {
+                        if (index == 2) {
+                          return (
+                            <Badge key={index} variant="secondary">
+                              {`+${education.courses.length - 3} more`}
+                            </Badge>
+                          );
+                        } else if (index > 2) {
+                          return null;
+                        } else {
+                          return (
+                            <Badge key={index} variant="secondary">
+                              {course}
+                            </Badge>
+                          );
+                        }
+                      })}
                     </div>
                   </TableCell>
                   <TableCell>

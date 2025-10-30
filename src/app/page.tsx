@@ -10,9 +10,9 @@ export default function Home() {
     <div id='home' className="space-y-24 px-4 md:px-10 py-8 pt-20 md:pt-40">
       <Hero />
       <Stats />
+      <EducationAndAchievements />
       <Skills />
       <FeaturedProjects />
-      <EducationAndAchievements />
       <Contact />
     </div>
   );

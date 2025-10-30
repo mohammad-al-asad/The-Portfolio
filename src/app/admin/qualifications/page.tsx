@@ -170,6 +170,7 @@ export default function AdminQualificationsPage() {
     if (!session) {
       return router.push("/admin/login");
     }
+    if (!confirm("Are you sure you want to delete this image?")) return;
     const formFields = form.getValues();
     const imageUrl = formFields.imageUrl;
     if (imageUrl) {
@@ -402,7 +403,7 @@ export default function AdminQualificationsPage() {
           </h1>
           <Button onClick={() => addItem(activeTab)}>
             <Plus className="md:mr-2 h-4 w-4" />
-            Add New {activeTab === "education" ? "Education" : "Achievement"}
+            Add {activeTab === "education" ? "Education" : "Achievement"}
           </Button>
         </div>
       </PageHeader>
