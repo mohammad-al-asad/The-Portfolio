@@ -12,7 +12,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
 model projects {
@@ -83,4 +83,13 @@ model achievements {
   technologies        String[]
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @map("_id") @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
 }
