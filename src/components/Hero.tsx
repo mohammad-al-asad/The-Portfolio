@@ -157,12 +157,14 @@ export default function Hero() {
               <div className="relative w-full h-full rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-4 shadow-2xl">
                 <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-background shadow-inner">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-purple-600/10 z-10" />
+                  {/* Fills the circle; slight side crop, positioned to keep me and both screens */}
                   <Image
-                    quality={100}
-                    src="/hero.png"
-                    alt="Mohammad Al Asad"
+                    quality={90}
+                    src="/hero.webp"
+                    alt="Mohammad Al Asad at his desk"
                     fill
-                    className="object-cover scale-x-[-1]"
+                    sizes="(max-width: 1024px) 320px, 384px"
+                    className="object-cover object-[45%_50%]"
                     priority
                   />
                 </div>

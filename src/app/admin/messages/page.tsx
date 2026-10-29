@@ -9,7 +9,6 @@ import {
   ArrowLeft,
   Copy,
   Inbox,
-  Loader2,
   Mail,
   MailOpen,
   RefreshCw,
@@ -22,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
+import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import { cn } from "@/lib/utils";
 
 type Filter = "all" | "unread";
@@ -197,8 +197,10 @@ export default function AdminMessagesPage() {
 
           <div className="flex-1 overflow-y-auto">
             {loading ? (
-              <div className="flex justify-center py-16">
-                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              <div className="divide-y" aria-busy="true">
+                {[0, 1, 2, 3, 4, 5].map((i) => (
+                  <MessageRowSkeleton key={i} />
+                ))}
               </div>
             ) : visible.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-16 px-6 text-center text-muted-foreground">

@@ -110,3 +110,10 @@ model ContactMessage {
   read      Boolean? // null on messages received before read tracking
   createdAt DateTime @default(now())
 }
+
+// One document per day (UTC), keyed by "YYYY-MM-DD", for the admin analytics
+model dailyVisits {
+  id        String @id @map("_id")
+  visitors  Int    @default(0) // unique browsers (first visit, via cookie)
+  pageViews Int    @default(0)
+}

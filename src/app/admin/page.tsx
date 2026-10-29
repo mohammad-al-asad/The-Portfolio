@@ -8,9 +8,11 @@ import {
   Users,
   Settings,
   Plus,
-  GraduationCap,
+  Award,
 } from "lucide-react";
-import Chart from "@/components/Chart";
+import Chart, { type ChartPoint } from "@/components/Chart";
+import { Skeleton } from "@/components/ui/skeleton";
+import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import PageHeader from "@/components/PageHeader";
 import Link from "next/link";
 import {
@@ -29,12 +31,25 @@ import moment from "moment";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
 
+type DashboardStats = {
+  visitors: { total: number; thisMonth: number; today: number; changePercent: number | null };
+  pageViews: { total: number; today: number };
+  projects: { total: number; thisMonth: number };
+  achievements: { total: number; thisMonth: number };
+  messages: { total: number; unread: number };
+  chart: ChartPoint[];
+};
+
+const formatCount = (n: number) =>
+  n >= 10_000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, "")}K` : n.toLocaleString();
+
 export default function AdminDashboard() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [resumeUrl, setResumeUrl] = useState("");
   const [messages, setMessages] = useState<ContactMessage[]>([]);
-  const [messageCount, setMessageCount] = useState(0);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const [messagesLoading, setMessagesLoading] = useState(true);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   const { edgestore } = useEdgeStore();
   const { data: session } = useSession();
@@ -74,47 +89,66 @@ export default function AdminDashboard() {
       if (!res.ok) return;
 
       const data: ContactMessage[] = await res.json();
-      setMessageCount(data.length);
-      setUnreadCount(data.filter((m) => !m.read).length);
       setMessages(data.slice(0, 5));
     } catch (error) {
       console.error("Failed to fetch messages", error);
+    } finally {
+      setMessagesLoading(false);
+    }
+  }
+
+  async function fetchStats() {
+    try {
+      const res = await fetch("/api/admin/stats");
+      if (res.ok) setStats(await res.json());
+    } catch (error) {
+      console.error("Failed to fetch dashboard stats", error);
+    } finally {
+      setStatsLoading(false);
     }
   }
 
   useEffect(() => {
     fetchMessages();
+    fetchStats();
   }, []);
 
+  const unreadCount = stats?.messages.unread ?? 0;
+
   // ---------------- Stats ----------------
-  const stats = [
-    {
-      title: "Total Visitors",
-      value: "24.5K",
-      icon: <Users className="h-6 w-6" />,
-      change: "+12%",
-    },
-    {
-      title: "Projects",
-      value: "15",
-      icon: <Briefcase className="h-6 w-6" />,
-      change: "+2",
-      link: "/admin/projects",
-    },
-    {
-      title: "Achievement",
-      value: "5",
-      icon: <GraduationCap className="h-6 w-6" />,
-      change: "+1",
-    },
-    {
-      title: "Messages",
-      value: messageCount.toString(),
-      icon: <Mail className="h-6 w-6" />,
-      change: `${unreadCount} unread`,
-      link: "/admin/messages",
-    },
-  ];
+  const plus = (n: number) => (n > 0 ? `+${n} this month` : "No new this month");
+  const statCards = stats
+    ? [
+        {
+          // Lifetime total (starting count + every visitor tracked since)
+          title: "Lifetime Visitors",
+          value: formatCount(stats.visitors.total),
+          icon: <Users className="h-6 w-6" />,
+          note: `+${stats.visitors.thisMonth} this month · ${stats.visitors.today} today`,
+        },
+        {
+          title: "Projects",
+          value: formatCount(stats.projects.total),
+          icon: <Briefcase className="h-6 w-6" />,
+          note: plus(stats.projects.thisMonth),
+          link: "/admin/projects",
+        },
+        {
+          title: "Achievements",
+          value: formatCount(stats.achievements.total),
+          icon: <Award className="h-6 w-6" />,
+          note: plus(stats.achievements.thisMonth),
+          link: "/admin/qualifications?tab=achievement",
+        },
+        {
+          title: "Messages",
+          value: formatCount(stats.messages.total),
+          icon: <Mail className="h-6 w-6" />,
+          note: `${stats.messages.unread} unread`,
+          link: "/admin/messages",
+        },
+      ]
+    : [];
 
   return (
     <div className="space-y-6">
@@ -134,26 +168,47 @@ export default function AdminDashboard() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-[10%] md:mt-[3%]">
-        {stats.map((stat, index) => (
-          <Link href={stat.link || "#"} key={index}>
-            <Card className="border border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-sm font-medium">
-                  {stat.title}
-                </CardTitle>
-                {stat.icon}
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-green-500 mt-1">
-                  {stat.title === "Messages"
-                    ? stat.change
-                    : `${stat.change} from last month`}
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+        {statsLoading
+          ? [0, 1, 2, 3].map((i) => (
+              <Card key={i} className="border border-gray-700" aria-hidden>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-6 w-6 rounded-md" />
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <Skeleton className="h-7 w-16" />
+                  <Skeleton className="h-3 w-32" />
+                </CardContent>
+              </Card>
+            ))
+          : statCards.map((stat) => {
+              const card = (
+                <Card className="h-full border border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <CardTitle className="text-sm font-medium">
+                      {stat.title}
+                    </CardTitle>
+                    {stat.icon}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{stat.value}</div>
+                    <p className="text-xs mt-1 text-green-500">{stat.note}</p>
+                  </CardContent>
+                </Card>
+              );
+              return stat.link ? (
+                <Link href={stat.link} key={stat.title}>
+                  {card}
+                </Link>
+              ) : (
+                <div key={stat.title}>{card}</div>
+              );
+            })}
+        {!statsLoading && !stats && (
+          <p className="col-span-full text-sm text-red-500">
+            Couldn&apos;t load dashboard stats.
+          </p>
+        )}
       </div>
 
       {/* Charts + Messages */}
@@ -163,7 +218,15 @@ export default function AdminDashboard() {
             <CardTitle>Analytics Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <Chart />
+            {statsLoading ? (
+              <Skeleton className="h-[300px] w-full" />
+            ) : stats ? (
+              <div className="h-[300px]">
+                <Chart points={stats.chart} />
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">No analytics yet.</p>
+            )}
           </CardContent>
         </Card>
 
@@ -186,7 +249,13 @@ export default function AdminDashboard() {
             </Link>
           </CardHeader>
           <CardContent className="px-0">
-            {messages.length === 0 ? (
+            {messagesLoading ? (
+              <div className="divide-y">
+                {[0, 1, 2, 3].map((i) => (
+                  <MessageRowSkeleton key={i} compact />
+                ))}
+              </div>
+            ) : messages.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-12 text-center text-muted-foreground">
                 <Mail className="h-7 w-7" />
                 <p className="text-sm">No messages yet.</p>

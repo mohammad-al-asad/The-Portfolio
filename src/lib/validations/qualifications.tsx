@@ -1,5 +1,11 @@
 import z from "zod";
 
+// A full URL (EdgeStore, GitHub) or a site-relative path like /certificates/x.png
+const imageUrlSchema = z
+  .union([z.url({ protocol: /^https?$/ }), z.string().regex(/^\/(?!\/)\S+$/), z.literal("")], {
+    error: "Invalid image URL",
+  });
+
 // Education Schema
 export const educationSchema = z.object({
   institution: z.string().min(3, "Institution name must be at least 3 characters"),
@@ -10,7 +16,7 @@ export const educationSchema = z.object({
   detailedDescription: z.string().optional(),
   gpa: z.string().optional(),
   courses: z.array(z.string()).min(1, "At least one course is required"),
-  imageUrl: z.url("Invalid image URL").or(z.literal("")),
+  imageUrl: imageUrlSchema,
   imagePath: z.string(),
   featured: z.boolean(),
 });
@@ -22,7 +28,7 @@ export const achievementSchema = z.object({
   year: z.string().min(4, "Please provide a valid year or range"),
   description: z.string().min(10, "Description should be more than 10 characters"),
   detailedDescription: z.string().optional(),
-  imageUrl: z.url("Invalid image URL").or(z.literal("")),
+  imageUrl: imageUrlSchema,
   imagePath: z.string(),
   technologies: z.array(z.string()).min(1, "Add at least one technology"),
   featured: z.boolean(),
