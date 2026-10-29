@@ -8,7 +8,6 @@ import {
   Users,
   Settings,
   Plus,
-  CircleUser,
   GraduationCap,
 } from "lucide-react";
 import Chart from "@/components/Chart";
@@ -27,21 +26,15 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import moment from "moment";
-
-type ContactMessage = {
-  id: string;
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  createdAt: string;
-};
+import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
+import { cn } from "@/lib/utils";
 
 export default function AdminDashboard() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [resumeUrl, setResumeUrl] = useState("");
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [messageCount, setMessageCount] = useState(0);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const { edgestore } = useEdgeStore();
   const { data: session } = useSession();
@@ -82,7 +75,8 @@ export default function AdminDashboard() {
 
       const data: ContactMessage[] = await res.json();
       setMessageCount(data.length);
-      setMessages(data.slice(0, 4));
+      setUnreadCount(data.filter((m) => !m.read).length);
+      setMessages(data.slice(0, 5));
     } catch (error) {
       console.error("Failed to fetch messages", error);
     }
@@ -117,7 +111,7 @@ export default function AdminDashboard() {
       title: "Messages",
       value: messageCount.toString(),
       icon: <Mail className="h-6 w-6" />,
-      change: `+${messages.length}`,
+      change: `${unreadCount} unread`,
       link: "/admin/messages",
     },
   ];
@@ -152,7 +146,9 @@ export default function AdminDashboard() {
               <CardContent>
                 <div className="text-2xl font-bold">{stat.value}</div>
                 <p className="text-xs text-green-500 mt-1">
-                  {stat.change} from last month
+                  {stat.title === "Messages"
+                    ? stat.change
+                    : `${stat.change} from last month`}
                 </p>
               </CardContent>
             </Card>
@@ -171,10 +167,17 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Modern Messages */}
-        <Card className="border border-gray-700">
-          <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle>Recent Messages</CardTitle>
+        {/* Recent Messages */}
+        <Card className="border border-gray-700 gap-0 py-0 overflow-hidden">
+          <CardHeader className="flex flex-row items-center justify-between border-b py-4">
+            <div className="flex items-center gap-2">
+              <CardTitle>Recent Messages</CardTitle>
+              {unreadCount > 0 && (
+                <span className="rounded-full bg-blue-600 px-2 py-0.5 text-xs font-medium text-white">
+                  {unreadCount} new
+                </span>
+              )}
+            </div>
             <Link
               href="/admin/messages"
               className="text-sm text-blue-500 hover:underline"
@@ -182,39 +185,61 @@ export default function AdminDashboard() {
               View all
             </Link>
           </CardHeader>
-          <hr />
-          <CardContent className="px-2">
-            <div className="space-y-4">
-              {messages.length === 0 ? (
-                <p className="text-sm text-gray-500">No messages yet.</p>
-              ) : (
-                messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className="group flex gap-4 rounded-lg border border-gray-700  p-4 hover:shadow-md transition-all"
-                  >
-                    {/* Avatar */}
-                    <div className="h-10 w-10 rounded-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold">
-                      {msg.name.charAt(0).toUpperCase()}
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <div className="flex justify-between items-center">
-                        <h4 className="font-medium">{msg.name}</h4>
-                        <span className="text-xs text-gray-500">
-                          {moment(msg.createdAt).fromNow()}
-                        </span>
+          <CardContent className="px-0">
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center gap-2 py-12 text-center text-muted-foreground">
+                <Mail className="h-7 w-7" />
+                <p className="text-sm">No messages yet.</p>
+              </div>
+            ) : (
+              <ul className="divide-y">
+                {messages.map((msg) => (
+                  <li key={msg.id}>
+                    <Link
+                      href={`/admin/messages?id=${msg.id}`}
+                      className="flex gap-3 px-5 py-3.5 hover:bg-muted/60 transition-colors"
+                    >
+                      <MessageAvatar
+                        name={msg.name}
+                        email={msg.email}
+                        className="h-9 w-9 text-xs"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <span
+                            className={cn(
+                              "truncate text-sm",
+                              msg.read ? "font-medium" : "font-semibold"
+                            )}
+                          >
+                            {msg.name}
+                          </span>
+                          <span className="shrink-0 text-xs text-muted-foreground">
+                            {moment(msg.createdAt).fromNow(true)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <p
+                            className={cn(
+                              "truncate text-sm",
+                              msg.read ? "text-muted-foreground" : "text-foreground"
+                            )}
+                          >
+                            {msg.subject}
+                          </p>
+                          {!msg.read && (
+                            <span className="ml-auto h-2 w-2 shrink-0 rounded-full bg-blue-500" />
+                          )}
+                        </div>
+                        <p className="truncate text-xs text-muted-foreground mt-0.5">
+                          {msg.message}
+                        </p>
                       </div>
-
-                      <p className="text-sm text-gray-400 line-clamp-2 mt-1">
-                        {msg.message}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </CardContent>
         </Card>
       </div>

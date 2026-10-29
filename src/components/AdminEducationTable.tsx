@@ -33,6 +33,7 @@ function AdminEducationTable({
         <TableHead>Location</TableHead>
         <TableHead>GPA</TableHead>
         <TableHead>Courses</TableHead>
+        <TableHead>Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
@@ -57,7 +58,8 @@ function AdminEducationTable({
                 <TableHead>Location</TableHead>
                 <TableHead>GPA</TableHead>
                 <TableHead>Courses</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>Featured</TableHead>
+        <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -90,6 +92,13 @@ function AdminEducationTable({
                         }
                       })}
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {education.featured ? (
+                      <Badge variant="default">Featured</Badge>
+                    ) : (
+                      <Badge variant="outline">Hidden</Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-2">

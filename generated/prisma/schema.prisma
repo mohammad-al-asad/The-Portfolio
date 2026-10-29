@@ -15,32 +15,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type ProjectLink {
+  type  String // live | github | appstore | playstore | other
+  label String?
+  url   String
+}
+
+type ProjectImage {
+  url    String
+  path   String? // EdgeStore path; empty for images hosted elsewhere
+  width  Int?
+  height Int?
+}
+
 model projects {
-  id                  String     @id @default(uuid()) @map("_id")
+  id                  String         @id @default(uuid()) @map("_id")
   title               String
   description         String
   detailedDescription String?
-  categoryId          String
-  category            categories @relation(fields: [categoryId], references: [id])
+  categoryId          String? // legacy single category, superseded by categoryIds
+  categoryIds         String[]
   tags                String[]
   technologies        String[]
   features            String[]
-  imageUrl            String
+  imageUrl            String // primary image (also listed in images)
   imagePath           String
-  liveUrl             String?
-  githubUrl           String
+  images              ProjectImage[]
+  links               ProjectLink[]
+  liveUrl             String? // legacy, superseded by links
+  githubUrl           String? // legacy, superseded by links
   completionDate      String?
   teamSize            String?
-  featured            Boolean    @default(false)
-  createdAt           DateTime   @default(now())
-  updatedAt           DateTime   @updatedAt
+  featured            Boolean        @default(false)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
 }
 
 model categories {
-  id          String     @id @default(uuid()) @map("_id")
+  id          String @id @default(uuid()) @map("_id")
   name        String
   description String
-  project     projects[]
 }
 
 model resumes {
@@ -67,6 +81,7 @@ model educations {
   courses             String[]
   imageUrl            String
   imagePath           String
+  featured            Boolean? // shown on the landing page; null on older records
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
@@ -81,6 +96,7 @@ model achievements {
   imageUrl            String
   imagePath           String
   technologies        String[]
+  featured            Boolean? // shown on the landing page; null on older records
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
@@ -91,5 +107,6 @@ model ContactMessage {
   email     String
   subject   String
   message   String
+  read      Boolean? // null on messages received before read tracking
   createdAt DateTime @default(now())
 }

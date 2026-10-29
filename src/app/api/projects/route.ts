@@ -7,7 +7,7 @@ import { prisma } from "@/lib/db";
 export async function GET() {
   try {
     const projects = await prisma.projects.findMany({
-      include: { category: true },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(projects);

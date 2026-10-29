@@ -120,6 +120,7 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   description: 'description',
   detailedDescription: 'detailedDescription',
   categoryId: 'categoryId',
+  categoryIds: 'categoryIds',
   tags: 'tags',
   technologies: 'technologies',
   features: 'features',
@@ -164,6 +165,7 @@ exports.Prisma.EducationsScalarFieldEnum = {
   courses: 'courses',
   imageUrl: 'imageUrl',
   imagePath: 'imagePath',
+  featured: 'featured',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -178,6 +180,7 @@ exports.Prisma.AchievementsScalarFieldEnum = {
   imageUrl: 'imageUrl',
   imagePath: 'imagePath',
   technologies: 'technologies',
+  featured: 'featured',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -188,6 +191,7 @@ exports.Prisma.ContactMessageScalarFieldEnum = {
   email: 'email',
   subject: 'subject',
   message: 'message',
+  read: 'read',
   createdAt: 'createdAt'
 };
 

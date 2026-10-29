@@ -12,6 +12,7 @@ export const educationSchema = z.object({
   courses: z.array(z.string()).min(1, "At least one course is required"),
   imageUrl: z.url("Invalid image URL").or(z.literal("")),
   imagePath: z.string(),
+  featured: z.boolean(),
 });
 
 // Achievement Schema
@@ -24,6 +25,7 @@ export const achievementSchema = z.object({
   imageUrl: z.url("Invalid image URL").or(z.literal("")),
   imagePath: z.string(),
   technologies: z.array(z.string()).min(1, "Add at least one technology"),
+  featured: z.boolean(),
 });
 
 // Type Inference
