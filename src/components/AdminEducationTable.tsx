@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { educations } from "../../generated/prisma";
 import AdminTableSkeleton from "./AdminTableSkeleton";
+import AdminChipList from "./AdminChipList";
 
 function AdminEducationTable({
   educations,
@@ -53,9 +54,9 @@ function AdminEducationTable({
             <TableHeader>
               <TableRow>
                 <TableHead>Institution</TableHead>
-                <TableHead>Degree</TableHead>
+                <TableHead className="hidden md:table-cell">Degree</TableHead>
                 <TableHead>Period</TableHead>
-                <TableHead>Location</TableHead>
+                <TableHead className="hidden xl:table-cell">Location</TableHead>
                 <TableHead>GPA</TableHead>
                 <TableHead>Courses</TableHead>
                 <TableHead>Featured</TableHead>
@@ -65,33 +66,19 @@ function AdminEducationTable({
             <TableBody>
               {educations.map((education) => (
                 <TableRow key={education.id}>
-                  <TableCell className="font-medium">
+                  <TableCell className="font-medium max-w-[13rem] truncate" title={education.institution}>
                     {education.institution}
                   </TableCell>
-                  <TableCell>{education.degree}</TableCell>
+                  <TableCell className="hidden md:table-cell max-w-[14rem] truncate" title={education.degree}>
+                    {education.degree}
+                  </TableCell>
                   <TableCell>{education.period}</TableCell>
-                  <TableCell>{education.location}</TableCell>
+                  <TableCell className="hidden xl:table-cell max-w-[9rem] truncate" title={education.location}>
+                    {education.location}
+                  </TableCell>
                   <TableCell>{education.gpa || "-"}</TableCell>
                   <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {education.courses.map((course, index) => {
-                        if (index == 2) {
-                          return (
-                            <Badge key={index} variant="secondary">
-                              {`+${education.courses.length - 3} more`}
-                            </Badge>
-                          );
-                        } else if (index > 2) {
-                          return null;
-                        } else {
-                          return (
-                            <Badge key={index} variant="secondary">
-                              {course}
-                            </Badge>
-                          );
-                        }
-                      })}
-                    </div>
+                    <AdminChipList items={education.courses} />
                   </TableCell>
                   <TableCell>
                     {education.featured ? (

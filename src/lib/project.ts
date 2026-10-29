@@ -42,6 +42,28 @@ export function getProjectLinks(project: projects): ProjectLink[] {
   return legacy;
 }
 
+// Technologies offered as filters on /projects. Each matches its spelling
+// variants (compared without case, dots, spaces, or dashes).
+export const TECH_FILTERS: { label: string; aliases: string[] }[] = [
+  { label: "React Native", aliases: ["reactnative"] },
+  { label: "Expo", aliases: ["expo"] },
+  { label: "React", aliases: ["react", "reactjs"] },
+  { label: "Next.js", aliases: ["nextjs", "next"] },
+  { label: "Node.js", aliases: ["nodejs", "node"] },
+  { label: "Express", aliases: ["express", "expressjs"] },
+  { label: "TypeScript", aliases: ["typescript", "ts"] },
+  { label: "MongoDB", aliases: ["mongodb", "mongo"] },
+  { label: "FastAPI", aliases: ["fastapi"] },
+];
+
+const normalizeTech = (name: string) => name.toLowerCase().replace(/[\s.\-_]/g, "");
+
+export function usesTech(project: projects, label: string): boolean {
+  const filter = TECH_FILTERS.find((f) => f.label === label);
+  if (!filter) return false;
+  return project.technologies.some((t) => filter.aliases.includes(normalizeTech(t)));
+}
+
 // Gallery images with the primary first. Projects saved before gallery
 // support only have imageUrl / imagePath.
 export function getProjectImages(project: projects): ProjectImage[] {

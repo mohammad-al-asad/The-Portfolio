@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "./ui/button";
@@ -6,21 +9,30 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { getProjectLinks, linkMeta } from "@/lib/project";
+import { edgeColor, tagsThatFit } from "@/lib/edgeColor";
 
 function SingleProject({ project }: { project: projects }) {
   const href = `/projects/${project.id}`;
   const links = getProjectLinks(project);
+  const tags = tagsThatFit(project.tags);
+  const hiddenTags = project.tags.length - tags.length;
+  // Fill around the (uncropped) image with the colour of its own edges
+  const [imageBg, setImageBg] = useState<string | null>(null);
   return (
     <Card className="relative bg-white py-0 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
       <div className="px-3 pt-4">
-        <div className="relative w-full h-56 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+        <div
+          className="relative w-full h-56 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 transition-colors duration-300"
+          style={imageBg ? { backgroundColor: imageBg } : undefined}
+        >
           <Image
             priority
             src={project.imageUrl}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-            className="object-cover object-top"
+            className="object-contain"
+            onLoad={(e) => setImageBg(edgeColor(e.currentTarget))}
           />
         </div>
       </div>
@@ -34,22 +46,22 @@ function SingleProject({ project }: { project: projects }) {
         <p className="text-gray-700 dark:text-gray-300 line-clamp-2">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-2 mt-4">
-          {project.tags.slice(0, 3).map((tag, i) => (
+        <div className="flex flex-nowrap gap-2 mt-4 overflow-hidden" title={project.tags.join(", ")}>
+          {tags.map((tag, i) => (
             <Badge
               key={i}
               variant="outline"
-              className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 text-xs"
+              className="min-w-0 truncate bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 text-xs"
             >
               {tag}
             </Badge>
           ))}
-          {project.tags.length > 3 && (
+          {hiddenTags > 0 && (
             <Badge
               variant="outline"
-              className="text-xs border-gray-300 dark:border-gray-600"
+              className="shrink-0 text-xs border-gray-300 dark:border-gray-600"
             >
-              +{project.tags.length - 3}
+              +{hiddenTags}
             </Badge>
           )}
         </div>

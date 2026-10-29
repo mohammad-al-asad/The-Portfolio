@@ -7,7 +7,7 @@ import { achievements, educations } from "../../generated/prisma";
 
 export function EducationCard({ item }: { item: educations }) {
   return (
-    <Card className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
+    <Card className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 py-0 gap-0 hover:border-blue-500 dark:hover:border-blue-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
       <CardContent className="p-6">
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export function EducationCard({ item }: { item: educations }) {
 
 export function AchievementCard({ item }: { item: achievements }) {
   return (
-    <Card className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-yellow-500 dark:hover:border-yellow-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
+    <Card className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 py-0 gap-0 hover:border-yellow-500 dark:hover:border-yellow-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
       <CardContent className="p-6">
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">

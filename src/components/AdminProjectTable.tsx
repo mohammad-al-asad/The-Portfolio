@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { projects } from "../../generated/prisma";
 import AdminTableSkeleton from "./AdminTableSkeleton";
+import AdminChipList from "./AdminChipList";
 
 function AdminProjectTable({
   projects,
@@ -51,7 +52,7 @@ function AdminProjectTable({
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
-                <TableHead>Description</TableHead>
+                <TableHead className="hidden lg:table-cell">Description</TableHead>
                 <TableHead>Tags</TableHead>
                 <TableHead>Featured</TableHead>
                 <TableHead>Actions</TableHead>
@@ -60,18 +61,14 @@ function AdminProjectTable({
             <TableBody>
               {projects.map((project) => (
                 <TableRow key={project.id}>
-                  <TableCell className="font-medium">{project.title}</TableCell>
-                  <TableCell className="max-w-xs truncate">
+                  <TableCell className="font-medium max-w-[14rem] truncate" title={project.title}>
+                    {project.title}
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell max-w-[20rem] truncate" title={project.description}>
                     {project.description}
                   </TableCell>
                   <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {project.tags.map((tag, index) => (
-                        <Badge key={index} variant="secondary">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
+                    <AdminChipList items={project.tags} />
                   </TableCell>
                   <TableCell>
                     {project.featured ? (

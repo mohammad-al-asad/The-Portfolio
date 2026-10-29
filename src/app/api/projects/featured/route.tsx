@@ -7,7 +7,8 @@ export async function GET() {
     const projects = await prisma.projects.findMany({
       where: {
         featured: true,
-      }
+      },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json(projects);

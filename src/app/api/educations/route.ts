@@ -6,7 +6,9 @@ import { prisma } from "@/lib/db";
 // GET all educations
 export async function GET() {
   try {
-    const educations = await prisma.educations.findMany();
+    const educations = await prisma.educations.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
     return NextResponse.json(educations);
   } catch (error) {

@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { achievements } from "../../generated/prisma";
 import AdminTableSkeleton from "./AdminTableSkeleton";
+import AdminChipList from "./AdminChipList";
 
 function AdminAchievementTable({
   achievements,
@@ -52,10 +53,10 @@ function AdminAchievementTable({
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
-                <TableHead>Organization</TableHead>
+                <TableHead className="hidden lg:table-cell">Organization</TableHead>
                 <TableHead>Year</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Technologies</TableHead>
+                <TableHead className="hidden xl:table-cell">Description</TableHead>
+                <TableHead>Skills</TableHead>
                 <TableHead>Featured</TableHead>
         <TableHead>Actions</TableHead>
               </TableRow>
@@ -63,22 +64,18 @@ function AdminAchievementTable({
             <TableBody>
               {achievements.map((achievement) => (
                 <TableRow key={achievement.id}>
-                  <TableCell className="font-medium">
+                  <TableCell className="font-medium max-w-[13rem] truncate" title={achievement.title}>
                     {achievement.title}
                   </TableCell>
-                  <TableCell className="max-w-xs truncate">{achievement.organization}</TableCell>
+                  <TableCell className="hidden lg:table-cell max-w-[11rem] truncate" title={achievement.organization}>
+                    {achievement.organization}
+                  </TableCell>
                   <TableCell>{achievement.year}</TableCell>
-                  <TableCell className="max-w-xs truncate">
+                  <TableCell className="hidden xl:table-cell max-w-[14rem] truncate" title={achievement.description}>
                     {achievement.description}
                   </TableCell>
                   <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {achievement.technologies.map((tech, index) => (
-                        <Badge key={index} variant="secondary">
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
+                    <AdminChipList items={achievement.technologies} />
                   </TableCell>
                   <TableCell>
                     {achievement.featured ? (

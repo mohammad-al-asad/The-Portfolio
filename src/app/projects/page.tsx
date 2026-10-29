@@ -10,7 +10,7 @@ import { ArrowLeft, X } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { ProjectCardSkeleton } from "@/components/CardSkeletons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getProjectCategoryIds } from "@/lib/project";
+import { TECH_FILTERS, getProjectCategoryIds, usesTech } from "@/lib/project";
 
 function FilterChip({
   active,
@@ -83,10 +83,11 @@ export default function ProjectsPage() {
     return allCategories.filter((c) => used.has(c.id));
   }, [allProjects, allCategories]);
 
+  // Curated list of core technologies (not every library a project uses)
   const technologies = useMemo(
     () =>
-      [...new Set(allProjects.flatMap((p) => p.technologies))].sort((a, b) =>
-        a.localeCompare(b)
+      TECH_FILTERS.map((f) => f.label).filter((label) =>
+        allProjects.some((p) => usesTech(p, label))
       ),
     [allProjects]
   );
@@ -94,7 +95,7 @@ export default function ProjectsPage() {
   const filtered = allProjects.filter(
     (p) =>
       (!category || getProjectCategoryIds(p).includes(category)) &&
-      (!technology || p.technologies.includes(technology))
+      (!technology || usesTech(p, technology))
   );
 
   const hasFilters = Boolean(category || technology);
@@ -120,7 +121,7 @@ export default function ProjectsPage() {
         </PageHeader>
 
         {loading ? (
-          <div className="pt-28 md:pt-56 p-3 space-y-8" aria-busy="true">
+          <div className="pt-28 md:pt-56 px-4 md:px-10 pb-24 space-y-8" aria-busy="true">
             <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
               {[0, 1].map((row) => (
                 <div key={row} className="flex flex-col md:flex-row gap-3">
@@ -140,7 +141,7 @@ export default function ProjectsPage() {
             </div>
           </div>
         ) : (
-          <div className="pt-28 md:pt-56 p-3 space-y-8">
+          <div className="pt-28 md:pt-56 px-4 md:px-10 pb-24 space-y-8">
             {/* Filters */}
             <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
               {usedCategories.length > 0 && (
