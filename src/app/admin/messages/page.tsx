@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import moment from "moment";
 import {
@@ -28,7 +27,6 @@ type Filter = "all" | "unread";
 
 export default function AdminMessagesPage() {
   const { status } = useSession();
-  const router = useRouter();
 
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,10 +37,6 @@ export default function AdminMessagesPage() {
 
   useEffect(() => {
     if (status === "loading") return;
-    if (status === "unauthenticated") {
-      router.push("/admin/login");
-      return;
-    }
     // Open a specific message when linked from the dashboard
     const id = new URLSearchParams(window.location.search).get("id");
     fetchMessages().then((data) => {
@@ -88,6 +82,9 @@ export default function AdminMessagesPage() {
     }
   };
 
+  // Viewing is open to everyone; changing read state or deleting needs the admin login
+  const canEdit = status === "authenticated";
+
   const select = (id: string | null, list = messages) => {
     setSelectedId(id);
     window.history.replaceState(
@@ -96,7 +93,7 @@ export default function AdminMessagesPage() {
       id ? `/admin/messages?id=${id}` : "/admin/messages"
     );
     const msg = list.find((m) => m.id === id);
-    if (msg && !msg.read) setRead(msg.id, true);
+    if (canEdit && msg && !msg.read) setRead(msg.id, true);
   };
 
   const remove = async (msg: ContactMessage) => {
@@ -157,8 +154,8 @@ export default function AdminMessagesPage() {
         </div>
       </PageHeader>
 
-      {/* Fixed-height box: fits the viewport (layout padding + margins = 9rem / 14rem); only the panes inside scroll */}
-      <div className="mt-8 rounded-xl border bg-card shadow-sm overflow-hidden grid grid-cols-1 grid-rows-[minmax(0,1fr)] lg:grid-cols-[24rem_1fr] h-[calc(100dvh-9rem)] md:h-[calc(100dvh-14rem)] min-h-[24rem]">
+      {/* Fixed-height box: fits the viewport (layout top padding 5rem / 10rem + mt-8 + pb-24 = 13rem / 18rem); only the panes inside scroll */}
+      <div className="mt-8 rounded-xl border bg-card shadow-sm overflow-hidden grid grid-cols-1 grid-rows-[minmax(0,1fr)] lg:grid-cols-[24rem_1fr] h-[calc(100dvh-13rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
         {/* List pane */}
         <section
           className={cn(
@@ -278,6 +275,7 @@ export default function AdminMessagesPage() {
                 >
                   <ArrowLeft className="h-4 w-4" /> Back
                 </Button>
+                {canEdit && (
                 <div className="ml-auto flex items-center gap-1">
                   <Button
                     variant="ghost"
@@ -303,6 +301,7 @@ export default function AdminMessagesPage() {
                     <span className="hidden sm:inline">Delete</span>
                   </Button>
                 </div>
+                )}
               </div>
 
               <div className="flex-1 overflow-y-auto p-6 md:p-8">

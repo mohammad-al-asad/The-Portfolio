@@ -6,6 +6,8 @@ export function Toaster() {
   return (
     <ReactHotToaster
       position="bottom-right"
+      // Sit above the admin session pill in the bottom-right corner
+      containerStyle={{ bottom: 80 }}
       toastOptions={{
         className: 'bg-gray-800 text-white border border-gray-700',
         duration: 5000,

@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
 import { prisma } from "@/lib/db";
 import { INITIAL_VISITORS, dayKey, monthKey } from "@/lib/analytics";
 
 const CHART_MONTHS = 6;
 
-// Dashboard numbers: visitors, content counts, messages, and a monthly chart
+// Dashboard numbers: visitors, content counts, messages, and a monthly chart.
+// Viewable without logging in; only editing requires the admin session.
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const now = new Date();
     const startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
     const months = Array.from({ length: CHART_MONTHS }, (_, i) =>

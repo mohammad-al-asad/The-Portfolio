@@ -30,7 +30,11 @@ export default function LoginPage() {
       setError(result.error);
       setIsLoading(false);
     } else {
-      router.push("/admin");
+      // Return to the admin page that sent us here (admin paths only)
+      const next = new URLSearchParams(window.location.search).get("callbackUrl");
+      const safe = next && /^\/admin(\/|$)/.test(next) && !next.startsWith("/admin/login");
+      router.push(safe ? next : "/admin");
+      router.refresh();
     }
   };
 
