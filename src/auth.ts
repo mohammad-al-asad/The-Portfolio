@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { prisma } from "@/lib/db";
 
 declare module "next-auth" {
   interface User {
@@ -35,28 +36,23 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const SERVER_URL = process.env.SERVER_URL;
-        const res = await fetch(`${SERVER_URL}/api/auth/login`, {
-          method: "POST",
-          body: JSON.stringify({
-            email: credentials?.email,
-          }),
-        });
-        const { email, password } = await res.json();
-
         if (!credentials?.email || !credentials.password) {
           return null;
         }
 
+        // Look the admin up directly so login never depends on an external URL
+        const admin = await prisma.admins.findFirst({
+          where: { email: credentials.email },
+        });
+
         if (
-          credentials.email === email &&
-          password &&
-          (await bcrypt.compare(credentials.password, password))
+          admin?.password &&
+          (await bcrypt.compare(credentials.password, admin.password))
         ) {
           return {
-            id: "1",
-            name: "M.A. Asad",
-            email: credentials.email,
+            id: admin.id,
+            name: admin.name,
+            email: admin.email,
             role: "admin",
           };
         }

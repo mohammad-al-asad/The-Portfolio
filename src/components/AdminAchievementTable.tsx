@@ -32,6 +32,7 @@ function AdminAchievementTable({
         <TableHead>Year</TableHead>
         <TableHead>Description</TableHead>
         <TableHead>Technologies</TableHead>
+        <TableHead>Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
@@ -55,7 +56,8 @@ function AdminAchievementTable({
                 <TableHead>Year</TableHead>
                 <TableHead>Description</TableHead>
                 <TableHead>Technologies</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>Featured</TableHead>
+        <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -77,6 +79,13 @@ function AdminAchievementTable({
                         </Badge>
                       ))}
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    {achievement.featured ? (
+                      <Badge variant="default">Featured</Badge>
+                    ) : (
+                      <Badge variant="outline">Hidden</Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-2">

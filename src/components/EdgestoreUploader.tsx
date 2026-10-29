@@ -14,6 +14,8 @@ interface EdgestoreUploaderProps {
   onChange: (value: string, path: string) => void;
   onRemove: () => void;
   disabled?: boolean;
+  /** Show the whole image (letterboxed) instead of a cropped 12rem strip */
+  fit?: "cover" | "contain";
 }
 
 export function EdgestoreUploader({
@@ -21,10 +23,14 @@ export function EdgestoreUploader({
   onChange,
   onRemove,
   disabled = false,
+  fit = "cover",
 }: EdgestoreUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const { edgestore } = useEdgeStore();
+  // Keep the latest onChange without re-creating the upload function
+  const onChangeRef = React.useRef(onChange);
+  onChangeRef.current = onChange;
 
   const uploadFn: UploadFn = React.useCallback(
     async ({ file, signal }) => {
@@ -48,7 +54,7 @@ export function EdgestoreUploader({
           },
         });
 
-        onChange(res.url, typeof res.path === "string" ? res.path : "");
+        onChangeRef.current(res.url, typeof res.path === "string" ? res.path : "");
         // Always return an object with url property to satisfy UploadFn type
         return res;
       } catch (error) {
@@ -66,12 +72,18 @@ export function EdgestoreUploader({
   if (value) {
     return (
       <div className="relative">
-        <div className="relative h-48 w-full overflow-hidden rounded-lg border">
+        <div
+          className={
+            fit === "contain"
+              ? "relative aspect-[4/3] w-full overflow-hidden rounded-lg border bg-muted"
+              : "relative h-48 w-full overflow-hidden rounded-lg border"
+          }
+        >
           <Image
             src={value}
             fill
             alt="Project preview"
-            className="h-full w-full object-cover"
+            className={fit === "contain" ? "object-contain" : "h-full w-full object-cover"}
           />
           <Button
             type="button"

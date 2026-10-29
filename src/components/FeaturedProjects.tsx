@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { projects } from "../../generated/prisma";
 import SingleProject from "./SingleProject";
-import LoadingScreen from "./LoadingScreen";
+import { ProjectCardSkeleton } from "./CardSkeletons";
 
 export default function FeaturedProjects() {
   const [featuredProjects, setFeaturedProjects] = useState<projects[]>();
@@ -31,9 +31,6 @@ export default function FeaturedProjects() {
     })();
   }, []);
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
   return (
     <section id="projects">
       <SectionHeader
@@ -42,16 +39,18 @@ export default function FeaturedProjects() {
         action={
           <Button asChild variant="outline" className="dark:border-gray-700">
             <Link href="/projects">
-              View All Projects <ArrowRight className="ml-2 h-4 w-4" />
+              View All Projects <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         }
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        {featuredProjects?.map((project) => (
-          <SingleProject key={project.id} project={project} />
-        ))}
+        {loading
+          ? [0, 1, 2].map((i) => <ProjectCardSkeleton key={i} />)
+          : featuredProjects?.map((project) => (
+              <SingleProject key={project.id} project={project} />
+            ))}
       </div>
     </section>
   );

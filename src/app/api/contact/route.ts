@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/auth";
 import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
@@ -27,6 +27,7 @@ export async function POST(req: Request) {
     });
 
     // 2. Send email
+    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
       to: [process.env.CONTACT_RECEIVER_EMAIL!],
@@ -51,6 +52,11 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session || session.user.role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const messages = await prisma.contactMessage.findMany({
       orderBy: { createdAt: "desc" },
     });

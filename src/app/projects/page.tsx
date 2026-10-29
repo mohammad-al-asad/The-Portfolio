@@ -1,32 +1,103 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-import { projects } from "../../../generated/prisma";
+import { categories, projects } from "../../../generated/prisma";
 import SingleProject from "@/components/SingleProject";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
+import { ProjectCardSkeleton } from "@/components/CardSkeletons";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getProjectCategoryIds } from "@/lib/project";
+
+function FilterChip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`rounded-full border px-3 py-1 text-sm transition-colors cursor-pointer ${
+        active
+          ? "bg-primary text-primary-foreground border-primary"
+          : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
 
 export default function ProjectsPage() {
-  const [allProjects, setAllProjects] = useState<projects[]>();
+  const [allProjects, setAllProjects] = useState<projects[]>([]);
+  const [allCategories, setAllCategories] = useState<categories[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState<string | null>(null);
+  const [technology, setTechnology] = useState<string | null>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCategory(params.get("category"));
+    setTechnology(params.get("tech"));
+
     (async function () {
       try {
-        const res = await fetch("api/projects");
-        if (res.ok) {
-          const allprojects = await res.json();
-          setAllProjects(allprojects);
-        } else {
+        const [projectRes, categoryRes] = await Promise.all([
+          fetch("/api/projects"),
+          fetch("/api/categories"),
+        ]);
+        if (!projectRes.ok || !categoryRes.ok) {
           throw new Error("Failed to fetch");
         }
+        setAllProjects(await projectRes.json());
+        setAllCategories(await categoryRes.json());
       } catch (error) {
         console.log("Failed to fetch", error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
+
+  // Keep the URL in sync so filtered views can be shared
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (category) params.set("category", category);
+    if (technology) params.set("tech", technology);
+    const query = params.toString();
+    window.history.replaceState(null, "", query ? `?${query}` : "/projects");
+  }, [category, technology]);
+
+  // Only offer categories and technologies that at least one project uses
+  const usedCategories = useMemo(() => {
+    const used = new Set(allProjects.flatMap(getProjectCategoryIds));
+    return allCategories.filter((c) => used.has(c.id));
+  }, [allProjects, allCategories]);
+
+  const technologies = useMemo(
+    () =>
+      [...new Set(allProjects.flatMap((p) => p.technologies))].sort((a, b) =>
+        a.localeCompare(b)
+      ),
+    [allProjects]
+  );
+
+  const filtered = allProjects.filter(
+    (p) =>
+      (!category || getProjectCategoryIds(p).includes(category)) &&
+      (!technology || p.technologies.includes(technology))
+  );
+
+  const hasFilters = Boolean(category || technology);
 
   return (
     <div className="min-h-screen">
@@ -48,12 +119,114 @@ export default function ProjectsPage() {
           </div>
         </PageHeader>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[20%] md:mt-[15%] p-3">
-          {allProjects?.map((project) => (
-            <SingleProject key={project.id} project={project} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="pt-28 md:pt-56 p-3 space-y-8" aria-busy="true">
+            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
+              {[0, 1].map((row) => (
+                <div key={row} className="flex flex-col md:flex-row gap-3">
+                  <Skeleton className="h-5 w-24 shrink-0" />
+                  <div className="flex flex-wrap gap-2">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <Skeleton key={i} className="h-7 w-20 rounded-full" />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <ProjectCardSkeleton key={i} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="pt-28 md:pt-56 p-3 space-y-8">
+            {/* Filters */}
+            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
+              {usedCategories.length > 0 && (
+                <div className="flex flex-col md:flex-row md:items-start gap-3">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white md:w-28 md:pt-1 shrink-0">
+                    Category
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    <FilterChip active={!category} onClick={() => setCategory(null)}>
+                      All
+                    </FilterChip>
+                    {usedCategories.map((c) => (
+                      <FilterChip
+                        key={c.id}
+                        active={category === c.id}
+                        onClick={() =>
+                          setCategory(category === c.id ? null : c.id)
+                        }
+                      >
+                        {c.name}
+                      </FilterChip>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {technologies.length > 0 && (
+                <div className="flex flex-col md:flex-row md:items-start gap-3">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white md:w-28 md:pt-1 shrink-0">
+                    Technology
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    <FilterChip
+                      active={!technology}
+                      onClick={() => setTechnology(null)}
+                    >
+                      All
+                    </FilterChip>
+                    {technologies.map((t) => (
+                      <FilterChip
+                        key={t}
+                        active={technology === t}
+                        onClick={() =>
+                          setTechnology(technology === t ? null : t)
+                        }
+                      >
+                        {t}
+                      </FilterChip>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                <span>
+                  Showing {filtered.length} of {allProjects.length} projects
+                </span>
+                {hasFilters && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setCategory(null);
+                      setTechnology(null);
+                    }}
+                  >
+                    <X className="h-4 w-4" /> Clear filters
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Projects Grid */}
+            {filtered.length === 0 ? (
+              <div className="text-center py-16 text-gray-500 dark:text-gray-400">
+                No projects match these filters.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filtered.map((project) => (
+                  <SingleProject key={project.id} project={project} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

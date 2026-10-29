@@ -14,6 +14,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model ProjectLink
+ * 
+ */
+export type ProjectLink = $Result.DefaultSelection<Prisma.$ProjectLinkPayload>
+/**
+ * Model ProjectImage
+ * 
+ */
+export type ProjectImage = $Result.DefaultSelection<Prisma.$ProjectImagePayload>
+/**
  * Model projects
  * 
  */
@@ -1352,40 +1362,148 @@ export namespace Prisma {
    */
 
 
-  /**
-   * Count Type CategoriesCountOutputType
-   */
-
-  export type CategoriesCountOutputType = {
-    project: number
-  }
-
-  export type CategoriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    project?: boolean | CategoriesCountOutputTypeCountProjectArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * CategoriesCountOutputType without action
-   */
-  export type CategoriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CategoriesCountOutputType
-     */
-    select?: CategoriesCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * CategoriesCountOutputType without action
-   */
-  export type CategoriesCountOutputTypeCountProjectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: projectsWhereInput
-  }
-
 
   /**
    * Models
    */
+
+  /**
+   * Model ProjectLink
+   */
+
+
+
+
+
+  export type ProjectLinkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    type?: boolean
+    label?: boolean
+    url?: boolean
+  }, ExtArgs["result"]["projectLink"]>
+
+
+
+  export type ProjectLinkSelectScalar = {
+    type?: boolean
+    label?: boolean
+    url?: boolean
+  }
+
+  export type ProjectLinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"type" | "label" | "url", ExtArgs["result"]["projectLink"]>
+
+  export type $ProjectLinkPayload = {
+    name: "ProjectLink"
+    objects: {}
+    scalars: {
+      type: string
+      label: string | null
+      url: string
+    }
+    composites: {}
+  }
+
+  type ProjectLinkGetPayload<S extends boolean | null | undefined | ProjectLinkDefaultArgs> = $Result.GetResult<Prisma.$ProjectLinkPayload, S>
+
+
+
+
+
+  /**
+   * Fields of the ProjectLink model
+   */
+  interface ProjectLinkFieldRefs {
+    readonly type: FieldRef<"ProjectLink", 'String'>
+    readonly label: FieldRef<"ProjectLink", 'String'>
+    readonly url: FieldRef<"ProjectLink", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectLink without action
+   */
+  export type ProjectLinkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectLink
+     */
+    select?: ProjectLinkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectLink
+     */
+    omit?: ProjectLinkOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectImage
+   */
+
+
+
+
+
+  export type ProjectImageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    url?: boolean
+    path?: boolean
+    width?: boolean
+    height?: boolean
+  }, ExtArgs["result"]["projectImage"]>
+
+
+
+  export type ProjectImageSelectScalar = {
+    url?: boolean
+    path?: boolean
+    width?: boolean
+    height?: boolean
+  }
+
+  export type ProjectImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"url" | "path" | "width" | "height", ExtArgs["result"]["projectImage"]>
+
+  export type $ProjectImagePayload = {
+    name: "ProjectImage"
+    objects: {}
+    scalars: {
+      url: string
+      path: string | null
+      width: number | null
+      height: number | null
+    }
+    composites: {}
+  }
+
+  type ProjectImageGetPayload<S extends boolean | null | undefined | ProjectImageDefaultArgs> = $Result.GetResult<Prisma.$ProjectImagePayload, S>
+
+
+
+
+
+  /**
+   * Fields of the ProjectImage model
+   */
+  interface ProjectImageFieldRefs {
+    readonly url: FieldRef<"ProjectImage", 'String'>
+    readonly path: FieldRef<"ProjectImage", 'String'>
+    readonly width: FieldRef<"ProjectImage", 'Int'>
+    readonly height: FieldRef<"ProjectImage", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectImage without action
+   */
+  export type ProjectImageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectImage
+     */
+    select?: ProjectImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectImage
+     */
+    omit?: ProjectImageOmit<ExtArgs> | null
+  }
+
 
   /**
    * Model projects
@@ -1437,6 +1555,7 @@ export namespace Prisma {
     description: number
     detailedDescription: number
     categoryId: number
+    categoryIds: number
     tags: number
     technologies: number
     features: number
@@ -1493,6 +1612,7 @@ export namespace Prisma {
     description?: true
     detailedDescription?: true
     categoryId?: true
+    categoryIds?: true
     tags?: true
     technologies?: true
     features?: true
@@ -1585,14 +1705,15 @@ export namespace Prisma {
     title: string
     description: string
     detailedDescription: string | null
-    categoryId: string
+    categoryId: string | null
+    categoryIds: string[]
     tags: string[]
     technologies: string[]
     features: string[]
     imageUrl: string
     imagePath: string
     liveUrl: string | null
-    githubUrl: string
+    githubUrl: string | null
     completionDate: string | null
     teamSize: string | null
     featured: boolean
@@ -1623,11 +1744,14 @@ export namespace Prisma {
     description?: boolean
     detailedDescription?: boolean
     categoryId?: boolean
+    categoryIds?: boolean
     tags?: boolean
     technologies?: boolean
     features?: boolean
     imageUrl?: boolean
     imagePath?: boolean
+    images?: boolean | ProjectImageDefaultArgs<ExtArgs>
+    links?: boolean | ProjectLinkDefaultArgs<ExtArgs>
     liveUrl?: boolean
     githubUrl?: boolean
     completionDate?: boolean
@@ -1635,7 +1759,6 @@ export namespace Prisma {
     featured?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    category?: boolean | categoriesDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["projects"]>
 
 
@@ -1646,6 +1769,7 @@ export namespace Prisma {
     description?: boolean
     detailedDescription?: boolean
     categoryId?: boolean
+    categoryIds?: boolean
     tags?: boolean
     technologies?: boolean
     features?: boolean
@@ -1660,36 +1784,36 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "detailedDescription" | "categoryId" | "tags" | "technologies" | "features" | "imageUrl" | "imagePath" | "liveUrl" | "githubUrl" | "completionDate" | "teamSize" | "featured" | "createdAt" | "updatedAt", ExtArgs["result"]["projects"]>
-  export type projectsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | categoriesDefaultArgs<ExtArgs>
-  }
+  export type projectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "detailedDescription" | "categoryId" | "categoryIds" | "tags" | "technologies" | "features" | "imageUrl" | "imagePath" | "images" | "links" | "liveUrl" | "githubUrl" | "completionDate" | "teamSize" | "featured" | "createdAt" | "updatedAt", ExtArgs["result"]["projects"]>
+  export type projectsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $projectsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "projects"
-    objects: {
-      category: Prisma.$categoriesPayload<ExtArgs>
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       description: string
       detailedDescription: string | null
-      categoryId: string
+      categoryId: string | null
+      categoryIds: string[]
       tags: string[]
       technologies: string[]
       features: string[]
       imageUrl: string
       imagePath: string
       liveUrl: string | null
-      githubUrl: string
+      githubUrl: string | null
       completionDate: string | null
       teamSize: string | null
       featured: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["projects"]>
-    composites: {}
+    composites: {
+      images: Prisma.$ProjectImagePayload[]
+      links: Prisma.$ProjectLinkPayload[]
+    }
   }
 
   type projectsGetPayload<S extends boolean | null | undefined | projectsDefaultArgs> = $Result.GetResult<Prisma.$projectsPayload, S>
@@ -2051,7 +2175,6 @@ export namespace Prisma {
    */
   export interface Prisma__projectsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    category<T extends categoriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, categoriesDefaultArgs<ExtArgs>>): Prisma__categoriesClient<$Result.GetResult<Prisma.$categoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2086,6 +2209,7 @@ export namespace Prisma {
     readonly description: FieldRef<"projects", 'String'>
     readonly detailedDescription: FieldRef<"projects", 'String'>
     readonly categoryId: FieldRef<"projects", 'String'>
+    readonly categoryIds: FieldRef<"projects", 'String[]'>
     readonly tags: FieldRef<"projects", 'String[]'>
     readonly technologies: FieldRef<"projects", 'String[]'>
     readonly features: FieldRef<"projects", 'String[]'>
@@ -2634,8 +2758,6 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    project?: boolean | categories$projectArgs<ExtArgs>
-    _count?: boolean | CategoriesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["categories"]>
 
 
@@ -2647,16 +2769,10 @@ export namespace Prisma {
   }
 
   export type categoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description", ExtArgs["result"]["categories"]>
-  export type categoriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    project?: boolean | categories$projectArgs<ExtArgs>
-    _count?: boolean | CategoriesCountOutputTypeDefaultArgs<ExtArgs>
-  }
 
   export type $categoriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "categories"
-    objects: {
-      project: Prisma.$projectsPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
@@ -3024,7 +3140,6 @@ export namespace Prisma {
    */
   export interface Prisma__categoriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    project<T extends categories$projectArgs<ExtArgs> = {}>(args?: Subset<T, categories$projectArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$projectsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3074,10 +3189,6 @@ export namespace Prisma {
      */
     omit?: categoriesOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
-    /**
      * Filter, which categories to fetch.
      */
     where: categoriesWhereUniqueInput
@@ -3096,10 +3207,6 @@ export namespace Prisma {
      */
     omit?: categoriesOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
-    /**
      * Filter, which categories to fetch.
      */
     where: categoriesWhereUniqueInput
@@ -3117,10 +3224,6 @@ export namespace Prisma {
      * Omit specific fields from the categories
      */
     omit?: categoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
     /**
      * Filter, which categories to fetch.
      */
@@ -3170,10 +3273,6 @@ export namespace Prisma {
      */
     omit?: categoriesOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
-    /**
      * Filter, which categories to fetch.
      */
     where?: categoriesWhereInput
@@ -3222,10 +3321,6 @@ export namespace Prisma {
      */
     omit?: categoriesOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
-    /**
      * Filter, which categories to fetch.
      */
     where?: categoriesWhereInput
@@ -3269,10 +3364,6 @@ export namespace Prisma {
      */
     omit?: categoriesOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
-    /**
      * The data needed to create a categories.
      */
     data: XOR<categoriesCreateInput, categoriesUncheckedCreateInput>
@@ -3300,10 +3391,6 @@ export namespace Prisma {
      * Omit specific fields from the categories
      */
     omit?: categoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
     /**
      * The data needed to update a categories.
      */
@@ -3345,10 +3432,6 @@ export namespace Prisma {
      */
     omit?: categoriesOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
-    /**
      * The filter to search for the categories to update in case it exists.
      */
     where: categoriesWhereUniqueInput
@@ -3374,10 +3457,6 @@ export namespace Prisma {
      * Omit specific fields from the categories
      */
     omit?: categoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
     /**
      * Filter which categories to delete.
      */
@@ -3427,30 +3506,6 @@ export namespace Prisma {
   }
 
   /**
-   * categories.project
-   */
-  export type categories$projectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the projects
-     */
-    select?: projectsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the projects
-     */
-    omit?: projectsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: projectsInclude<ExtArgs> | null
-    where?: projectsWhereInput
-    orderBy?: projectsOrderByWithRelationInput | projectsOrderByWithRelationInput[]
-    cursor?: projectsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProjectsScalarFieldEnum | ProjectsScalarFieldEnum[]
-  }
-
-  /**
    * categories without action
    */
   export type categoriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3462,10 +3517,6 @@ export namespace Prisma {
      * Omit specific fields from the categories
      */
     omit?: categoriesOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: categoriesInclude<ExtArgs> | null
   }
 
 
@@ -5310,6 +5361,7 @@ export namespace Prisma {
     gpa: string | null
     imageUrl: string | null
     imagePath: string | null
+    featured: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5325,6 +5377,7 @@ export namespace Prisma {
     gpa: string | null
     imageUrl: string | null
     imagePath: string | null
+    featured: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5341,6 +5394,7 @@ export namespace Prisma {
     courses: number
     imageUrl: number
     imagePath: number
+    featured: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5358,6 +5412,7 @@ export namespace Prisma {
     gpa?: true
     imageUrl?: true
     imagePath?: true
+    featured?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5373,6 +5428,7 @@ export namespace Prisma {
     gpa?: true
     imageUrl?: true
     imagePath?: true
+    featured?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5389,6 +5445,7 @@ export namespace Prisma {
     courses?: true
     imageUrl?: true
     imagePath?: true
+    featured?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5478,6 +5535,7 @@ export namespace Prisma {
     courses: string[]
     imageUrl: string
     imagePath: string
+    featured: boolean | null
     createdAt: Date
     updatedAt: Date
     _count: EducationsCountAggregateOutputType | null
@@ -5511,6 +5569,7 @@ export namespace Prisma {
     courses?: boolean
     imageUrl?: boolean
     imagePath?: boolean
+    featured?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["educations"]>
@@ -5529,11 +5588,12 @@ export namespace Prisma {
     courses?: boolean
     imageUrl?: boolean
     imagePath?: boolean
+    featured?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type educationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "institution" | "degree" | "period" | "location" | "description" | "detailedDescription" | "gpa" | "courses" | "imageUrl" | "imagePath" | "createdAt" | "updatedAt", ExtArgs["result"]["educations"]>
+  export type educationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "institution" | "degree" | "period" | "location" | "description" | "detailedDescription" | "gpa" | "courses" | "imageUrl" | "imagePath" | "featured" | "createdAt" | "updatedAt", ExtArgs["result"]["educations"]>
 
   export type $educationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "educations"
@@ -5550,6 +5610,7 @@ export namespace Prisma {
       courses: string[]
       imageUrl: string
       imagePath: string
+      featured: boolean | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["educations"]>
@@ -5955,6 +6016,7 @@ export namespace Prisma {
     readonly courses: FieldRef<"educations", 'String[]'>
     readonly imageUrl: FieldRef<"educations", 'String'>
     readonly imagePath: FieldRef<"educations", 'String'>
+    readonly featured: FieldRef<"educations", 'Boolean'>
     readonly createdAt: FieldRef<"educations", 'DateTime'>
     readonly updatedAt: FieldRef<"educations", 'DateTime'>
   }
@@ -6324,6 +6386,7 @@ export namespace Prisma {
     detailedDescription: string | null
     imageUrl: string | null
     imagePath: string | null
+    featured: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6337,6 +6400,7 @@ export namespace Prisma {
     detailedDescription: string | null
     imageUrl: string | null
     imagePath: string | null
+    featured: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6351,6 +6415,7 @@ export namespace Prisma {
     imageUrl: number
     imagePath: number
     technologies: number
+    featured: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6366,6 +6431,7 @@ export namespace Prisma {
     detailedDescription?: true
     imageUrl?: true
     imagePath?: true
+    featured?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6379,6 +6445,7 @@ export namespace Prisma {
     detailedDescription?: true
     imageUrl?: true
     imagePath?: true
+    featured?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6393,6 +6460,7 @@ export namespace Prisma {
     imageUrl?: true
     imagePath?: true
     technologies?: true
+    featured?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6480,6 +6548,7 @@ export namespace Prisma {
     imageUrl: string
     imagePath: string
     technologies: string[]
+    featured: boolean | null
     createdAt: Date
     updatedAt: Date
     _count: AchievementsCountAggregateOutputType | null
@@ -6511,6 +6580,7 @@ export namespace Prisma {
     imageUrl?: boolean
     imagePath?: boolean
     technologies?: boolean
+    featured?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["achievements"]>
@@ -6527,11 +6597,12 @@ export namespace Prisma {
     imageUrl?: boolean
     imagePath?: boolean
     technologies?: boolean
+    featured?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type achievementsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "organization" | "year" | "description" | "detailedDescription" | "imageUrl" | "imagePath" | "technologies" | "createdAt" | "updatedAt", ExtArgs["result"]["achievements"]>
+  export type achievementsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "organization" | "year" | "description" | "detailedDescription" | "imageUrl" | "imagePath" | "technologies" | "featured" | "createdAt" | "updatedAt", ExtArgs["result"]["achievements"]>
 
   export type $achievementsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "achievements"
@@ -6546,6 +6617,7 @@ export namespace Prisma {
       imageUrl: string
       imagePath: string
       technologies: string[]
+      featured: boolean | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["achievements"]>
@@ -6949,6 +7021,7 @@ export namespace Prisma {
     readonly imageUrl: FieldRef<"achievements", 'String'>
     readonly imagePath: FieldRef<"achievements", 'String'>
     readonly technologies: FieldRef<"achievements", 'String[]'>
+    readonly featured: FieldRef<"achievements", 'Boolean'>
     readonly createdAt: FieldRef<"achievements", 'DateTime'>
     readonly updatedAt: FieldRef<"achievements", 'DateTime'>
   }
@@ -7315,6 +7388,7 @@ export namespace Prisma {
     email: string | null
     subject: string | null
     message: string | null
+    read: boolean | null
     createdAt: Date | null
   }
 
@@ -7324,6 +7398,7 @@ export namespace Prisma {
     email: string | null
     subject: string | null
     message: string | null
+    read: boolean | null
     createdAt: Date | null
   }
 
@@ -7333,6 +7408,7 @@ export namespace Prisma {
     email: number
     subject: number
     message: number
+    read: number
     createdAt: number
     _all: number
   }
@@ -7344,6 +7420,7 @@ export namespace Prisma {
     email?: true
     subject?: true
     message?: true
+    read?: true
     createdAt?: true
   }
 
@@ -7353,6 +7430,7 @@ export namespace Prisma {
     email?: true
     subject?: true
     message?: true
+    read?: true
     createdAt?: true
   }
 
@@ -7362,6 +7440,7 @@ export namespace Prisma {
     email?: true
     subject?: true
     message?: true
+    read?: true
     createdAt?: true
     _all?: true
   }
@@ -7444,6 +7523,7 @@ export namespace Prisma {
     email: string
     subject: string
     message: string
+    read: boolean | null
     createdAt: Date
     _count: ContactMessageCountAggregateOutputType | null
     _min: ContactMessageMinAggregateOutputType | null
@@ -7470,6 +7550,7 @@ export namespace Prisma {
     email?: boolean
     subject?: boolean
     message?: boolean
+    read?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["contactMessage"]>
 
@@ -7481,10 +7562,11 @@ export namespace Prisma {
     email?: boolean
     subject?: boolean
     message?: boolean
+    read?: boolean
     createdAt?: boolean
   }
 
-  export type ContactMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "subject" | "message" | "createdAt", ExtArgs["result"]["contactMessage"]>
+  export type ContactMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "subject" | "message" | "read" | "createdAt", ExtArgs["result"]["contactMessage"]>
 
   export type $ContactMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ContactMessage"
@@ -7495,6 +7577,7 @@ export namespace Prisma {
       email: string
       subject: string
       message: string
+      read: boolean | null
       createdAt: Date
     }, ExtArgs["result"]["contactMessage"]>
     composites: {}
@@ -7893,6 +7976,7 @@ export namespace Prisma {
     readonly email: FieldRef<"ContactMessage", 'String'>
     readonly subject: FieldRef<"ContactMessage", 'String'>
     readonly message: FieldRef<"ContactMessage", 'String'>
+    readonly read: FieldRef<"ContactMessage", 'Boolean'>
     readonly createdAt: FieldRef<"ContactMessage", 'DateTime'>
   }
     
@@ -8252,6 +8336,7 @@ export namespace Prisma {
     description: 'description',
     detailedDescription: 'detailedDescription',
     categoryId: 'categoryId',
+    categoryIds: 'categoryIds',
     tags: 'tags',
     technologies: 'technologies',
     features: 'features',
@@ -8308,6 +8393,7 @@ export namespace Prisma {
     courses: 'courses',
     imageUrl: 'imageUrl',
     imagePath: 'imagePath',
+    featured: 'featured',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8325,6 +8411,7 @@ export namespace Prisma {
     imageUrl: 'imageUrl',
     imagePath: 'imagePath',
     technologies: 'technologies',
+    featured: 'featured',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8338,6 +8425,7 @@ export namespace Prisma {
     email: 'email',
     subject: 'subject',
     message: 'message',
+    read: 'read',
     createdAt: 'createdAt'
   };
 
@@ -8425,20 +8513,22 @@ export namespace Prisma {
     title?: StringFilter<"projects"> | string
     description?: StringFilter<"projects"> | string
     detailedDescription?: StringNullableFilter<"projects"> | string | null
-    categoryId?: StringFilter<"projects"> | string
+    categoryId?: StringNullableFilter<"projects"> | string | null
+    categoryIds?: StringNullableListFilter<"projects">
     tags?: StringNullableListFilter<"projects">
     technologies?: StringNullableListFilter<"projects">
     features?: StringNullableListFilter<"projects">
     imageUrl?: StringFilter<"projects"> | string
     imagePath?: StringFilter<"projects"> | string
+    images?: ProjectImageCompositeListFilter | ProjectImageObjectEqualityInput[]
+    links?: ProjectLinkCompositeListFilter | ProjectLinkObjectEqualityInput[]
     liveUrl?: StringNullableFilter<"projects"> | string | null
-    githubUrl?: StringFilter<"projects"> | string
+    githubUrl?: StringNullableFilter<"projects"> | string | null
     completionDate?: StringNullableFilter<"projects"> | string | null
     teamSize?: StringNullableFilter<"projects"> | string | null
     featured?: BoolFilter<"projects"> | boolean
     createdAt?: DateTimeFilter<"projects"> | Date | string
     updatedAt?: DateTimeFilter<"projects"> | Date | string
-    category?: XOR<CategoriesScalarRelationFilter, categoriesWhereInput>
   }
 
   export type projectsOrderByWithRelationInput = {
@@ -8447,11 +8537,14 @@ export namespace Prisma {
     description?: SortOrder
     detailedDescription?: SortOrder
     categoryId?: SortOrder
+    categoryIds?: SortOrder
     tags?: SortOrder
     technologies?: SortOrder
     features?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    images?: ProjectImageOrderByCompositeAggregateInput
+    links?: ProjectLinkOrderByCompositeAggregateInput
     liveUrl?: SortOrder
     githubUrl?: SortOrder
     completionDate?: SortOrder
@@ -8459,7 +8552,6 @@ export namespace Prisma {
     featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    category?: categoriesOrderByWithRelationInput
   }
 
   export type projectsWhereUniqueInput = Prisma.AtLeast<{
@@ -8470,20 +8562,22 @@ export namespace Prisma {
     title?: StringFilter<"projects"> | string
     description?: StringFilter<"projects"> | string
     detailedDescription?: StringNullableFilter<"projects"> | string | null
-    categoryId?: StringFilter<"projects"> | string
+    categoryId?: StringNullableFilter<"projects"> | string | null
+    categoryIds?: StringNullableListFilter<"projects">
     tags?: StringNullableListFilter<"projects">
     technologies?: StringNullableListFilter<"projects">
     features?: StringNullableListFilter<"projects">
     imageUrl?: StringFilter<"projects"> | string
     imagePath?: StringFilter<"projects"> | string
+    images?: ProjectImageCompositeListFilter | ProjectImageObjectEqualityInput[]
+    links?: ProjectLinkCompositeListFilter | ProjectLinkObjectEqualityInput[]
     liveUrl?: StringNullableFilter<"projects"> | string | null
-    githubUrl?: StringFilter<"projects"> | string
+    githubUrl?: StringNullableFilter<"projects"> | string | null
     completionDate?: StringNullableFilter<"projects"> | string | null
     teamSize?: StringNullableFilter<"projects"> | string | null
     featured?: BoolFilter<"projects"> | boolean
     createdAt?: DateTimeFilter<"projects"> | Date | string
     updatedAt?: DateTimeFilter<"projects"> | Date | string
-    category?: XOR<CategoriesScalarRelationFilter, categoriesWhereInput>
   }, "id">
 
   export type projectsOrderByWithAggregationInput = {
@@ -8492,6 +8586,7 @@ export namespace Prisma {
     description?: SortOrder
     detailedDescription?: SortOrder
     categoryId?: SortOrder
+    categoryIds?: SortOrder
     tags?: SortOrder
     technologies?: SortOrder
     features?: SortOrder
@@ -8517,14 +8612,15 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"projects"> | string
     description?: StringWithAggregatesFilter<"projects"> | string
     detailedDescription?: StringNullableWithAggregatesFilter<"projects"> | string | null
-    categoryId?: StringWithAggregatesFilter<"projects"> | string
+    categoryId?: StringNullableWithAggregatesFilter<"projects"> | string | null
+    categoryIds?: StringNullableListFilter<"projects">
     tags?: StringNullableListFilter<"projects">
     technologies?: StringNullableListFilter<"projects">
     features?: StringNullableListFilter<"projects">
     imageUrl?: StringWithAggregatesFilter<"projects"> | string
     imagePath?: StringWithAggregatesFilter<"projects"> | string
     liveUrl?: StringNullableWithAggregatesFilter<"projects"> | string | null
-    githubUrl?: StringWithAggregatesFilter<"projects"> | string
+    githubUrl?: StringNullableWithAggregatesFilter<"projects"> | string | null
     completionDate?: StringNullableWithAggregatesFilter<"projects"> | string | null
     teamSize?: StringNullableWithAggregatesFilter<"projects"> | string | null
     featured?: BoolWithAggregatesFilter<"projects"> | boolean
@@ -8539,14 +8635,12 @@ export namespace Prisma {
     id?: StringFilter<"categories"> | string
     name?: StringFilter<"categories"> | string
     description?: StringFilter<"categories"> | string
-    project?: ProjectsListRelationFilter
   }
 
   export type categoriesOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    project?: projectsOrderByRelationAggregateInput
   }
 
   export type categoriesWhereUniqueInput = Prisma.AtLeast<{
@@ -8556,7 +8650,6 @@ export namespace Prisma {
     NOT?: categoriesWhereInput | categoriesWhereInput[]
     name?: StringFilter<"categories"> | string
     description?: StringFilter<"categories"> | string
-    project?: ProjectsListRelationFilter
   }, "id">
 
   export type categoriesOrderByWithAggregationInput = {
@@ -8676,6 +8769,7 @@ export namespace Prisma {
     courses?: StringNullableListFilter<"educations">
     imageUrl?: StringFilter<"educations"> | string
     imagePath?: StringFilter<"educations"> | string
+    featured?: BoolNullableFilter<"educations"> | boolean | null
     createdAt?: DateTimeFilter<"educations"> | Date | string
     updatedAt?: DateTimeFilter<"educations"> | Date | string
   }
@@ -8692,6 +8786,7 @@ export namespace Prisma {
     courses?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8711,6 +8806,7 @@ export namespace Prisma {
     courses?: StringNullableListFilter<"educations">
     imageUrl?: StringFilter<"educations"> | string
     imagePath?: StringFilter<"educations"> | string
+    featured?: BoolNullableFilter<"educations"> | boolean | null
     createdAt?: DateTimeFilter<"educations"> | Date | string
     updatedAt?: DateTimeFilter<"educations"> | Date | string
   }, "id">
@@ -8727,6 +8823,7 @@ export namespace Prisma {
     courses?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: educationsCountOrderByAggregateInput
@@ -8749,6 +8846,7 @@ export namespace Prisma {
     courses?: StringNullableListFilter<"educations">
     imageUrl?: StringWithAggregatesFilter<"educations"> | string
     imagePath?: StringWithAggregatesFilter<"educations"> | string
+    featured?: BoolNullableWithAggregatesFilter<"educations"> | boolean | null
     createdAt?: DateTimeWithAggregatesFilter<"educations"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"educations"> | Date | string
   }
@@ -8766,6 +8864,7 @@ export namespace Prisma {
     imageUrl?: StringFilter<"achievements"> | string
     imagePath?: StringFilter<"achievements"> | string
     technologies?: StringNullableListFilter<"achievements">
+    featured?: BoolNullableFilter<"achievements"> | boolean | null
     createdAt?: DateTimeFilter<"achievements"> | Date | string
     updatedAt?: DateTimeFilter<"achievements"> | Date | string
   }
@@ -8780,6 +8879,7 @@ export namespace Prisma {
     imageUrl?: SortOrder
     imagePath?: SortOrder
     technologies?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8797,6 +8897,7 @@ export namespace Prisma {
     imageUrl?: StringFilter<"achievements"> | string
     imagePath?: StringFilter<"achievements"> | string
     technologies?: StringNullableListFilter<"achievements">
+    featured?: BoolNullableFilter<"achievements"> | boolean | null
     createdAt?: DateTimeFilter<"achievements"> | Date | string
     updatedAt?: DateTimeFilter<"achievements"> | Date | string
   }, "id">
@@ -8811,6 +8912,7 @@ export namespace Prisma {
     imageUrl?: SortOrder
     imagePath?: SortOrder
     technologies?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: achievementsCountOrderByAggregateInput
@@ -8831,6 +8933,7 @@ export namespace Prisma {
     imageUrl?: StringWithAggregatesFilter<"achievements"> | string
     imagePath?: StringWithAggregatesFilter<"achievements"> | string
     technologies?: StringNullableListFilter<"achievements">
+    featured?: BoolNullableWithAggregatesFilter<"achievements"> | boolean | null
     createdAt?: DateTimeWithAggregatesFilter<"achievements"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"achievements"> | Date | string
   }
@@ -8844,6 +8947,7 @@ export namespace Prisma {
     email?: StringFilter<"ContactMessage"> | string
     subject?: StringFilter<"ContactMessage"> | string
     message?: StringFilter<"ContactMessage"> | string
+    read?: BoolNullableFilter<"ContactMessage"> | boolean | null
     createdAt?: DateTimeFilter<"ContactMessage"> | Date | string
   }
 
@@ -8853,6 +8957,7 @@ export namespace Prisma {
     email?: SortOrder
     subject?: SortOrder
     message?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -8865,6 +8970,7 @@ export namespace Prisma {
     email?: StringFilter<"ContactMessage"> | string
     subject?: StringFilter<"ContactMessage"> | string
     message?: StringFilter<"ContactMessage"> | string
+    read?: BoolNullableFilter<"ContactMessage"> | boolean | null
     createdAt?: DateTimeFilter<"ContactMessage"> | Date | string
   }, "id">
 
@@ -8874,6 +8980,7 @@ export namespace Prisma {
     email?: SortOrder
     subject?: SortOrder
     message?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
     _count?: ContactMessageCountOrderByAggregateInput
     _max?: ContactMessageMaxOrderByAggregateInput
@@ -8889,6 +8996,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"ContactMessage"> | string
     subject?: StringWithAggregatesFilter<"ContactMessage"> | string
     message?: StringWithAggregatesFilter<"ContactMessage"> | string
+    read?: BoolNullableWithAggregatesFilter<"ContactMessage"> | boolean | null
     createdAt?: DateTimeWithAggregatesFilter<"ContactMessage"> | Date | string
   }
 
@@ -8897,19 +9005,22 @@ export namespace Prisma {
     title: string
     description: string
     detailedDescription?: string | null
+    categoryId?: string | null
+    categoryIds?: projectsCreatecategoryIdsInput | string[]
     tags?: projectsCreatetagsInput | string[]
     technologies?: projectsCreatetechnologiesInput | string[]
     features?: projectsCreatefeaturesInput | string[]
     imageUrl: string
     imagePath: string
+    images?: XOR<ProjectImageListCreateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListCreateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: string | null
-    githubUrl: string
+    githubUrl?: string | null
     completionDate?: string | null
     teamSize?: string | null
     featured?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    category: categoriesCreateNestedOneWithoutProjectInput
   }
 
   export type projectsUncheckedCreateInput = {
@@ -8917,14 +9028,17 @@ export namespace Prisma {
     title: string
     description: string
     detailedDescription?: string | null
-    categoryId: string
+    categoryId?: string | null
+    categoryIds?: projectsCreatecategoryIdsInput | string[]
     tags?: projectsCreatetagsInput | string[]
     technologies?: projectsCreatetechnologiesInput | string[]
     features?: projectsCreatefeaturesInput | string[]
     imageUrl: string
     imagePath: string
+    images?: XOR<ProjectImageListCreateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListCreateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: string | null
-    githubUrl: string
+    githubUrl?: string | null
     completionDate?: string | null
     teamSize?: string | null
     featured?: boolean
@@ -8936,33 +9050,39 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryIds?: projectsUpdatecategoryIdsInput | string[]
     tags?: projectsUpdatetagsInput | string[]
     technologies?: projectsUpdatetechnologiesInput | string[]
     features?: projectsUpdatefeaturesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    images?: XOR<ProjectImageListUpdateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListUpdateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
+    githubUrl?: NullableStringFieldUpdateOperationsInput | string | null
     completionDate?: NullableStringFieldUpdateOperationsInput | string | null
     teamSize?: NullableStringFieldUpdateOperationsInput | string | null
     featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: categoriesUpdateOneRequiredWithoutProjectNestedInput
   }
 
   export type projectsUncheckedUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: StringFieldUpdateOperationsInput | string
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryIds?: projectsUpdatecategoryIdsInput | string[]
     tags?: projectsUpdatetagsInput | string[]
     technologies?: projectsUpdatetechnologiesInput | string[]
     features?: projectsUpdatefeaturesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    images?: XOR<ProjectImageListUpdateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListUpdateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
+    githubUrl?: NullableStringFieldUpdateOperationsInput | string | null
     completionDate?: NullableStringFieldUpdateOperationsInput | string | null
     teamSize?: NullableStringFieldUpdateOperationsInput | string | null
     featured?: BoolFieldUpdateOperationsInput | boolean
@@ -8975,14 +9095,17 @@ export namespace Prisma {
     title: string
     description: string
     detailedDescription?: string | null
-    categoryId: string
+    categoryId?: string | null
+    categoryIds?: projectsCreatecategoryIdsInput | string[]
     tags?: projectsCreatetagsInput | string[]
     technologies?: projectsCreatetechnologiesInput | string[]
     features?: projectsCreatefeaturesInput | string[]
     imageUrl: string
     imagePath: string
+    images?: XOR<ProjectImageListCreateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListCreateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: string | null
-    githubUrl: string
+    githubUrl?: string | null
     completionDate?: string | null
     teamSize?: string | null
     featured?: boolean
@@ -8994,13 +9117,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryIds?: projectsUpdatecategoryIdsInput | string[]
     tags?: projectsUpdatetagsInput | string[]
     technologies?: projectsUpdatetechnologiesInput | string[]
     features?: projectsUpdatefeaturesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    images?: XOR<ProjectImageListUpdateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListUpdateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
+    githubUrl?: NullableStringFieldUpdateOperationsInput | string | null
     completionDate?: NullableStringFieldUpdateOperationsInput | string | null
     teamSize?: NullableStringFieldUpdateOperationsInput | string | null
     featured?: BoolFieldUpdateOperationsInput | boolean
@@ -9012,14 +9139,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: StringFieldUpdateOperationsInput | string
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryIds?: projectsUpdatecategoryIdsInput | string[]
     tags?: projectsUpdatetagsInput | string[]
     technologies?: projectsUpdatetechnologiesInput | string[]
     features?: projectsUpdatefeaturesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    images?: XOR<ProjectImageListUpdateEnvelopeInput, ProjectImageCreateInput> | ProjectImageCreateInput[]
+    links?: XOR<ProjectLinkListUpdateEnvelopeInput, ProjectLinkCreateInput> | ProjectLinkCreateInput[]
     liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
+    githubUrl?: NullableStringFieldUpdateOperationsInput | string | null
     completionDate?: NullableStringFieldUpdateOperationsInput | string | null
     teamSize?: NullableStringFieldUpdateOperationsInput | string | null
     featured?: BoolFieldUpdateOperationsInput | boolean
@@ -9031,26 +9161,22 @@ export namespace Prisma {
     id?: string
     name: string
     description: string
-    project?: projectsCreateNestedManyWithoutCategoryInput
   }
 
   export type categoriesUncheckedCreateInput = {
     id?: string
     name: string
     description: string
-    project?: projectsUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type categoriesUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    project?: projectsUpdateManyWithoutCategoryNestedInput
   }
 
   export type categoriesUncheckedUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    project?: projectsUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type categoriesCreateManyInput = {
@@ -9157,6 +9283,7 @@ export namespace Prisma {
     courses?: educationsCreatecoursesInput | string[]
     imageUrl: string
     imagePath: string
+    featured?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9173,6 +9300,7 @@ export namespace Prisma {
     courses?: educationsCreatecoursesInput | string[]
     imageUrl: string
     imagePath: string
+    featured?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9188,6 +9316,7 @@ export namespace Prisma {
     courses?: educationsUpdatecoursesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9203,6 +9332,7 @@ export namespace Prisma {
     courses?: educationsUpdatecoursesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9219,6 +9349,7 @@ export namespace Prisma {
     courses?: educationsCreatecoursesInput | string[]
     imageUrl: string
     imagePath: string
+    featured?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9234,6 +9365,7 @@ export namespace Prisma {
     courses?: educationsUpdatecoursesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9249,6 +9381,7 @@ export namespace Prisma {
     courses?: educationsUpdatecoursesInput | string[]
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9263,6 +9396,7 @@ export namespace Prisma {
     imageUrl: string
     imagePath: string
     technologies?: achievementsCreatetechnologiesInput | string[]
+    featured?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9277,6 +9411,7 @@ export namespace Prisma {
     imageUrl: string
     imagePath: string
     technologies?: achievementsCreatetechnologiesInput | string[]
+    featured?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9290,6 +9425,7 @@ export namespace Prisma {
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
     technologies?: achievementsUpdatetechnologiesInput | string[]
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9303,6 +9439,7 @@ export namespace Prisma {
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
     technologies?: achievementsUpdatetechnologiesInput | string[]
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9317,6 +9454,7 @@ export namespace Prisma {
     imageUrl: string
     imagePath: string
     technologies?: achievementsCreatetechnologiesInput | string[]
+    featured?: boolean | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9330,6 +9468,7 @@ export namespace Prisma {
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
     technologies?: achievementsUpdatetechnologiesInput | string[]
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9343,6 +9482,7 @@ export namespace Prisma {
     imageUrl?: StringFieldUpdateOperationsInput | string
     imagePath?: StringFieldUpdateOperationsInput | string
     technologies?: achievementsUpdatetechnologiesInput | string[]
+    featured?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9353,6 +9493,7 @@ export namespace Prisma {
     email: string
     subject: string
     message: string
+    read?: boolean | null
     createdAt?: Date | string
   }
 
@@ -9362,6 +9503,7 @@ export namespace Prisma {
     email: string
     subject: string
     message: string
+    read?: boolean | null
     createdAt?: Date | string
   }
 
@@ -9370,6 +9512,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    read?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9378,6 +9521,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    read?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9387,6 +9531,7 @@ export namespace Prisma {
     email: string
     subject: string
     message: string
+    read?: boolean | null
     createdAt?: Date | string
   }
 
@@ -9395,6 +9540,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    read?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9403,6 +9549,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+    read?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9445,6 +9592,37 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type ProjectImageCompositeListFilter = {
+    equals?: ProjectImageObjectEqualityInput[]
+    every?: ProjectImageWhereInput
+    some?: ProjectImageWhereInput
+    none?: ProjectImageWhereInput
+    isEmpty?: boolean
+    isSet?: boolean
+  }
+
+  export type ProjectImageObjectEqualityInput = {
+    url: string
+    path?: string | null
+    width?: number | null
+    height?: number | null
+  }
+
+  export type ProjectLinkCompositeListFilter = {
+    equals?: ProjectLinkObjectEqualityInput[]
+    every?: ProjectLinkWhereInput
+    some?: ProjectLinkWhereInput
+    none?: ProjectLinkWhereInput
+    isEmpty?: boolean
+    isSet?: boolean
+  }
+
+  export type ProjectLinkObjectEqualityInput = {
+    type: string
+    label?: string | null
+    url: string
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -9461,9 +9639,12 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type CategoriesScalarRelationFilter = {
-    is?: categoriesWhereInput
-    isNot?: categoriesWhereInput
+  export type ProjectImageOrderByCompositeAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProjectLinkOrderByCompositeAggregateInput = {
+    _count?: SortOrder
   }
 
   export type projectsCountOrderByAggregateInput = {
@@ -9472,6 +9653,7 @@ export namespace Prisma {
     description?: SortOrder
     detailedDescription?: SortOrder
     categoryId?: SortOrder
+    categoryIds?: SortOrder
     tags?: SortOrder
     technologies?: SortOrder
     features?: SortOrder
@@ -9579,16 +9761,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type ProjectsListRelationFilter = {
-    every?: projectsWhereInput
-    some?: projectsWhereInput
-    none?: projectsWhereInput
-  }
-
-  export type projectsOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type categoriesCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -9643,6 +9815,12 @@ export namespace Prisma {
     password?: SortOrder
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+    isSet?: boolean
+  }
+
   export type educationsCountOrderByAggregateInput = {
     id?: SortOrder
     institution?: SortOrder
@@ -9655,6 +9833,7 @@ export namespace Prisma {
     courses?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9670,6 +9849,7 @@ export namespace Prisma {
     gpa?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9685,8 +9865,18 @@ export namespace Prisma {
     gpa?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
   export type achievementsCountOrderByAggregateInput = {
@@ -9699,6 +9889,7 @@ export namespace Prisma {
     imageUrl?: SortOrder
     imagePath?: SortOrder
     technologies?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9712,6 +9903,7 @@ export namespace Prisma {
     detailedDescription?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9725,6 +9917,7 @@ export namespace Prisma {
     detailedDescription?: SortOrder
     imageUrl?: SortOrder
     imagePath?: SortOrder
+    featured?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9735,6 +9928,7 @@ export namespace Prisma {
     email?: SortOrder
     subject?: SortOrder
     message?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -9744,6 +9938,7 @@ export namespace Prisma {
     email?: SortOrder
     subject?: SortOrder
     message?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -9753,7 +9948,12 @@ export namespace Prisma {
     email?: SortOrder
     subject?: SortOrder
     message?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type projectsCreatecategoryIdsInput = {
+    set: string[]
   }
 
   export type projectsCreatetagsInput = {
@@ -9768,10 +9968,25 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type categoriesCreateNestedOneWithoutProjectInput = {
-    create?: XOR<categoriesCreateWithoutProjectInput, categoriesUncheckedCreateWithoutProjectInput>
-    connectOrCreate?: categoriesCreateOrConnectWithoutProjectInput
-    connect?: categoriesWhereUniqueInput
+  export type ProjectImageListCreateEnvelopeInput = {
+    set?: ProjectImageCreateInput | ProjectImageCreateInput[]
+  }
+
+  export type ProjectImageCreateInput = {
+    url: string
+    path?: string | null
+    width?: number | null
+    height?: number | null
+  }
+
+  export type ProjectLinkListCreateEnvelopeInput = {
+    set?: ProjectLinkCreateInput | ProjectLinkCreateInput[]
+  }
+
+  export type ProjectLinkCreateInput = {
+    type: string
+    label?: string | null
+    url: string
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -9781,6 +9996,11 @@ export namespace Prisma {
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
     unset?: boolean
+  }
+
+  export type projectsUpdatecategoryIdsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type projectsUpdatetagsInput = {
@@ -9798,62 +10018,26 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type ProjectImageListUpdateEnvelopeInput = {
+    set?: ProjectImageCreateInput | ProjectImageCreateInput[]
+    push?: ProjectImageCreateInput | ProjectImageCreateInput[]
+    updateMany?: ProjectImageUpdateManyInput
+    deleteMany?: ProjectImageDeleteManyInput
+  }
+
+  export type ProjectLinkListUpdateEnvelopeInput = {
+    set?: ProjectLinkCreateInput | ProjectLinkCreateInput[]
+    push?: ProjectLinkCreateInput | ProjectLinkCreateInput[]
+    updateMany?: ProjectLinkUpdateManyInput
+    deleteMany?: ProjectLinkDeleteManyInput
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type categoriesUpdateOneRequiredWithoutProjectNestedInput = {
-    create?: XOR<categoriesCreateWithoutProjectInput, categoriesUncheckedCreateWithoutProjectInput>
-    connectOrCreate?: categoriesCreateOrConnectWithoutProjectInput
-    upsert?: categoriesUpsertWithoutProjectInput
-    connect?: categoriesWhereUniqueInput
-    update?: XOR<XOR<categoriesUpdateToOneWithWhereWithoutProjectInput, categoriesUpdateWithoutProjectInput>, categoriesUncheckedUpdateWithoutProjectInput>
-  }
-
-  export type projectsCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<projectsCreateWithoutCategoryInput, projectsUncheckedCreateWithoutCategoryInput> | projectsCreateWithoutCategoryInput[] | projectsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: projectsCreateOrConnectWithoutCategoryInput | projectsCreateOrConnectWithoutCategoryInput[]
-    createMany?: projectsCreateManyCategoryInputEnvelope
-    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-  }
-
-  export type projectsUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<projectsCreateWithoutCategoryInput, projectsUncheckedCreateWithoutCategoryInput> | projectsCreateWithoutCategoryInput[] | projectsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: projectsCreateOrConnectWithoutCategoryInput | projectsCreateOrConnectWithoutCategoryInput[]
-    createMany?: projectsCreateManyCategoryInputEnvelope
-    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-  }
-
-  export type projectsUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<projectsCreateWithoutCategoryInput, projectsUncheckedCreateWithoutCategoryInput> | projectsCreateWithoutCategoryInput[] | projectsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: projectsCreateOrConnectWithoutCategoryInput | projectsCreateOrConnectWithoutCategoryInput[]
-    upsert?: projectsUpsertWithWhereUniqueWithoutCategoryInput | projectsUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: projectsCreateManyCategoryInputEnvelope
-    set?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    disconnect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    delete?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    update?: projectsUpdateWithWhereUniqueWithoutCategoryInput | projectsUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: projectsUpdateManyWithWhereWithoutCategoryInput | projectsUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
-  }
-
-  export type projectsUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<projectsCreateWithoutCategoryInput, projectsUncheckedCreateWithoutCategoryInput> | projectsCreateWithoutCategoryInput[] | projectsUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: projectsCreateOrConnectWithoutCategoryInput | projectsCreateOrConnectWithoutCategoryInput[]
-    upsert?: projectsUpsertWithWhereUniqueWithoutCategoryInput | projectsUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: projectsCreateManyCategoryInputEnvelope
-    set?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    disconnect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    delete?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    connect?: projectsWhereUniqueInput | projectsWhereUniqueInput[]
-    update?: projectsUpdateWithWhereUniqueWithoutCategoryInput | projectsUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: projectsUpdateManyWithWhereWithoutCategoryInput | projectsUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: projectsScalarWhereInput | projectsScalarWhereInput[]
   }
 
   export type educationsCreatecoursesInput = {
@@ -9863,6 +10047,11 @@ export namespace Prisma {
   export type educationsUpdatecoursesInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+    unset?: boolean
   }
 
   export type achievementsCreatetechnologiesInput = {
@@ -9901,6 +10090,25 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
     isSet?: boolean
+  }
+
+  export type ProjectImageWhereInput = {
+    AND?: ProjectImageWhereInput | ProjectImageWhereInput[]
+    OR?: ProjectImageWhereInput[]
+    NOT?: ProjectImageWhereInput | ProjectImageWhereInput[]
+    url?: StringFilter<"ProjectImage"> | string
+    path?: StringNullableFilter<"ProjectImage"> | string | null
+    width?: IntNullableFilter<"ProjectImage"> | number | null
+    height?: IntNullableFilter<"ProjectImage"> | number | null
+  }
+
+  export type ProjectLinkWhereInput = {
+    AND?: ProjectLinkWhereInput | ProjectLinkWhereInput[]
+    OR?: ProjectLinkWhereInput[]
+    NOT?: ProjectLinkWhereInput | ProjectLinkWhereInput[]
+    type?: StringFilter<"ProjectLink"> | string
+    label?: StringNullableFilter<"ProjectLink"> | string | null
+    url?: StringFilter<"ProjectLink"> | string
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -9999,201 +10207,71 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type categoriesCreateWithoutProjectInput = {
-    id?: string
-    name: string
-    description: string
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+    isSet?: boolean
   }
 
-  export type categoriesUncheckedCreateWithoutProjectInput = {
-    id?: string
-    name: string
-    description: string
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+    isSet?: boolean
   }
 
-  export type categoriesCreateOrConnectWithoutProjectInput = {
-    where: categoriesWhereUniqueInput
-    create: XOR<categoriesCreateWithoutProjectInput, categoriesUncheckedCreateWithoutProjectInput>
+  export type ProjectImageUpdateManyInput = {
+    where: ProjectImageWhereInput
+    data: ProjectImageUpdateInput
   }
 
-  export type categoriesUpsertWithoutProjectInput = {
-    update: XOR<categoriesUpdateWithoutProjectInput, categoriesUncheckedUpdateWithoutProjectInput>
-    create: XOR<categoriesCreateWithoutProjectInput, categoriesUncheckedCreateWithoutProjectInput>
-    where?: categoriesWhereInput
+  export type ProjectImageDeleteManyInput = {
+    where: ProjectImageWhereInput
   }
 
-  export type categoriesUpdateToOneWithWhereWithoutProjectInput = {
-    where?: categoriesWhereInput
-    data: XOR<categoriesUpdateWithoutProjectInput, categoriesUncheckedUpdateWithoutProjectInput>
+  export type ProjectLinkUpdateManyInput = {
+    where: ProjectLinkWhereInput
+    data: ProjectLinkUpdateInput
   }
 
-  export type categoriesUpdateWithoutProjectInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+  export type ProjectLinkDeleteManyInput = {
+    where: ProjectLinkWhereInput
   }
 
-  export type categoriesUncheckedUpdateWithoutProjectInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
   }
 
-  export type projectsCreateWithoutCategoryInput = {
-    id?: string
-    title: string
-    description: string
-    detailedDescription?: string | null
-    tags?: projectsCreatetagsInput | string[]
-    technologies?: projectsCreatetechnologiesInput | string[]
-    features?: projectsCreatefeaturesInput | string[]
-    imageUrl: string
-    imagePath: string
-    liveUrl?: string | null
-    githubUrl: string
-    completionDate?: string | null
-    teamSize?: string | null
-    featured?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type ProjectImageUpdateInput = {
+    url?: StringFieldUpdateOperationsInput | string
+    path?: NullableStringFieldUpdateOperationsInput | string | null
+    width?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type projectsUncheckedCreateWithoutCategoryInput = {
-    id?: string
-    title: string
-    description: string
-    detailedDescription?: string | null
-    tags?: projectsCreatetagsInput | string[]
-    technologies?: projectsCreatetechnologiesInput | string[]
-    features?: projectsCreatefeaturesInput | string[]
-    imageUrl: string
-    imagePath: string
-    liveUrl?: string | null
-    githubUrl: string
-    completionDate?: string | null
-    teamSize?: string | null
-    featured?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type ProjectLinkUpdateInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    label?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
   }
 
-  export type projectsCreateOrConnectWithoutCategoryInput = {
-    where: projectsWhereUniqueInput
-    create: XOR<projectsCreateWithoutCategoryInput, projectsUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type projectsCreateManyCategoryInputEnvelope = {
-    data: projectsCreateManyCategoryInput | projectsCreateManyCategoryInput[]
-  }
-
-  export type projectsUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: projectsWhereUniqueInput
-    update: XOR<projectsUpdateWithoutCategoryInput, projectsUncheckedUpdateWithoutCategoryInput>
-    create: XOR<projectsCreateWithoutCategoryInput, projectsUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type projectsUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: projectsWhereUniqueInput
-    data: XOR<projectsUpdateWithoutCategoryInput, projectsUncheckedUpdateWithoutCategoryInput>
-  }
-
-  export type projectsUpdateManyWithWhereWithoutCategoryInput = {
-    where: projectsScalarWhereInput
-    data: XOR<projectsUpdateManyMutationInput, projectsUncheckedUpdateManyWithoutCategoryInput>
-  }
-
-  export type projectsScalarWhereInput = {
-    AND?: projectsScalarWhereInput | projectsScalarWhereInput[]
-    OR?: projectsScalarWhereInput[]
-    NOT?: projectsScalarWhereInput | projectsScalarWhereInput[]
-    id?: StringFilter<"projects"> | string
-    title?: StringFilter<"projects"> | string
-    description?: StringFilter<"projects"> | string
-    detailedDescription?: StringNullableFilter<"projects"> | string | null
-    categoryId?: StringFilter<"projects"> | string
-    tags?: StringNullableListFilter<"projects">
-    technologies?: StringNullableListFilter<"projects">
-    features?: StringNullableListFilter<"projects">
-    imageUrl?: StringFilter<"projects"> | string
-    imagePath?: StringFilter<"projects"> | string
-    liveUrl?: StringNullableFilter<"projects"> | string | null
-    githubUrl?: StringFilter<"projects"> | string
-    completionDate?: StringNullableFilter<"projects"> | string | null
-    teamSize?: StringNullableFilter<"projects"> | string | null
-    featured?: BoolFilter<"projects"> | boolean
-    createdAt?: DateTimeFilter<"projects"> | Date | string
-    updatedAt?: DateTimeFilter<"projects"> | Date | string
-  }
-
-  export type projectsCreateManyCategoryInput = {
-    id?: string
-    title: string
-    description: string
-    detailedDescription?: string | null
-    tags?: projectsCreatetagsInput | string[]
-    technologies?: projectsCreatetechnologiesInput | string[]
-    features?: projectsCreatefeaturesInput | string[]
-    imageUrl: string
-    imagePath: string
-    liveUrl?: string | null
-    githubUrl: string
-    completionDate?: string | null
-    teamSize?: string | null
-    featured?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type projectsUpdateWithoutCategoryInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: projectsUpdatetagsInput | string[]
-    technologies?: projectsUpdatetechnologiesInput | string[]
-    features?: projectsUpdatefeaturesInput | string[]
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    imagePath?: StringFieldUpdateOperationsInput | string
-    liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
-    completionDate?: NullableStringFieldUpdateOperationsInput | string | null
-    teamSize?: NullableStringFieldUpdateOperationsInput | string | null
-    featured?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type projectsUncheckedUpdateWithoutCategoryInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: projectsUpdatetagsInput | string[]
-    technologies?: projectsUpdatetechnologiesInput | string[]
-    features?: projectsUpdatefeaturesInput | string[]
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    imagePath?: StringFieldUpdateOperationsInput | string
-    liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
-    completionDate?: NullableStringFieldUpdateOperationsInput | string | null
-    teamSize?: NullableStringFieldUpdateOperationsInput | string | null
-    featured?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type projectsUncheckedUpdateManyWithoutCategoryInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    detailedDescription?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: projectsUpdatetagsInput | string[]
-    technologies?: projectsUpdatetechnologiesInput | string[]
-    features?: projectsUpdatefeaturesInput | string[]
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    imagePath?: StringFieldUpdateOperationsInput | string
-    liveUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    githubUrl?: StringFieldUpdateOperationsInput | string
-    completionDate?: NullableStringFieldUpdateOperationsInput | string | null
-    teamSize?: NullableStringFieldUpdateOperationsInput | string | null
-    featured?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+    unset?: boolean
   }
 
 
