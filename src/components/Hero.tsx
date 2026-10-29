@@ -144,10 +144,12 @@ export default function Hero() {
                   {/* Fills the circle; slight side crop, positioned to keep me and both screens */}
                   <Image
                     quality={90}
-                    src="/hero.webp"
+                    src="/hero.jpg"
                     alt="Mohammad Al Asad at his desk"
                     fill
-                    sizes="(max-width: 1024px) 320px, 384px"
+                    // The 4:3 photo is drawn 4/3 wider than the circle to fill it
+                    // (320px / 384px circle -> 427px / 512px wide), so request that width
+                    sizes="(max-width: 1024px) 427px, 512px"
                     className="object-cover object-[45%_50%]"
                     priority
                   />
