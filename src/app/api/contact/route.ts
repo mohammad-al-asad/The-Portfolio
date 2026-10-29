@@ -1,7 +1,5 @@
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
 import { Resend } from "resend";
 
 export async function POST(req: Request) {
@@ -52,11 +50,6 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const messages = await prisma.contactMessage.findMany({
       orderBy: { createdAt: "desc" },
     });
