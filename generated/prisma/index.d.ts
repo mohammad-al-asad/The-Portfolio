@@ -58,6 +58,11 @@ export type achievements = $Result.DefaultSelection<Prisma.$achievementsPayload>
  * 
  */
 export type ContactMessage = $Result.DefaultSelection<Prisma.$ContactMessagePayload>
+/**
+ * Model dailyVisits
+ * 
+ */
+export type dailyVisits = $Result.DefaultSelection<Prisma.$dailyVisitsPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -213,6 +218,16 @@ export class PrismaClient<
     * ```
     */
   get contactMessage(): Prisma.ContactMessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dailyVisits`: Exposes CRUD operations for the **dailyVisits** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DailyVisits
+    * const dailyVisits = await prisma.dailyVisits.findMany()
+    * ```
+    */
+  get dailyVisits(): Prisma.dailyVisitsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -660,7 +675,8 @@ export namespace Prisma {
     admins: 'admins',
     educations: 'educations',
     achievements: 'achievements',
-    ContactMessage: 'ContactMessage'
+    ContactMessage: 'ContactMessage',
+    dailyVisits: 'dailyVisits'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -679,7 +695,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "projects" | "categories" | "resumes" | "admins" | "educations" | "achievements" | "contactMessage"
+      modelProps: "projects" | "categories" | "resumes" | "admins" | "educations" | "achievements" | "contactMessage" | "dailyVisits"
       txIsolationLevel: never
     }
     model: {
@@ -1201,6 +1217,80 @@ export namespace Prisma {
           }
         }
       }
+      dailyVisits: {
+        payload: Prisma.$dailyVisitsPayload<ExtArgs>
+        fields: Prisma.dailyVisitsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.dailyVisitsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.dailyVisitsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>
+          }
+          findFirst: {
+            args: Prisma.dailyVisitsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.dailyVisitsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>
+          }
+          findMany: {
+            args: Prisma.dailyVisitsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>[]
+          }
+          create: {
+            args: Prisma.dailyVisitsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>
+          }
+          createMany: {
+            args: Prisma.dailyVisitsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.dailyVisitsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>
+          }
+          update: {
+            args: Prisma.dailyVisitsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>
+          }
+          deleteMany: {
+            args: Prisma.dailyVisitsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.dailyVisitsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.dailyVisitsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$dailyVisitsPayload>
+          }
+          aggregate: {
+            args: Prisma.DailyVisitsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDailyVisits>
+          }
+          groupBy: {
+            args: Prisma.dailyVisitsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DailyVisitsGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.dailyVisitsFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.dailyVisitsAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.dailyVisitsCountArgs<ExtArgs>
+            result: $Utils.Optional<DailyVisitsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1287,6 +1377,7 @@ export namespace Prisma {
     educations?: educationsOmit
     achievements?: achievementsOmit
     contactMessage?: ContactMessageOmit
+    dailyVisits?: dailyVisitsOmit
   }
 
   /* Types for Logging */
@@ -8327,6 +8418,954 @@ export namespace Prisma {
 
 
   /**
+   * Model dailyVisits
+   */
+
+  export type AggregateDailyVisits = {
+    _count: DailyVisitsCountAggregateOutputType | null
+    _avg: DailyVisitsAvgAggregateOutputType | null
+    _sum: DailyVisitsSumAggregateOutputType | null
+    _min: DailyVisitsMinAggregateOutputType | null
+    _max: DailyVisitsMaxAggregateOutputType | null
+  }
+
+  export type DailyVisitsAvgAggregateOutputType = {
+    visitors: number | null
+    pageViews: number | null
+  }
+
+  export type DailyVisitsSumAggregateOutputType = {
+    visitors: number | null
+    pageViews: number | null
+  }
+
+  export type DailyVisitsMinAggregateOutputType = {
+    id: string | null
+    visitors: number | null
+    pageViews: number | null
+  }
+
+  export type DailyVisitsMaxAggregateOutputType = {
+    id: string | null
+    visitors: number | null
+    pageViews: number | null
+  }
+
+  export type DailyVisitsCountAggregateOutputType = {
+    id: number
+    visitors: number
+    pageViews: number
+    _all: number
+  }
+
+
+  export type DailyVisitsAvgAggregateInputType = {
+    visitors?: true
+    pageViews?: true
+  }
+
+  export type DailyVisitsSumAggregateInputType = {
+    visitors?: true
+    pageViews?: true
+  }
+
+  export type DailyVisitsMinAggregateInputType = {
+    id?: true
+    visitors?: true
+    pageViews?: true
+  }
+
+  export type DailyVisitsMaxAggregateInputType = {
+    id?: true
+    visitors?: true
+    pageViews?: true
+  }
+
+  export type DailyVisitsCountAggregateInputType = {
+    id?: true
+    visitors?: true
+    pageViews?: true
+    _all?: true
+  }
+
+  export type DailyVisitsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which dailyVisits to aggregate.
+     */
+    where?: dailyVisitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of dailyVisits to fetch.
+     */
+    orderBy?: dailyVisitsOrderByWithRelationInput | dailyVisitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: dailyVisitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` dailyVisits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` dailyVisits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned dailyVisits
+    **/
+    _count?: true | DailyVisitsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DailyVisitsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DailyVisitsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DailyVisitsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DailyVisitsMaxAggregateInputType
+  }
+
+  export type GetDailyVisitsAggregateType<T extends DailyVisitsAggregateArgs> = {
+        [P in keyof T & keyof AggregateDailyVisits]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDailyVisits[P]>
+      : GetScalarType<T[P], AggregateDailyVisits[P]>
+  }
+
+
+
+
+  export type dailyVisitsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: dailyVisitsWhereInput
+    orderBy?: dailyVisitsOrderByWithAggregationInput | dailyVisitsOrderByWithAggregationInput[]
+    by: DailyVisitsScalarFieldEnum[] | DailyVisitsScalarFieldEnum
+    having?: dailyVisitsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DailyVisitsCountAggregateInputType | true
+    _avg?: DailyVisitsAvgAggregateInputType
+    _sum?: DailyVisitsSumAggregateInputType
+    _min?: DailyVisitsMinAggregateInputType
+    _max?: DailyVisitsMaxAggregateInputType
+  }
+
+  export type DailyVisitsGroupByOutputType = {
+    id: string
+    visitors: number
+    pageViews: number
+    _count: DailyVisitsCountAggregateOutputType | null
+    _avg: DailyVisitsAvgAggregateOutputType | null
+    _sum: DailyVisitsSumAggregateOutputType | null
+    _min: DailyVisitsMinAggregateOutputType | null
+    _max: DailyVisitsMaxAggregateOutputType | null
+  }
+
+  type GetDailyVisitsGroupByPayload<T extends dailyVisitsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DailyVisitsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DailyVisitsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DailyVisitsGroupByOutputType[P]>
+            : GetScalarType<T[P], DailyVisitsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type dailyVisitsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    visitors?: boolean
+    pageViews?: boolean
+  }, ExtArgs["result"]["dailyVisits"]>
+
+
+
+  export type dailyVisitsSelectScalar = {
+    id?: boolean
+    visitors?: boolean
+    pageViews?: boolean
+  }
+
+  export type dailyVisitsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "visitors" | "pageViews", ExtArgs["result"]["dailyVisits"]>
+
+  export type $dailyVisitsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "dailyVisits"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      visitors: number
+      pageViews: number
+    }, ExtArgs["result"]["dailyVisits"]>
+    composites: {}
+  }
+
+  type dailyVisitsGetPayload<S extends boolean | null | undefined | dailyVisitsDefaultArgs> = $Result.GetResult<Prisma.$dailyVisitsPayload, S>
+
+  type dailyVisitsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<dailyVisitsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DailyVisitsCountAggregateInputType | true
+    }
+
+  export interface dailyVisitsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['dailyVisits'], meta: { name: 'dailyVisits' } }
+    /**
+     * Find zero or one DailyVisits that matches the filter.
+     * @param {dailyVisitsFindUniqueArgs} args - Arguments to find a DailyVisits
+     * @example
+     * // Get one DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends dailyVisitsFindUniqueArgs>(args: SelectSubset<T, dailyVisitsFindUniqueArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DailyVisits that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {dailyVisitsFindUniqueOrThrowArgs} args - Arguments to find a DailyVisits
+     * @example
+     * // Get one DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends dailyVisitsFindUniqueOrThrowArgs>(args: SelectSubset<T, dailyVisitsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DailyVisits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {dailyVisitsFindFirstArgs} args - Arguments to find a DailyVisits
+     * @example
+     * // Get one DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends dailyVisitsFindFirstArgs>(args?: SelectSubset<T, dailyVisitsFindFirstArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DailyVisits that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {dailyVisitsFindFirstOrThrowArgs} args - Arguments to find a DailyVisits
+     * @example
+     * // Get one DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends dailyVisitsFindFirstOrThrowArgs>(args?: SelectSubset<T, dailyVisitsFindFirstOrThrowArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DailyVisits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {dailyVisitsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.findMany()
+     * 
+     * // Get first 10 DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dailyVisitsWithIdOnly = await prisma.dailyVisits.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends dailyVisitsFindManyArgs>(args?: SelectSubset<T, dailyVisitsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DailyVisits.
+     * @param {dailyVisitsCreateArgs} args - Arguments to create a DailyVisits.
+     * @example
+     * // Create one DailyVisits
+     * const DailyVisits = await prisma.dailyVisits.create({
+     *   data: {
+     *     // ... data to create a DailyVisits
+     *   }
+     * })
+     * 
+     */
+    create<T extends dailyVisitsCreateArgs>(args: SelectSubset<T, dailyVisitsCreateArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DailyVisits.
+     * @param {dailyVisitsCreateManyArgs} args - Arguments to create many DailyVisits.
+     * @example
+     * // Create many DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends dailyVisitsCreateManyArgs>(args?: SelectSubset<T, dailyVisitsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a DailyVisits.
+     * @param {dailyVisitsDeleteArgs} args - Arguments to delete one DailyVisits.
+     * @example
+     * // Delete one DailyVisits
+     * const DailyVisits = await prisma.dailyVisits.delete({
+     *   where: {
+     *     // ... filter to delete one DailyVisits
+     *   }
+     * })
+     * 
+     */
+    delete<T extends dailyVisitsDeleteArgs>(args: SelectSubset<T, dailyVisitsDeleteArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DailyVisits.
+     * @param {dailyVisitsUpdateArgs} args - Arguments to update one DailyVisits.
+     * @example
+     * // Update one DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends dailyVisitsUpdateArgs>(args: SelectSubset<T, dailyVisitsUpdateArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DailyVisits.
+     * @param {dailyVisitsDeleteManyArgs} args - Arguments to filter DailyVisits to delete.
+     * @example
+     * // Delete a few DailyVisits
+     * const { count } = await prisma.dailyVisits.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends dailyVisitsDeleteManyArgs>(args?: SelectSubset<T, dailyVisitsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DailyVisits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {dailyVisitsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends dailyVisitsUpdateManyArgs>(args: SelectSubset<T, dailyVisitsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DailyVisits.
+     * @param {dailyVisitsUpsertArgs} args - Arguments to update or create a DailyVisits.
+     * @example
+     * // Update or create a DailyVisits
+     * const dailyVisits = await prisma.dailyVisits.upsert({
+     *   create: {
+     *     // ... data to create a DailyVisits
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DailyVisits we want to update
+     *   }
+     * })
+     */
+    upsert<T extends dailyVisitsUpsertArgs>(args: SelectSubset<T, dailyVisitsUpsertArgs<ExtArgs>>): Prisma__dailyVisitsClient<$Result.GetResult<Prisma.$dailyVisitsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DailyVisits that matches the filter.
+     * @param {dailyVisitsFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const dailyVisits = await prisma.dailyVisits.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: dailyVisitsFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a DailyVisits.
+     * @param {dailyVisitsAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const dailyVisits = await prisma.dailyVisits.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: dailyVisitsAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of DailyVisits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {dailyVisitsCountArgs} args - Arguments to filter DailyVisits to count.
+     * @example
+     * // Count the number of DailyVisits
+     * const count = await prisma.dailyVisits.count({
+     *   where: {
+     *     // ... the filter for the DailyVisits we want to count
+     *   }
+     * })
+    **/
+    count<T extends dailyVisitsCountArgs>(
+      args?: Subset<T, dailyVisitsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DailyVisitsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DailyVisits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyVisitsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DailyVisitsAggregateArgs>(args: Subset<T, DailyVisitsAggregateArgs>): Prisma.PrismaPromise<GetDailyVisitsAggregateType<T>>
+
+    /**
+     * Group by DailyVisits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {dailyVisitsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends dailyVisitsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: dailyVisitsGroupByArgs['orderBy'] }
+        : { orderBy?: dailyVisitsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, dailyVisitsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDailyVisitsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the dailyVisits model
+   */
+  readonly fields: dailyVisitsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for dailyVisits.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__dailyVisitsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the dailyVisits model
+   */
+  interface dailyVisitsFieldRefs {
+    readonly id: FieldRef<"dailyVisits", 'String'>
+    readonly visitors: FieldRef<"dailyVisits", 'Int'>
+    readonly pageViews: FieldRef<"dailyVisits", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * dailyVisits findUnique
+   */
+  export type dailyVisitsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * Filter, which dailyVisits to fetch.
+     */
+    where: dailyVisitsWhereUniqueInput
+  }
+
+  /**
+   * dailyVisits findUniqueOrThrow
+   */
+  export type dailyVisitsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * Filter, which dailyVisits to fetch.
+     */
+    where: dailyVisitsWhereUniqueInput
+  }
+
+  /**
+   * dailyVisits findFirst
+   */
+  export type dailyVisitsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * Filter, which dailyVisits to fetch.
+     */
+    where?: dailyVisitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of dailyVisits to fetch.
+     */
+    orderBy?: dailyVisitsOrderByWithRelationInput | dailyVisitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for dailyVisits.
+     */
+    cursor?: dailyVisitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` dailyVisits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` dailyVisits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of dailyVisits.
+     */
+    distinct?: DailyVisitsScalarFieldEnum | DailyVisitsScalarFieldEnum[]
+  }
+
+  /**
+   * dailyVisits findFirstOrThrow
+   */
+  export type dailyVisitsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * Filter, which dailyVisits to fetch.
+     */
+    where?: dailyVisitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of dailyVisits to fetch.
+     */
+    orderBy?: dailyVisitsOrderByWithRelationInput | dailyVisitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for dailyVisits.
+     */
+    cursor?: dailyVisitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` dailyVisits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` dailyVisits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of dailyVisits.
+     */
+    distinct?: DailyVisitsScalarFieldEnum | DailyVisitsScalarFieldEnum[]
+  }
+
+  /**
+   * dailyVisits findMany
+   */
+  export type dailyVisitsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * Filter, which dailyVisits to fetch.
+     */
+    where?: dailyVisitsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of dailyVisits to fetch.
+     */
+    orderBy?: dailyVisitsOrderByWithRelationInput | dailyVisitsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing dailyVisits.
+     */
+    cursor?: dailyVisitsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` dailyVisits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` dailyVisits.
+     */
+    skip?: number
+    distinct?: DailyVisitsScalarFieldEnum | DailyVisitsScalarFieldEnum[]
+  }
+
+  /**
+   * dailyVisits create
+   */
+  export type dailyVisitsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a dailyVisits.
+     */
+    data: XOR<dailyVisitsCreateInput, dailyVisitsUncheckedCreateInput>
+  }
+
+  /**
+   * dailyVisits createMany
+   */
+  export type dailyVisitsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many dailyVisits.
+     */
+    data: dailyVisitsCreateManyInput | dailyVisitsCreateManyInput[]
+  }
+
+  /**
+   * dailyVisits update
+   */
+  export type dailyVisitsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a dailyVisits.
+     */
+    data: XOR<dailyVisitsUpdateInput, dailyVisitsUncheckedUpdateInput>
+    /**
+     * Choose, which dailyVisits to update.
+     */
+    where: dailyVisitsWhereUniqueInput
+  }
+
+  /**
+   * dailyVisits updateMany
+   */
+  export type dailyVisitsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update dailyVisits.
+     */
+    data: XOR<dailyVisitsUpdateManyMutationInput, dailyVisitsUncheckedUpdateManyInput>
+    /**
+     * Filter which dailyVisits to update
+     */
+    where?: dailyVisitsWhereInput
+    /**
+     * Limit how many dailyVisits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * dailyVisits upsert
+   */
+  export type dailyVisitsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the dailyVisits to update in case it exists.
+     */
+    where: dailyVisitsWhereUniqueInput
+    /**
+     * In case the dailyVisits found by the `where` argument doesn't exist, create a new dailyVisits with this data.
+     */
+    create: XOR<dailyVisitsCreateInput, dailyVisitsUncheckedCreateInput>
+    /**
+     * In case the dailyVisits was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<dailyVisitsUpdateInput, dailyVisitsUncheckedUpdateInput>
+  }
+
+  /**
+   * dailyVisits delete
+   */
+  export type dailyVisitsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+    /**
+     * Filter which dailyVisits to delete.
+     */
+    where: dailyVisitsWhereUniqueInput
+  }
+
+  /**
+   * dailyVisits deleteMany
+   */
+  export type dailyVisitsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which dailyVisits to delete
+     */
+    where?: dailyVisitsWhereInput
+    /**
+     * Limit how many dailyVisits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * dailyVisits findRaw
+   */
+  export type dailyVisitsFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * dailyVisits aggregateRaw
+   */
+  export type dailyVisitsAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * dailyVisits without action
+   */
+  export type dailyVisitsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the dailyVisits
+     */
+    select?: dailyVisitsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the dailyVisits
+     */
+    omit?: dailyVisitsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -8432,6 +9471,15 @@ export namespace Prisma {
   export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
 
 
+  export const DailyVisitsScalarFieldEnum: {
+    id: 'id',
+    visitors: 'visitors',
+    pageViews: 'pageViews'
+  };
+
+  export type DailyVisitsScalarFieldEnum = (typeof DailyVisitsScalarFieldEnum)[keyof typeof DailyVisitsScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -8499,6 +9547,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -8998,6 +10060,50 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter<"ContactMessage"> | string
     read?: BoolNullableWithAggregatesFilter<"ContactMessage"> | boolean | null
     createdAt?: DateTimeWithAggregatesFilter<"ContactMessage"> | Date | string
+  }
+
+  export type dailyVisitsWhereInput = {
+    AND?: dailyVisitsWhereInput | dailyVisitsWhereInput[]
+    OR?: dailyVisitsWhereInput[]
+    NOT?: dailyVisitsWhereInput | dailyVisitsWhereInput[]
+    id?: StringFilter<"dailyVisits"> | string
+    visitors?: IntFilter<"dailyVisits"> | number
+    pageViews?: IntFilter<"dailyVisits"> | number
+  }
+
+  export type dailyVisitsOrderByWithRelationInput = {
+    id?: SortOrder
+    visitors?: SortOrder
+    pageViews?: SortOrder
+  }
+
+  export type dailyVisitsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: dailyVisitsWhereInput | dailyVisitsWhereInput[]
+    OR?: dailyVisitsWhereInput[]
+    NOT?: dailyVisitsWhereInput | dailyVisitsWhereInput[]
+    visitors?: IntFilter<"dailyVisits"> | number
+    pageViews?: IntFilter<"dailyVisits"> | number
+  }, "id">
+
+  export type dailyVisitsOrderByWithAggregationInput = {
+    id?: SortOrder
+    visitors?: SortOrder
+    pageViews?: SortOrder
+    _count?: dailyVisitsCountOrderByAggregateInput
+    _avg?: dailyVisitsAvgOrderByAggregateInput
+    _max?: dailyVisitsMaxOrderByAggregateInput
+    _min?: dailyVisitsMinOrderByAggregateInput
+    _sum?: dailyVisitsSumOrderByAggregateInput
+  }
+
+  export type dailyVisitsScalarWhereWithAggregatesInput = {
+    AND?: dailyVisitsScalarWhereWithAggregatesInput | dailyVisitsScalarWhereWithAggregatesInput[]
+    OR?: dailyVisitsScalarWhereWithAggregatesInput[]
+    NOT?: dailyVisitsScalarWhereWithAggregatesInput | dailyVisitsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"dailyVisits"> | string
+    visitors?: IntWithAggregatesFilter<"dailyVisits"> | number
+    pageViews?: IntWithAggregatesFilter<"dailyVisits"> | number
   }
 
   export type projectsCreateInput = {
@@ -9553,6 +10659,44 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type dailyVisitsCreateInput = {
+    id: string
+    visitors?: number
+    pageViews?: number
+  }
+
+  export type dailyVisitsUncheckedCreateInput = {
+    id: string
+    visitors?: number
+    pageViews?: number
+  }
+
+  export type dailyVisitsUpdateInput = {
+    visitors?: IntFieldUpdateOperationsInput | number
+    pageViews?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type dailyVisitsUncheckedUpdateInput = {
+    visitors?: IntFieldUpdateOperationsInput | number
+    pageViews?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type dailyVisitsCreateManyInput = {
+    id: string
+    visitors?: number
+    pageViews?: number
+  }
+
+  export type dailyVisitsUpdateManyMutationInput = {
+    visitors?: IntFieldUpdateOperationsInput | number
+    pageViews?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type dailyVisitsUncheckedUpdateManyInput = {
+    visitors?: IntFieldUpdateOperationsInput | number
+    pageViews?: IntFieldUpdateOperationsInput | number
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9952,6 +11096,61 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type dailyVisitsCountOrderByAggregateInput = {
+    id?: SortOrder
+    visitors?: SortOrder
+    pageViews?: SortOrder
+  }
+
+  export type dailyVisitsAvgOrderByAggregateInput = {
+    visitors?: SortOrder
+    pageViews?: SortOrder
+  }
+
+  export type dailyVisitsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    visitors?: SortOrder
+    pageViews?: SortOrder
+  }
+
+  export type dailyVisitsMinOrderByAggregateInput = {
+    id?: SortOrder
+    visitors?: SortOrder
+    pageViews?: SortOrder
+  }
+
+  export type dailyVisitsSumOrderByAggregateInput = {
+    visitors?: SortOrder
+    pageViews?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type projectsCreatecategoryIdsInput = {
     set: string[]
   }
@@ -10061,6 +11260,14 @@ export namespace Prisma {
   export type achievementsUpdatetechnologiesInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10220,6 +11427,33 @@ export namespace Prisma {
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
     isSet?: boolean
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type ProjectImageUpdateManyInput = {

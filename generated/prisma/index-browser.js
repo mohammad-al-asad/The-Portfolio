@@ -195,6 +195,12 @@ exports.Prisma.ContactMessageScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DailyVisitsScalarFieldEnum = {
+  id: 'id',
+  visitors: 'visitors',
+  pageViews: 'pageViews'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -213,7 +219,8 @@ exports.Prisma.ModelName = {
   admins: 'admins',
   educations: 'educations',
   achievements: 'achievements',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  dailyVisits: 'dailyVisits'
 };
 
 /**

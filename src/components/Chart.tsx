@@ -21,7 +21,9 @@ ChartJS.register(
   Legend
 );
 
-export default function Chart() {
+export type ChartPoint = { label: string; visitors: number; pageViews: number };
+
+export default function Chart({ points }: { points: ChartPoint[] }) {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -43,31 +45,31 @@ export default function Chart() {
         }
       },
       y: {
+        beginAtZero: true,
         grid: {
           color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
           color: '#788494',
+          precision: 0,
         }
       }
     }
   };
 
-  const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-  
   const data = {
-    labels,
+    labels: points.map((p) => p.label),
     datasets: [
       {
         label: 'Visitors',
-        data: [6500, 8100, 7200, 9800, 11500, 10500, 13200],
+        data: points.map((p) => p.visitors),
         borderColor: 'rgb(59, 130, 246)',
         backgroundColor: 'transparent',
         tension: 0.3,
       },
       {
         label: 'Page Views',
-        data: [12000, 15000, 14200, 16500, 18000, 19500, 22000],
+        data: points.map((p) => p.pageViews),
         borderColor: 'rgb(139, 92, 246)',
         backgroundColor: 'transparent',
         tension: 0.3,

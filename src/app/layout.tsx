@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import { SessionProvider } from "@/components/SessionProvider";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import VisitTracker from "@/components/VisitTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default async function RootLayout({
                 <Navbar />
                 <main className="container mx-auto">{children}</main>
                 <Toaster />
+                <VisitTracker />
               </div>
             </EdgeStoreProvider>
           </ThemeProvider>
