@@ -6,7 +6,9 @@ import { prisma } from "@/lib/db";
 // GET all achievements
 export async function GET() {
   try {
-    const achievements = await prisma.achievements.findMany();
+    const achievements = await prisma.achievements.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
     return NextResponse.json(achievements);
   } catch (error) {

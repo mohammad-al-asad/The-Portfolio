@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { edgeColor } from "@/lib/edgeColor";
 
 type Img = { url: string; width?: number | null; height?: number | null };
 
@@ -19,6 +20,8 @@ export default function ProjectGallery({
   title: string;
 }) {
   const [index, setIndex] = useState(0);
+  // Edge colour per image URL, used to fill around letterboxed images
+  const [bgByUrl, setBgByUrl] = useState<Record<string, string>>({});
   const count = images.length;
 
   const go = useCallback(
@@ -48,7 +51,10 @@ export default function ProjectGallery({
       }}
     >
       {/* Stage: fixed size (primary image's aspect ratio, capped at 70vh) */}
-      <div className="group relative rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 p-2 sm:p-4">
+      <div
+        className="group relative rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 p-2 sm:p-4 transition-colors duration-300"
+        style={bgByUrl[current.url] ? { backgroundColor: bgByUrl[current.url] } : undefined}
+      >
         <a
           href={current.url}
           target="_blank"
@@ -65,6 +71,10 @@ export default function ProjectGallery({
             priority={index === 0}
             sizes="(max-width: 1024px) 100vw, 1024px"
             className="object-contain rounded-lg animate-in fade-in duration-300"
+            onLoad={(e) => {
+              const color = edgeColor(e.currentTarget);
+              if (color) setBgByUrl((prev) => ({ ...prev, [current.url]: color }));
+            }}
           />
           <span className="absolute right-2 top-2 rounded-md bg-black/50 p-1.5 text-white opacity-0 group-hover:opacity-100 transition-opacity">
             <Expand className="h-4 w-4" />

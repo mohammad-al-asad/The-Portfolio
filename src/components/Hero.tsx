@@ -10,7 +10,6 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function Hero() {
@@ -61,14 +60,8 @@ export default function Hero() {
     <section className="pb-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-8">
-          {/* Text Content Side */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="text-center lg:text-left order-1 transition-all"
-          >
+          {/* Text Content Side: CSS fade starts on first paint (no JS wait) */}
+          <div className="text-center lg:text-left order-1 animate-in fade-in duration-1000">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Crafting{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
@@ -104,16 +97,10 @@ export default function Hero() {
                 </a>
               </Button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Image Side */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1}}
-            viewport={{once:true}}
-            className="relative order-2 flex justify-center transition-all"
-          >
+          <div className="relative order-2 flex justify-center animate-in fade-in duration-1000">
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
               {/* Floating Social Icons */}
               {socialLinks.map((social, index) => {
@@ -134,14 +121,11 @@ export default function Hero() {
                     }}
                     aria-label={social.label}
                   >
-                    <motion.div
-                      initial={{ scale: "1%" }}
-                      whileInView={{ scale: "100%" }}
-                      transition={{ duration: 0.5 }}
-                      className={`w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${social.className}`}
+                    <div
+                      className={`animate-in zoom-in-50 fade-in duration-500 w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${social.className}`}
                     >
                       {social.icon}
-                    </motion.div>
+                    </div>
                   </a>
                 );
               })}
@@ -180,7 +164,7 @@ export default function Hero() {
               {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10 animate-pulse" />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

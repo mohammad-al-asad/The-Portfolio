@@ -53,7 +53,7 @@ export function MessageRowSkeleton({ compact = false }: { compact?: boolean }) {
 // Mirrors EducationCard / AchievementCard
 export function QualificationCardSkeleton() {
   return (
-    <Card className={cardClass} aria-hidden>
+    <Card className={`${cardClass} py-0 gap-0`} aria-hidden>
       <CardContent className="p-6 space-y-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3 flex-1">
