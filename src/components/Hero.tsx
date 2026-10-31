@@ -112,10 +112,17 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                     priority
                   />
                 </div>
+
+                {/* Floating elements */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full animate-bounce" />
+                <div
+                  className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.5s" }}
+                />
               </div>
 
               {/* Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10 animate-pulse" />
             </div>
           </div>
         </div>
