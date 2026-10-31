@@ -41,6 +41,7 @@ const Navbar = () => {
       path: "/#qualifications",
       icon: <GraduationCap size={20} />,
     },
+    { name: "Projects", path: "/#projects", icon: <Briefcase size={18} /> },
     { name: "Contact", path: "/#contact", icon: <Mail size={18} /> },
   ];
 
@@ -56,7 +57,6 @@ const Navbar = () => {
       path: "/admin/qualifications",
       icon: <GraduationCap size={18} />,
     },
-    // { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
     { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
   ];
 

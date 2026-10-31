@@ -4,41 +4,56 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 import { SessionProvider } from "@/components/SessionProvider";
-import { EdgeStoreProvider } from "@/lib/edgestore";
 import VisitTracker from "@/components/VisitTracker";
+import { SITE_URL } from "@/lib/site";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+const description =
+  "Full-stack & React Native developer building fast, polished apps for mobile and the web.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Mohammad Al Asad",
-  description:
-    "Full-stack developer specializing in building modern, responsive web applications with cutting-edge technologies.",
+  description,
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Mohammad Al Asad",
+    title: "Mohammad Al Asad | Full-stack & React Native Developer",
+    description,
+    images: [{ url: "/hero.jpg", alt: "Mohammad Al Asad" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mohammad Al Asad | Full-stack & React Native Developer",
+    description,
+    images: ["/hero.jpg"],
+  },
 };
-export default async function RootLayout({
+
+// The session is fetched in the browser (only the admin area needs it), so
+// public pages stay static and are served straight from the cache
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
   return (
     <html lang="en" className="no-scrollbar" suppressHydrationWarning>
-      <SessionProvider session={session}>
-        <body className={inter.className}>
+      <body className={`${inter.variable} ${inter.className}`}>
+        <SessionProvider>
           <ThemeProvider>
-            <EdgeStoreProvider>
-              <div className="min-h-screen text-gray-900 dark:text-white">
-                <Navbar />
-                <main className="container mx-auto">{children}</main>
-                <Toaster />
-                <VisitTracker />
-              </div>
-            </EdgeStoreProvider>
+            <div className="min-h-screen text-gray-900 dark:text-white">
+              <Navbar />
+              <main className="container mx-auto">{children}</main>
+              <Toaster />
+              <VisitTracker />
+            </div>
           </ThemeProvider>
-        </body>
-      </SessionProvider>
+        </SessionProvider>
+      </body>
     </html>
   );
 }

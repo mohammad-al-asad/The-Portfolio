@@ -14,6 +14,14 @@ import {
   linkMeta,
 } from "@/lib/project";
 
+// Served from cache; admin edits refresh it right away (see lib/revalidate)
+export const revalidate = 3600;
+
+// Build each page on its first visit, then serve it from the cache
+export async function generateStaticParams() {
+  return [];
+}
+
 type Props = { params: Promise<{ id: string }> };
 
 const getProject = (id: string) => prisma.projects.findUnique({ where: { id } });

@@ -14,14 +14,15 @@ export async function GET() {
       new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - (CHART_MONTHS - 1 - i), 1))
     );
 
-    const [allDays, projects, projectsThisMonth, achievements, achievementsThisMonth, messages] =
+    const [allDays, projects, projectsThisMonth, achievements, achievementsThisMonth, messages, unread] =
       await Promise.all([
         prisma.dailyVisits.findMany(),
         prisma.projects.count(),
         prisma.projects.count({ where: { createdAt: { gte: startOfMonth } } }),
         prisma.achievements.count(),
         prisma.achievements.count({ where: { createdAt: { gte: startOfMonth } } }),
-        prisma.contactMessage.findMany({ select: { read: true } }),
+        prisma.contactMessage.count(),
+        prisma.contactMessage.count({ where: { read: { not: true } } }),
       ]);
 
     // Roll daily documents up into months
@@ -54,7 +55,7 @@ export async function GET() {
       pageViews: { total: totalPageViews, today: today?.pageViews ?? 0 },
       projects: { total: projects, thisMonth: projectsThisMonth },
       achievements: { total: achievements, thisMonth: achievementsThisMonth },
-      messages: { total: messages.length, unread: messages.filter((m) => !m.read).length },
+      messages: { total: messages, unread },
       chart: months.map((m) => ({
         label: m.toLocaleString("en-US", { month: "short", timeZone: "UTC" }),
         visitors: byMonth.get(monthKey(m))?.visitors ?? 0,

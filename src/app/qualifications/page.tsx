@@ -14,6 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/PageHeader";
 
+// Served from cache; admin edits refresh it right away (see lib/revalidate)
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Qualifications | Mohammad Al Asad",
   description: "Academic background and professional achievements.",

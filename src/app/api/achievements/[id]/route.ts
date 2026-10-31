@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/auth";
 import { prisma } from "@/lib/db";
+import { refreshPublicPages } from "@/lib/revalidate";
 
 // GET a specific achievement
 export async function GET(
@@ -51,6 +52,8 @@ export async function PUT(
       data: body,
     });
 
+    refreshPublicPages();
+
     return NextResponse.json({
       message: "Achievement updated successfully",
       achievement,
@@ -80,6 +83,8 @@ export async function DELETE(
     await prisma.achievements.delete({
       where: { id: id },
     });
+
+    refreshPublicPages();
 
     return NextResponse.json({ message: "Achievement deleted successfully" });
   } catch (error) {

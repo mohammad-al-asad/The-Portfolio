@@ -4,6 +4,14 @@ import { Calendar, GraduationCap, MapPin } from "lucide-react";
 import { prisma } from "@/lib/db";
 import QualificationDetail from "@/components/QualificationDetail";
 
+// Served from cache; admin edits refresh it right away (see lib/revalidate)
+export const revalidate = 3600;
+
+// Build each page on its first visit, then serve it from the cache
+export async function generateStaticParams() {
+  return [];
+}
+
 type Props = { params: Promise<{ id: string }> };
 
 const getEducation = (id: string) =>

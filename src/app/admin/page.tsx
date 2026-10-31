@@ -59,7 +59,7 @@ export default function AdminDashboard() {
   async function fetchResume() {
     const res = await fetch("/api/resume");
     const resume = await res.json();
-    setResumeUrl(resume.resumeUrl);
+    setResumeUrl(resume.resumeUrl ?? "");
   }
 
   useEffect(() => {

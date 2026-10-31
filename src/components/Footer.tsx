@@ -5,21 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Send, MapPin } from "lucide-react";
 import { useState } from "react";
-import {
-  FaFacebookF,
-  FaGithub,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-} from "react-icons/fa";
+import toast from "react-hot-toast";
+import { SOCIAL_LINKS } from "@/lib/socials";
+
+const EMPTY_FORM = { name: "", email: "", subject: "", message: "", website: "" };
 
 export default function Footer() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   const [loading, setLoading] = useState(false);
 
@@ -37,50 +29,20 @@ export default function Footer() {
       });
 
       if (!res.ok) {
-        throw new Error("Request failed");
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send message");
       }
 
-      alert("Message sent successfully");
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      toast.success("Thanks! Your message is on its way. I'll reply soon.");
+      setFormData(EMPTY_FORM);
     } catch (error) {
-      alert("Failed to send message");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to send message"
+      );
     } finally {
       setLoading(false);
     }
   };
-
-  const socialLinks = [
-    {
-      icon: <FaGithub />,
-      href: "https://github.com/mohammad-al-asad",
-      label: "GitHub",
-    },
-    {
-      icon: <FaLinkedinIn />,
-      href: "https://www.linkedin.com/in/mohammad-al-asad",
-      label: "LinkedIn",
-    },
-    {
-      icon: <FaTwitter />,
-      href: "https://x.com/maasad11914",
-      label: "Twitter",
-    },
-    {
-      icon: <FaFacebookF />,
-      href: "https://www.facebook.com/maasad11914",
-      label: "Facebook",
-    },
-    {
-      icon: <FaInstagram />,
-      href: "https://www.instagram.com/maasad11914",
-      label: "Instagram",
-    },
-  ];
 
   return (
     <footer
@@ -131,16 +93,16 @@ export default function Footer() {
             <div className="mt-6">
               <p className="text-sm text-gray-500 mb-4">Follow me</p>
               <div className="flex space-x-3">
-                {socialLinks.map((social) => (
+                {SOCIAL_LINKS.map(({ label, href, Icon }) => (
                   <a
-                    key={social.label}
-                    href={social.href}
+                    key={label}
+                    href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gray-100 dark:bg-gray-800 border rounded-lg p-3 hover:scale-110 transition"
-                    aria-label={social.label}
+                    aria-label={label}
                   >
-                    {social.icon}
+                    <Icon />
                   </a>
                 ))}
               </div>
@@ -176,6 +138,20 @@ export default function Footer() {
                   />
                 </div>
 
+                {/* Honeypot: hidden from people, filled in by spam bots */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                  value={formData.website}
+                  onChange={(e) =>
+                    setFormData({ ...formData, website: e.target.value })
+                  }
+                />
+
                 <Input
                   placeholder="Subject"
                   value={formData.subject}
@@ -188,6 +164,7 @@ export default function Footer() {
                 <Textarea
                   placeholder="Your Message"
                   rows={5}
+                  maxLength={5000}
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
@@ -203,7 +180,7 @@ export default function Footer() {
                   className="w-full"
                 >
                   {loading ? "Sending..." : "Send Message"}
-                  {!loading && <Send className="ml-2 h-4 w-4" />}
+                  {!loading && <Send className="h-4 w-4" />}
                 </Button>
               </form>
             </div>

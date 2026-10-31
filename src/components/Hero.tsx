@@ -1,61 +1,20 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaXTwitter } from "react-icons/fa6";
-import {
-  FaFacebookF,
-  FaGithub,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { SOCIAL_LINKS } from "@/lib/socials";
 
-export default function Hero() {
-  const socialLinks = [
-    {
-      icon: <FaGithub size={24} />,
-      href: "https://github.com/mohammad-al-asad",
-      label: "GitHub",
-      className:"group-hover:bg-gray-500 group-hover:border-gray-500"
-    },
-    {
-      icon: <FaLinkedinIn size={24} />,
-      href: "https://www.linkedin.com/in/mohammad-al-asad",
-      className:"group-hover:border-blue-500 group-hover:bg-blue-500",
-      label: "LinkedIn",
-    },
-    {
-      icon: <FaInstagram size={24} />,
-      href: "https://www.instagram.com/maasad11914",
-      className:"group-hover:border-none hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600",
-      label: "Instagram",
-    },
-    {
-      icon: <FaFacebookF size={24} />,
-      href: "https://www.facebook.com/maasad11914",
-      className:"group-hover:border-blue-500 group-hover:bg-blue-500",
-      label: "Facebook",
-    },
-    
-    {
-      icon: <FaXTwitter size={24} />,
-      href: "https://x.com/maasad11914",
-      className:"dark:group-hover:border-white hover:border-black group-hover:bg-black",
-      label: "Twitter",
-    }
-  ];
-  const [resumeUrl, setResumeUrl] = useState("");
-  async function fetchResume() {
-    const res = await fetch("/api/resume");
-    const resume = await res.json();
-    setResumeUrl(resume.resumeUrl);
-  }
-  useEffect(() => {
-    fetchResume();
-  }, []);
+// Brand colour each icon takes on hover
+const HOVER: Record<string, string> = {
+  GitHub: "group-hover:bg-gray-500 group-hover:border-gray-500",
+  LinkedIn: "group-hover:border-blue-500 group-hover:bg-blue-500",
+  Instagram:
+    "group-hover:border-none hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600",
+  Facebook: "group-hover:border-blue-500 group-hover:bg-blue-500",
+  X: "dark:group-hover:border-white hover:border-black group-hover:bg-black",
+};
 
+export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
   return (
     <section className="pb-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,32 +29,31 @@ export default function Hero() {
               That Inspire
             </h1>
             <p className="text-lg md:text-xl text-gray-400 mb-8 leading-relaxed">
-              Full-stack developer specializing in building modern, responsive
-              web applications with cutting-edge technologies.
+              Full-stack & React Native developer building fast, polished apps
+              for mobile and the web, from the first idea to the store listing.
             </p>
             <div className="flex flex-col justify-center lg:justify-start sm:flex-row gap-4 mb-8">
               <Button
+                asChild
                 size="lg"
                 className="text-lg shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Link href="/projects" className="flex items-center">
-                  View Projects <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/projects">
+                  View Projects <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-lg border-2 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-              >
-                <a
-                  href={resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex gap-1 items-center"
+              {resumeUrl && (
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="text-lg border-2 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
                 >
-                  Download CV <Download className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                    Download CV <Download className="h-4 w-4" />
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
 
@@ -103,28 +61,28 @@ export default function Hero() {
           <div className="relative order-2 flex justify-center animate-in fade-in duration-1000">
             <div className="relative w-80 h-80 lg:w-96 lg:h-96">
               {/* Floating Social Icons */}
-              {socialLinks.map((social, index) => {
-                const angle = (index * 360) / socialLinks.length;
+              {SOCIAL_LINKS.map(({ label, href, Icon }, index) => {
+                const angle = (index * 360) / SOCIAL_LINKS.length;
                 const radius = 175; // Distance from center
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
 
                 return (
                   <a
-                    key={social.label}
-                    href={social.href}
+                    key={label}
+                    href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute left-[56%] top-[56%] -translate-x-1/2 -translate-y-1/2 z-20 group"
                     style={{
                       transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
                     }}
-                    aria-label={social.label}
+                    aria-label={label}
                   >
                     <div
-                      className={`animate-in zoom-in-50 fade-in duration-500 w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${social.className}`}
+                      className={`animate-in zoom-in-50 fade-in duration-500 w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
                     >
-                      {social.icon}
+                      <Icon size={24} />
                     </div>
                   </a>
                 );
@@ -154,17 +112,10 @@ export default function Hero() {
                     priority
                   />
                 </div>
-
-                {/* Floating elements */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full animate-bounce" />
-                <div
-                  className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-500 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.5s" }}
-                />
               </div>
 
               {/* Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10" />
             </div>
           </div>
         </div>
