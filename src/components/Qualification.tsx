@@ -31,7 +31,7 @@ export default function Qualification({
         title="Qualifications"
         subtitle="Where I studied and what I've earned along the way"
         action={
-          <Button asChild variant="outline" className="dark:border-gray-700">
+          <Button asChild variant="outline" className="dark:border-white/10">
             <Link href="/qualifications">
               View All Qualifications <ArrowRight className="h-4 w-4" />
             </Link>

@@ -38,10 +38,10 @@ function SectionTitle({
       <div className={`p-2 rounded-lg ${accent}`}>
         <Icon className="h-5 w-5" />
       </div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">
         {title}
       </h2>
-      <span className="text-sm text-gray-500 dark:text-gray-400">({count})</span>
+      <span className="text-sm text-gray-500 dark:text-muted-foreground">({count})</span>
     </div>
   );
 }
@@ -56,17 +56,17 @@ export default async function QualificationsPage() {
     <div className="min-h-screen">
       <div className="page-container">
         <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-blue-500/10 dark:to-purple-600/10 border border-gray-200 dark:border-white/10">
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center border-gray-300 dark:border-white/15 hover:bg-white dark:hover:bg-white/5 transition-colors"
             >
               <Link href="/#qualifications">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white">
+            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-foreground">
               Qualifications
             </h1>
           </div>
@@ -75,21 +75,21 @@ export default async function QualificationsPage() {
         <div className="max-w-6xl mx-auto px-4 md:px-10 pt-28 md:pt-56 pb-20 space-y-20">
           {/* Intro */}
           <header className="max-w-2xl space-y-4">
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
+            <p className="text-gray-600 dark:text-muted-foreground text-lg">
               My academic background and the competitions and recognitions
               I&apos;ve earned along the way.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
                 href="#education"
-                className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-4 py-1.5 text-sm hover:border-blue-500 transition-colors"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 px-4 py-1.5 text-sm hover:border-blue-500 transition-colors"
               >
                 <GraduationCap className="h-4 w-4 text-blue-500" />
                 {educations.length} Education
               </a>
               <a
                 href="#achievements"
-                className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 px-4 py-1.5 text-sm hover:border-amber-500 transition-colors"
+                className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 px-4 py-1.5 text-sm hover:border-amber-500 transition-colors"
               >
                 <Award className="h-4 w-4 text-amber-500" />
                 {achievements.length} Achievements
@@ -106,15 +106,15 @@ export default async function QualificationsPage() {
               accent="bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400"
             />
             {educations.length === 0 ? (
-              <p className="text-gray-500 dark:text-gray-400">Nothing here yet.</p>
+              <p className="text-gray-500 dark:text-muted-foreground">Nothing here yet.</p>
             ) : (
-              <ol className="relative border-l-2 border-gray-200 dark:border-gray-700 ml-3 space-y-8">
+              <ol className="relative border-l-2 border-gray-200 dark:border-white/10 ml-3 space-y-8">
                 {educations.map((item) => (
                   <li key={item.id} className="relative pl-8">
                     <span className="absolute -left-[9px] top-6 h-4 w-4 rounded-full border-4 border-background bg-blue-500" />
                     <Link
                       href={`/educations/${item.id}`}
-                      className="group block rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 shadow-sm dark:shadow-none hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
+                      className="group block rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 p-6 shadow-sm dark:shadow-none hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div>
@@ -122,10 +122,10 @@ export default async function QualificationsPage() {
                             <Calendar className="h-4 w-4" />
                             {item.period}
                           </p>
-                          <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">
+                          <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-foreground">
                             {item.institution}
                           </h3>
-                          <p className="text-gray-700 dark:text-gray-300">
+                          <p className="text-gray-700 dark:text-foreground/80">
                             {item.degree}
                           </p>
                         </div>
@@ -138,11 +138,11 @@ export default async function QualificationsPage() {
                           </Badge>
                         )}
                       </div>
-                      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                      <p className="mt-2 text-sm text-gray-500 dark:text-muted-foreground flex items-center gap-1.5">
                         <MapPin className="h-4 w-4" />
                         {item.location}
                       </p>
-                      <p className="mt-4 text-gray-700 dark:text-gray-300 line-clamp-3">
+                      <p className="mt-4 text-gray-700 dark:text-foreground/80 line-clamp-3">
                         {item.description}
                       </p>
                       {item.courses.length > 0 && (
@@ -151,7 +151,7 @@ export default async function QualificationsPage() {
                             <Badge
                               key={i}
                               variant="outline"
-                              className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 text-xs"
+                              className="bg-gray-100 dark:bg-card text-gray-700 dark:text-foreground/80 border-gray-300 dark:border-white/15 text-xs"
                             >
                               {c}
                             </Badge>
@@ -182,16 +182,16 @@ export default async function QualificationsPage() {
               accent="bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400"
             />
             {achievements.length === 0 ? (
-              <p className="text-gray-500 dark:text-gray-400">Nothing here yet.</p>
+              <p className="text-gray-500 dark:text-muted-foreground">Nothing here yet.</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {achievements.map((item) => (
                   <Link
                     key={item.id}
                     href={`/achievements/${item.id}`}
-                    className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 shadow-sm dark:shadow-none hover:border-amber-500 dark:hover:border-amber-400 transition-colors"
+                    className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 shadow-sm dark:shadow-none hover:border-amber-500 dark:hover:border-amber-400 transition-colors"
                   >
-                    <div className="relative aspect-[4/3] bg-white border-b border-gray-200 dark:border-gray-700">
+                    <div className="relative aspect-[4/3] bg-white border-b border-gray-200 dark:border-white/10">
                       {item.imageUrl ? (
                         <Image
                           src={item.imageUrl}
@@ -210,13 +210,13 @@ export default async function QualificationsPage() {
                       </Badge>
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-foreground">
                         {item.title}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-1">
+                      <p className="text-sm text-gray-600 dark:text-muted-foreground line-clamp-1">
                         {item.organization}
                       </p>
-                      <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
+                      <p className="mt-3 text-sm text-gray-700 dark:text-foreground/80 line-clamp-3">
                         {item.description}
                       </p>
                       <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-600 dark:text-amber-400 group-hover:gap-2 transition-all">

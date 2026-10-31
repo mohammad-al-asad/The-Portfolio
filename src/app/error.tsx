@@ -23,7 +23,7 @@ export default function Error({
       </div>
       <div className="space-y-2">
         <h1 className="text-2xl font-bold">Something went wrong</h1>
-        <p className="text-gray-500 dark:text-gray-400 max-w-md">
+        <p className="text-gray-500 dark:text-muted-foreground max-w-md">
           A hiccup on my side. Try again, and if it keeps happening, let me know.
         </p>
       </div>

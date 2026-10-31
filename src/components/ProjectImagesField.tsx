@@ -157,7 +157,7 @@ export default function ProjectImagesField({
               "relative aspect-[4/3] flex flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed px-3 text-center text-xs text-muted-foreground transition-colors cursor-pointer",
               isDragActive
                 ? "border-primary bg-primary/5 text-foreground"
-                : "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-muted/50",
+                : "border-gray-300 dark:border-white/15 hover:border-gray-400 dark:hover:border-white/25 hover:bg-muted/50",
               upload && "cursor-wait"
             ),
           })}

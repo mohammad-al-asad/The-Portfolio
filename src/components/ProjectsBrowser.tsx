@@ -27,7 +27,7 @@ function FilterChip({
       className={`rounded-full border px-3 py-1 text-sm transition-colors cursor-pointer ${
         active
           ? "bg-primary text-primary-foreground border-primary"
-          : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+          : "border-gray-300 dark:border-white/15 text-gray-700 dark:text-foreground/80 hover:bg-gray-100 dark:hover:bg-white/5"
       }`}
     >
       {children}
@@ -95,17 +95,17 @@ export default function ProjectsBrowser({
       <div className="page-container">
         {/* Header - With Gradient Accent */}
         <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-blue-500/10 dark:to-purple-600/10 border border-gray-200 dark:border-white/10">
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center border-gray-300 dark:border-white/15 hover:bg-white dark:hover:bg-white/5 transition-colors"
             >
               <Link href="/" aria-label="Back to home">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white">
+            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-foreground">
               Project Gallery
             </h1>
           </div>
@@ -113,10 +113,10 @@ export default function ProjectsBrowser({
 
           <div className="pt-28 md:pt-56 px-4 md:px-10 pb-24 space-y-8">
             {/* Filters */}
-            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
+            <div className="glow-edge space-y-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 p-4 md:p-6">
               {usedCategories.length > 0 && (
                 <div className="flex flex-col md:flex-row md:items-start gap-3">
-                  <span className="text-sm font-semibold text-gray-900 dark:text-white md:w-28 md:pt-1 shrink-0">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-foreground md:w-28 md:pt-1 shrink-0">
                     Category
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -140,7 +140,7 @@ export default function ProjectsBrowser({
 
               {technologies.length > 0 && (
                 <div className="flex flex-col md:flex-row md:items-start gap-3">
-                  <span className="text-sm font-semibold text-gray-900 dark:text-white md:w-28 md:pt-1 shrink-0">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-foreground md:w-28 md:pt-1 shrink-0">
                     Technology
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -165,7 +165,7 @@ export default function ProjectsBrowser({
                 </div>
               )}
 
-              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-muted-foreground">
                 <span>
                   Showing {filtered.length} of {allProjects.length} projects
                 </span>
@@ -186,7 +186,7 @@ export default function ProjectsBrowser({
 
             {/* Projects Grid */}
             {filtered.length === 0 ? (
-              <div className="text-center py-16 text-gray-500 dark:text-gray-400">
+              <div className="text-center py-16 text-gray-500 dark:text-muted-foreground">
                 No projects match these filters.
               </div>
             ) : (

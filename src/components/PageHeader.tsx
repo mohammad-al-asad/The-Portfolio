@@ -14,7 +14,7 @@ function PageHeader({ children }: { children: React.ReactElement }) {
 
   return (
     <div
-      className={`md:mb-10 mb-8 z-20 fixed left-0 top-0 bg-background shadow dark:shadow-blue-600 transition-all duration-300 w-full ${
+      className={`md:mb-10 mb-8 z-20 fixed left-0 top-0 bg-background shadow dark:bg-background/75 dark:backdrop-blur-xl dark:shadow-[0_10px_30px_-16px_oklch(0.6_0.22_290/0.7)] dark:border-b dark:border-white/[0.06] transition-all duration-300 w-full ${
         scrolled ? "" : "md:pt-24"
       }`}
     >

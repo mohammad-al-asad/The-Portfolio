@@ -439,7 +439,7 @@ export default function ProjectForm({ project }: { project?: projects }) {
                           className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm transition-colors cursor-pointer ${
                             selected
                               ? "bg-primary text-primary-foreground border-primary"
-                              : "border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+                              : "border-gray-300 dark:border-white/15 hover:bg-gray-100 dark:hover:bg-white/5"
                           }`}
                         >
                           {selected && <Check className="h-3 w-3" />}

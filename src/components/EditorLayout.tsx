@@ -32,19 +32,19 @@ export default function EditorLayout({
   return (
     <div className="page-container">
       <PageHeader>
-        <div className="flex items-center justify-between gap-4 md:px-16 px-4 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between gap-4 md:px-16 px-4 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-blue-500/10 dark:to-purple-600/10 border border-gray-200 dark:border-white/10">
           <div className="flex items-center gap-3 min-w-0">
             <Button
               asChild
               variant="outline"
               size="icon"
-              className="shrink-0 border-gray-300 dark:border-gray-600"
+              className="shrink-0 border-gray-300 dark:border-white/15"
             >
               <Link href={backHref} aria-label="Back">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate">
+            <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-foreground truncate">
               {title}
             </h1>
           </div>

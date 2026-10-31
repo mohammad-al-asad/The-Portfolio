@@ -12,7 +12,7 @@ export default function FeaturedProjects({ projects }: { projects: projects[] })
         title="Featured Projects"
         subtitle="A few things I've built and shipped recently"
         action={
-          <Button asChild variant="outline" className="dark:border-gray-700">
+          <Button asChild variant="outline" className="dark:border-white/10">
             <Link href="/projects">
               View All Projects <ArrowRight className="h-4 w-4" />
             </Link>

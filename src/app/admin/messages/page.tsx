@@ -140,7 +140,7 @@ export default function AdminMessagesPage() {
   return (
     <div className="page-container">
       <PageHeader>
-        <div className="flex items-center justify-between gap-4 md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between gap-4 md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-blue-500/10 dark:to-purple-600/10 border border-gray-200 dark:border-white/10">
           <div className="flex items-center gap-3">
             <h1 className="text-xl md:text-2xl font-bold">Messages</h1>
             {unreadCount > 0 && (

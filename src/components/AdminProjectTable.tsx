@@ -44,7 +44,7 @@ function AdminProjectTable({
       </CardHeader>
       <CardContent>
         {projects.length === 0 ? (
-          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div className="text-center py-8 text-gray-500 dark:text-muted-foreground">
             No projects found. Add your first project!
           </div>
         ) : (

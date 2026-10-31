@@ -23,24 +23,24 @@ export default function AdminTableSkeleton({children,title}:{children:ReactNode,
             {skeletonRows.map((_, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-4 w-24 bg-gray-200 dark:bg-white/10 rounded"></div>
                 </TableCell>
                 <TableCell>
-                  <div className="h-4 w-40 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-4 w-40 bg-gray-200 dark:bg-white/10 rounded"></div>
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-1">
-                    <div className="h-4 w-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div className="h-4 w-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="h-4 w-10 bg-gray-200 dark:bg-white/10 rounded"></div>
+                    <div className="h-4 w-10 bg-gray-200 dark:bg-white/10 rounded"></div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-4 w-16 bg-gray-200 dark:bg-white/10 rounded"></div>
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="h-8 w-8 bg-gray-200 dark:bg-white/10 rounded"></div>
+                    <div className="h-8 w-8 bg-gray-200 dark:bg-white/10 rounded"></div>
                   </div>
                 </TableCell>
               </TableRow>

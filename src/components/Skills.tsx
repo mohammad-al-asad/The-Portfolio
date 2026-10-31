@@ -44,15 +44,15 @@ export default function Skills() {
         {skills.map((skill) => (
           <div
             key={skill.name}
-            className="bg-white text-foreground dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg p-6"
+            className="glow-edge bg-white text-foreground dark:bg-card/70 border border-gray-200 dark:border-white/10 rounded-lg p-6"
           >
             <div className="flex justify-between items-center mb-3">
               <span className="font-medium">{skill.name}</span>
               <Badge variant="secondary">{skill.level}%</Badge>
             </div>
-            <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-[width] duration-1000 ease-out motion-reduce:transition-none"
+                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full dark:shadow-[0_0_14px_oklch(0.62_0.22_290/0.7)] transition-[width] duration-1000 ease-out motion-reduce:transition-none"
                 style={{ width: visible ? `${skill.level}%` : "1%" }}
               />
             </div>
