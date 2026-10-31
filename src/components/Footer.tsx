@@ -47,7 +47,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="bg-background border-t border-gray-200 dark:border-white/[0.06]"
+      className="bg-background border-t border-gray-200 dark:border-gray-800"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -57,14 +57,14 @@ export default function Footer() {
               Let&apos;s Connect
             </h3>
 
-            <p className="text-gray-600 dark:text-muted-foreground mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               Ready to bring your ideas to life? Let&apos;s discuss how we can
               work together.
             </p>
 
             <div className="space-y-4">
               <div className="flex items-center">
-                <div className="bg-gray-200 dark:bg-card border rounded-lg p-3 mr-4">
+                <div className="bg-gray-200 dark:bg-gray-800 border rounded-lg p-3 mr-4">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
@@ -79,7 +79,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-center">
-                <div className="bg-gray-200 dark:bg-card border rounded-lg p-3 mr-4">
+                <div className="bg-gray-200 dark:bg-gray-800 border rounded-lg p-3 mr-4">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
@@ -99,7 +99,7 @@ export default function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gray-100 dark:bg-card border rounded-lg p-3 hover:scale-110 transition"
+                    className="bg-gray-100 dark:bg-gray-800 border rounded-lg p-3 hover:scale-110 transition"
                     aria-label={label}
                   >
                     <Icon />
@@ -111,7 +111,7 @@ export default function Footer() {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <div className="glow-edge bg-white dark:bg-card/70 border rounded-xl p-6 lg:p-8">
+            <div className="bg-white dark:bg-gray-800/50 border rounded-xl p-6 lg:p-8">
               <h3 className="text-xl font-semibold mb-6">
                 Send me a message
               </h3>

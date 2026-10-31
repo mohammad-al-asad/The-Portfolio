@@ -45,7 +45,7 @@ function AdminAchievementTable({
       </CardHeader>
       <CardContent>
         {achievements.length === 0 ? (
-          <div className="text-center py-8 text-gray-500 dark:text-muted-foreground">
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             No achievements found. Add your first achievement!
           </div>
         ) : (

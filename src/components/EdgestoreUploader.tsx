@@ -113,23 +113,23 @@ export function EdgestoreUploader({
               "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
             },
           }}
-          className="w-full border-2 border-dashed border-gray-300 dark:border-white/10 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400 dark:hover:border-white/20 transition-colors"
+          className="w-full border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
         />
       </UploaderProvider>
 
       {uploading && (
         <div className="space-y-2">
           <Progress value={progress} className="w-full" />
-          <p className="text-sm text-gray-500 dark:text-muted-foreground text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
             Uploading... {progress}%
           </p>
         </div>
       )}
 
-      <p className="text-sm text-gray-500 dark:text-muted-foreground text-center">
+      <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
         Drag and drop an image or click to browse
       </p>
-      <p className="text-xs text-gray-400 dark:text-muted-foreground/80 text-center">
+      <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
         PNG, JPG, GIF up to 50MB
       </p>
     </div>

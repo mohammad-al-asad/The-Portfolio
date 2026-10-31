@@ -13,7 +13,7 @@ export default function NotFound() {
           404
         </p>
         <h1 className="text-2xl font-bold">This page took a wrong turn</h1>
-        <p className="text-gray-500 dark:text-muted-foreground max-w-md">
+        <p className="text-gray-500 dark:text-gray-400 max-w-md">
           It may have been moved or removed. Let&apos;s get you back on track.
         </p>
       </div>

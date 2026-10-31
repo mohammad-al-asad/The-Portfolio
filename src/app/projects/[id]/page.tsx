@@ -50,17 +50,17 @@ export default async function ProjectDetailPage({ params }: Props) {
     <div className="min-h-screen">
       <div className="page-container">
         <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-blue-500/10 dark:to-purple-600/10 border border-gray-200 dark:border-white/10">
+          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-white/15 hover:bg-white dark:hover:bg-white/5 transition-colors"
+              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
             >
               <Link href="/projects">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-foreground truncate">
+            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white truncate">
               Project Details
             </h1>
           </div>
@@ -83,10 +83,10 @@ export default async function ProjectDetailPage({ params }: Props) {
                 ))}
               </div>
             )}
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
               {project.title}
             </h2>
-            <p className="text-lg text-gray-600 dark:text-muted-foreground">
+            <p className="text-lg text-gray-600 dark:text-gray-400">
               {project.description}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -94,7 +94,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 <Badge
                   key={i}
                   variant="outline"
-                  className="bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-foreground/80 border-gray-300 dark:border-white/15"
+                  className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600"
                 >
                   {tag}
                 </Badge>
@@ -118,7 +118,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                     key={i}
                     asChild
                     variant={i === 0 ? "default" : "outline"}
-                    className={i === 0 ? "" : "border-gray-300 dark:border-white/15"}
+                    className={i === 0 ? "" : "border-gray-300 dark:border-gray-600"}
                   >
                     <a href={link.url} target="_blank" rel="noopener noreferrer">
                       <Icon className="h-4 w-4" />
@@ -134,24 +134,24 @@ export default async function ProjectDetailPage({ params }: Props) {
             {/* Main content */}
             <div className="lg:col-span-2 space-y-10">
               <section>
-                <h3 className="font-semibold text-xl text-gray-900 dark:text-foreground mb-3">
+                <h3 className="font-semibold text-xl text-gray-900 dark:text-white mb-3">
                   About This Project
                 </h3>
-                <p className="text-gray-700 dark:text-foreground/80 whitespace-pre-line leading-relaxed">
+                <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed">
                   {project.detailedDescription || project.description}
                 </p>
               </section>
 
               {project.features.length > 0 && (
                 <section>
-                  <h3 className="font-semibold text-xl text-gray-900 dark:text-foreground mb-3">
+                  <h3 className="font-semibold text-xl text-gray-900 dark:text-white mb-3">
                     Key Features
                   </h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {project.features.map((feature, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-gray-700 dark:text-foreground/80"
+                        className="flex items-start gap-2 text-gray-700 dark:text-gray-300"
                       >
                         <span className="mt-2 w-2 h-2 shrink-0 bg-purple-500 rounded-full" />
                         {feature}
@@ -165,18 +165,18 @@ export default async function ProjectDetailPage({ params }: Props) {
             {/* Sidebar */}
             <aside className="space-y-8">
               {(project.completionDate || project.teamSize) && (
-                <section className="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 p-6 space-y-3">
-                  <h3 className="font-semibold text-lg text-gray-900 dark:text-foreground">
+                <section className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 space-y-3">
+                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
                     Project Details
                   </h3>
                   {project.completionDate && (
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                       <Calendar className="h-4 w-4" />
                       <span>Completed: {project.completionDate}</span>
                     </div>
                   )}
                   {project.teamSize && (
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                       <Users className="h-4 w-4" />
                       <span>Team: {project.teamSize}</span>
                     </div>
@@ -185,8 +185,8 @@ export default async function ProjectDetailPage({ params }: Props) {
               )}
 
               {project.technologies.length > 0 && (
-                <section className="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-card/70 p-6">
-                  <h3 className="font-semibold text-lg text-gray-900 dark:text-foreground mb-3">
+                <section className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
+                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-3">
                     Technologies
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -194,7 +194,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                       <Badge
                         key={i}
                         variant="outline"
-                        className="bg-gray-100 dark:bg-card text-gray-700 dark:text-foreground/80 border-gray-300 dark:border-white/15"
+                        className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600"
                       >
                         {tech}
                       </Badge>

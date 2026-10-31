@@ -19,10 +19,10 @@ function SingleProject({ project }: { project: projects }) {
   // Fill around the (uncropped) image with the colour of its own edges
   const [imageBg, setImageBg] = useState<string | null>(null);
   return (
-    <Card className="relative bg-white py-0 dark:bg-card/70 border border-gray-200 dark:border-white/10 hover:border-purple-500 dark:hover:border-purple-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
+    <Card className="relative bg-white py-0 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors duration-300 shadow-sm dark:shadow-none group">
       <div className="px-3 pt-4">
         <div
-          className="relative w-full h-56 overflow-hidden rounded-lg border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-card transition-colors duration-300"
+          className="relative w-full h-56 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 transition-colors duration-300"
           style={imageBg ? { backgroundColor: imageBg } : undefined}
         >
           <Image
@@ -37,13 +37,13 @@ function SingleProject({ project }: { project: projects }) {
         </div>
       </div>
       <CardContent className="px-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-foreground mb-2">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
           {/* Stretched link makes the whole card clickable */}
           <Link href={href} className="after:absolute after:inset-0">
             {project.title}
           </Link>
         </h3>
-        <p className="text-gray-700 dark:text-foreground/80 line-clamp-2">
+        <p className="text-gray-700 dark:text-gray-300 line-clamp-2">
           {project.description}
         </p>
         <div className="flex flex-nowrap gap-2 mt-4 overflow-hidden" title={project.tags.join(", ")}>
@@ -51,7 +51,7 @@ function SingleProject({ project }: { project: projects }) {
             <Badge
               key={i}
               variant="outline"
-              className="min-w-0 truncate bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-foreground/80 border-gray-300 dark:border-white/15 text-xs"
+              className="min-w-0 truncate bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 text-xs"
             >
               {tag}
             </Badge>
@@ -59,7 +59,7 @@ function SingleProject({ project }: { project: projects }) {
           {hiddenTags > 0 && (
             <Badge
               variant="outline"
-              className="shrink-0 text-xs border-gray-300 dark:border-white/15"
+              className="shrink-0 text-xs border-gray-300 dark:border-gray-600"
             >
               +{hiddenTags}
             </Badge>
@@ -70,7 +70,7 @@ function SingleProject({ project }: { project: projects }) {
         <Button
           asChild
           variant="outline"
-          className="relative z-10 flex-1 border-gray-300 dark:border-white/15"
+          className="relative z-10 flex-1 border-gray-300 dark:border-gray-600"
         >
           <Link href={href}>
             <ExternalLink className="h-4 w-4" />
@@ -86,7 +86,7 @@ function SingleProject({ project }: { project: projects }) {
               asChild
               variant="outline"
               size="icon"
-              className="relative z-10 shrink-0 border-gray-300 dark:border-white/15"
+              className="relative z-10 shrink-0 border-gray-300 dark:border-gray-600"
             >
               <a
                 href={link.url}

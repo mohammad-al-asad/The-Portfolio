@@ -77,39 +77,38 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Midnight Aurora: deep ink-indigo with blue-violet light, instead of neutral grey */
 .dark {
-  --background: oklch(0.155 0.028 276);          /* #0B0D1A */
-  --foreground: oklch(0.935 0.018 276);          /* #E6E8F5 */
-  --card: oklch(0.195 0.038 276);                /* #12152A */
-  --card-foreground: oklch(0.935 0.018 276);
-  --popover: oklch(0.195 0.038 276);
-  --popover-foreground: oklch(0.935 0.018 276);
-  --primary: oklch(0.78 0.12 285);               /* soft violet */
-  --primary-foreground: oklch(0.155 0.028 276);
-  --secondary: oklch(0.235 0.048 276);           /* #1A1E38 */
-  --secondary-foreground: oklch(0.935 0.018 276);
-  --muted: oklch(0.235 0.048 276);
-  --muted-foreground: oklch(0.69 0.045 276);     /* #9097B8 */
-  --accent: oklch(0.255 0.055 276);
-  --accent-foreground: oklch(0.935 0.018 276);
-  --destructive: oklch(0.68 0.19 18);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.66 0.17 285);
-  --chart-1: oklch(0.62 0.2 265);
-  --chart-2: oklch(0.72 0.16 300);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.195 0.038 276);
-  --sidebar-foreground: oklch(0.935 0.018 276);
-  --sidebar-primary: oklch(0.62 0.2 265);
-  --sidebar-primary-foreground: oklch(0.935 0.018 276);
-  --sidebar-accent: oklch(0.255 0.055 276);
-  --sidebar-accent-foreground: oklch(0.935 0.018 276);
-  --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(0.66 0.17 285);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 html {
@@ -188,105 +187,4 @@ html {
   width: 100%;
   max-width: 96rem;
   margin-inline: auto;
-}
-
-/* ---------- Midnight Aurora effects (dark theme only) ---------- */
-@layer components {
-  /* Slow-drifting aurora + faint starfield behind every page */
-  .aurora {
-    position: fixed;
-    inset: 0;
-    z-index: -10;
-    pointer-events: none;
-    overflow: hidden;
-    display: none;
-  }
-  .dark .aurora { display: block; }
-  .aurora::before,
-  .aurora::after {
-    content: "";
-    position: absolute;
-    width: 60vmax;
-    height: 60vmax;
-    border-radius: 9999px;
-    filter: blur(90px);
-    opacity: 0.32;
-    will-change: transform;
-  }
-  .aurora::before {
-    top: -22vmax;
-    left: -14vmax;
-    background: radial-gradient(circle, oklch(0.6 0.2 262) 0%, transparent 65%);
-    animation: aurora-drift-a 26s ease-in-out infinite alternate;
-  }
-  .aurora::after {
-    bottom: -26vmax;
-    right: -16vmax;
-    background: radial-gradient(circle, oklch(0.58 0.24 300) 0%, transparent 65%);
-    animation: aurora-drift-b 32s ease-in-out infinite alternate;
-  }
-  .aurora .aurora-mid {
-    position: absolute;
-    top: 35%;
-    left: 40%;
-    width: 40vmax;
-    height: 40vmax;
-    border-radius: 9999px;
-    background: radial-gradient(circle, oklch(0.62 0.15 230) 0%, transparent 65%);
-    filter: blur(100px);
-    opacity: 0.16;
-    animation: aurora-drift-c 38s ease-in-out infinite alternate;
-  }
-  .aurora .stars {
-    position: absolute;
-    inset: 0;
-    opacity: 0.35;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 72% 12%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 38% 64%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 88% 52%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 22% 86%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 56% 34%, #fff 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 64% 82%, #c4b5fd 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 6% 48%, #93c5fd 50%, transparent 51%);
-    background-size: 420px 420px;
-  }
-  @keyframes aurora-drift-a { to { transform: translate(14vmax, 10vmax) scale(1.12); } }
-  @keyframes aurora-drift-b { to { transform: translate(-12vmax, -8vmax) scale(1.08); } }
-  @keyframes aurora-drift-c { to { transform: translate(-10vmax, 6vmax) scale(1.2); } }
-  @media (prefers-reduced-motion: reduce) {
-    .aurora::before, .aurora::after, .aurora .aurora-mid { animation: none; }
-  }
-
-  /* Glass cards with a thin blue-violet gradient edge that lights up on hover */
-  .dark [data-slot="card"],
-  .dark .glow-edge {
-    position: relative;
-    backdrop-filter: blur(14px);
-  }
-  .dark [data-slot="card"]::before,
-  .dark .glow-edge::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, oklch(0.7 0.17 255 / 0.7), oklch(0.65 0.22 300 / 0.7));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-    opacity: 0.25;
-    transition: opacity 0.35s ease;
-    pointer-events: none;
-  }
-  .dark [data-slot="card"]:hover::before,
-  .dark .glow-edge:hover::before { opacity: 0.9; }
-  .dark [data-slot="card"]:hover,
-  .dark .glow-edge:hover { box-shadow: 0 10px 40px -18px oklch(0.6 0.22 290 / 0.55); }
-
-  /* Neon-like glow on gradient headings and numbers */
-  .dark .bg-clip-text.text-transparent {
-    filter: drop-shadow(0 0 18px oklch(0.62 0.2 285 / 0.35));
-  }
 }

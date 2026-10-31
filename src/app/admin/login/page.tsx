@@ -39,7 +39,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-full mx-auto max-w-md p-8 space-y-6 bg-gradient-to-r from-blue-400/15 to-purple-600/15 backdrop-blur-sm border-2 border-gray-400 dark:border-white/10 rounded-xl">
+    <div className="w-full mx-auto max-w-md p-8 space-y-6 bg-gradient-to-r from-blue-400/15 to-purple-600/15 backdrop-blur-sm border-2 border-gray-400 dark:border-gray-700 rounded-xl">
       <div className="text-center">
         <h1 className="text-3xl font-bold">Admin Login</h1>
         <p className="text-gray-400 mt-2">Access your portfolio dashboard</p>
@@ -79,7 +79,7 @@ export default function LoginPage() {
             <span className="w-full border-t border-gray-700" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-blue-400 dark:bg-white/10 px-2 py-0.5 text-xs text-white">
+            <span className="bg-blue-400 dark:bg-gray-700 px-2 py-0.5 text-xs text-white">
               lets start editing
             </span>
           </div>

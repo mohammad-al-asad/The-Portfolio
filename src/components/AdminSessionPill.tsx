@@ -16,7 +16,7 @@ export default function AdminSessionPill() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <div className="flex items-center gap-3 rounded-full border border-gray-200 dark:border-white/10 bg-background/85 backdrop-blur-md py-1.5 pl-4 pr-1.5 shadow-lg">
+      <div className="flex items-center gap-3 rounded-full border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1.5 pl-4 pr-1.5 shadow-lg">
         {status === "loading" ? (
           <>
             <Skeleton className="h-4 w-28" />

@@ -122,7 +122,7 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
               </div>
 
               {/* Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 dark:from-blue-500/40 dark:to-purple-600/40 rounded-full blur-3xl -z-10 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10 animate-pulse" />
             </div>
           </div>
         </div>

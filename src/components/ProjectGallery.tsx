@@ -52,7 +52,7 @@ export default function ProjectGallery({
     >
       {/* Stage: fixed size (primary image's aspect ratio, capped at 70vh) */}
       <div
-        className="group relative rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-card/60 p-2 sm:p-4 transition-colors duration-300"
+        className="group relative rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 p-2 sm:p-4 transition-colors duration-300"
         style={bgByUrl[current.url] ? { backgroundColor: bgByUrl[current.url] } : undefined}
       >
         <a

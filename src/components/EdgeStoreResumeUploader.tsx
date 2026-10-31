@@ -179,7 +179,7 @@ export function EdgestoreCVUploader({
           className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 ${
             dragActive
               ? "border-blue-400 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-600"
-              : "border-gray-300 dark:border-white/10 hover:border-gray-400 dark:hover:border-white/20"
+              : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600"
           } ${
             disabled || uploading
               ? "opacity-50 cursor-not-allowed"
@@ -205,10 +205,10 @@ export function EdgestoreCVUploader({
             </div>
 
             <div className="space-y-2">
-              <p className="text-lg font-medium text-gray-900 dark:text-foreground">
+              <p className="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Upload your CV
               </p>
-              <p className="text-sm text-gray-500 dark:text-muted-foreground">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Drag and drop your PDF file or click to browse
               </p>
             </div>
@@ -236,17 +236,17 @@ export function EdgestoreCVUploader({
       {uploading && (
         <div className="space-y-2">
           <Progress value={progress} className="w-full" />
-          <p className="text-sm text-gray-500 dark:text-muted-foreground text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
             Uploading CV... {progress}%
           </p>
         </div>
       )}
 
       <div className="text-center space-y-1">
-        <p className="text-sm text-gray-500 dark:text-muted-foreground">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           PDF format only • Maximum file size: 5MB
         </p>
-        <p className="text-xs text-gray-400 dark:text-muted-foreground/80">
+        <p className="text-xs text-gray-400 dark:text-gray-500">
           Your CV will be stored securely and can be downloaded by visitors
         </p>
       </div>

@@ -161,7 +161,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       {/* Header */}
       <PageHeader>
-        <div className="flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-blue-500/10 dark:to-purple-600/10 border border-gray-200 dark:border-white/10">
+        <div className="flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
           <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
             <Settings size={23} />
             Dashboard
