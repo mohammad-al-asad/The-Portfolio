@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/auth";
 import z from "zod";
 import { prisma } from "@/lib/db";
+import { refreshPublicPages } from "@/lib/revalidate";
 
 // GET a specific project
 export async function GET(
@@ -51,9 +52,7 @@ export async function PUT(
       data: body,
     });
 
-    if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
+    refreshPublicPages();
 
     return NextResponse.json({
       message: "Project updated successfully",
@@ -87,18 +86,16 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const deletedproject = await prisma.projects.delete({
+    await prisma.projects.delete({
       where: {
         id: id,
       },
     });
 
-    if (!deletedproject) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
+    refreshPublicPages();
 
     return NextResponse.json({ message: "Project deleted successfully" });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to delete project" },
       { status: 500 }

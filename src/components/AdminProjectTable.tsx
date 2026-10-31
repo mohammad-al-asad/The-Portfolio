@@ -29,8 +29,8 @@ function AdminProjectTable({
     return (
       <AdminTableSkeleton title="Projects List">
         <TableHead>Title</TableHead>
-        <TableHead>Description</TableHead>
-        <TableHead>Tags</TableHead>
+        <TableHead className="hidden lg:table-cell">Description</TableHead>
+        <TableHead className="hidden sm:table-cell">Tags</TableHead>
         <TableHead>Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
@@ -53,7 +53,7 @@ function AdminProjectTable({
               <TableRow>
                 <TableHead>Title</TableHead>
                 <TableHead className="hidden lg:table-cell">Description</TableHead>
-                <TableHead>Tags</TableHead>
+                <TableHead className="hidden sm:table-cell">Tags</TableHead>
                 <TableHead>Featured</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
@@ -61,13 +61,13 @@ function AdminProjectTable({
             <TableBody>
               {projects.map((project) => (
                 <TableRow key={project.id}>
-                  <TableCell className="font-medium max-w-[14rem] truncate" title={project.title}>
+                  <TableCell className="font-medium max-w-[10rem] sm:max-w-[12rem] lg:max-w-[14rem] truncate" title={project.title}>
                     {project.title}
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell max-w-[20rem] truncate" title={project.description}>
+                  <TableCell className="hidden lg:table-cell max-w-[16rem] xl:max-w-[20rem] truncate" title={project.description}>
                     {project.description}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     <AdminChipList items={project.tags} />
                   </TableCell>
                   <TableCell>

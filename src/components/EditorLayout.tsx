@@ -30,7 +30,7 @@ export default function EditorLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container mx-auto">
+    <div className="page-container">
       <PageHeader>
         <div className="flex items-center justify-between gap-4 md:px-16 px-4 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3 min-w-0">

@@ -37,7 +37,7 @@ export default function QualificationDetail({
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto">
+      <div className="page-container">
         <PageHeader>
           <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
             <Button
@@ -55,7 +55,7 @@ export default function QualificationDetail({
           </div>
         </PageHeader>
 
-        <article className="max-w-5xl mx-auto px-4 md:px-10 pt-28 md:pt-56 pb-16">
+        <article className="max-w-5xl mx-auto px-4 md:px-[45px] pt-28 md:pt-56 pb-16">
           <header className="space-y-3 border-b border-gray-200 dark:border-gray-700 pb-8">
             <p className={`text-sm font-semibold uppercase tracking-wider ${accentText}`}>
               {kind}

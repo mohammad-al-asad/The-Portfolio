@@ -14,6 +14,14 @@ import {
   linkMeta,
 } from "@/lib/project";
 
+// Served from cache; admin edits refresh it right away (see lib/revalidate)
+export const revalidate = 3600;
+
+// Build each page on its first visit, then serve it from the cache
+export async function generateStaticParams() {
+  return [];
+}
+
 type Props = { params: Promise<{ id: string }> };
 
 const getProject = (id: string) => prisma.projects.findUnique({ where: { id } });
@@ -40,7 +48,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto">
+      <div className="page-container">
         <PageHeader>
           <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
             <Button
@@ -58,7 +66,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           </div>
         </PageHeader>
 
-        <article className="max-w-5xl mx-auto px-4 md:px-10 pt-28 md:pt-56 pb-16 space-y-10">
+        <article className="max-w-5xl mx-auto px-4 md:px-[45px] pt-28 md:pt-56 pb-16 space-y-10">
           {/* Title & summary */}
           <header className="space-y-4">
             {categories.length > 0 && (

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/auth";
 import z from "zod";
 import { prisma } from "@/lib/db";
+import { refreshPublicPages } from "@/lib/revalidate";
 
 // GET a specific education
 export async function GET(
@@ -56,6 +57,8 @@ export async function PUT(
       data: body,
     });
 
+    refreshPublicPages();
+
     return NextResponse.json({
       message: "Education updated successfully",
       education: updatedEducation,
@@ -94,6 +97,8 @@ export async function DELETE(
         id: id,
       },
     });
+
+    refreshPublicPages();
 
     return NextResponse.json({ message: "Education deleted successfully" });
   } catch (error) {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/auth";
 import { prisma } from "@/lib/db";
+import { refreshPublicPages } from "@/lib/revalidate";
 
 // GET all projects
 export async function GET() {
@@ -31,6 +32,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const project = await prisma.projects.create({ data: body });
+
+    refreshPublicPages();
 
     return NextResponse.json(
       { message: "Project created successfully", project },

@@ -30,17 +30,19 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
+    // Same order as the sections on the home page
     { name: "Home", path: "/", icon: <Home size={18} /> },
-    {
-      name: "Skills",
-      path: "/#skills",
-      icon: <ChartNoAxesCombined size={18} />,
-    },
     {
       name: "Qualifications",
       path: "/#qualifications",
       icon: <GraduationCap size={20} />,
     },
+    {
+      name: "Skills",
+      path: "/#skills",
+      icon: <ChartNoAxesCombined size={18} />,
+    },
+    { name: "Projects", path: "/#projects", icon: <Briefcase size={18} /> },
     { name: "Contact", path: "/#contact", icon: <Mail size={18} /> },
   ];
 
@@ -56,7 +58,6 @@ const Navbar = () => {
       path: "/admin/qualifications",
       icon: <GraduationCap size={18} />,
     },
-    // { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
     { name: "Messages", path: "/admin/messages", icon: <Mail size={18} /> },
   ];
 

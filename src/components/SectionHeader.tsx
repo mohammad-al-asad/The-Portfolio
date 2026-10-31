@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 
 interface SectionHeaderProps {
   title: string;
@@ -25,12 +24,3 @@ export function SectionHeader({
   );
 }
 
-export function SectionAction({ className, ...props }:{className:string}) {
-  return (
-    <Button
-      variant="outline"
-      className={cn('mt-4 md:mt-0', className)}
-      {...props}
-    />
-  );
-}

@@ -14,6 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/PageHeader";
 
+// Served from cache; admin edits refresh it right away (see lib/revalidate)
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Qualifications | Mohammad Al Asad",
   description: "Academic background and professional achievements.",
@@ -51,7 +54,7 @@ export default async function QualificationsPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto">
+      <div className="page-container">
         <PageHeader>
           <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
             <Button
@@ -69,7 +72,7 @@ export default async function QualificationsPage() {
           </div>
         </PageHeader>
 
-        <div className="max-w-6xl mx-auto px-4 md:px-10 pt-28 md:pt-56 pb-20 space-y-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-[45px] pt-28 md:pt-56 pb-20 space-y-20">
           {/* Intro */}
           <header className="max-w-2xl space-y-4">
             <p className="text-gray-600 dark:text-gray-400 text-lg">

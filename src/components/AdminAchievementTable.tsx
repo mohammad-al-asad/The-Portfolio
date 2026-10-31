@@ -29,10 +29,10 @@ function AdminAchievementTable({
     return (
       <AdminTableSkeleton title="Achievements List">
         <TableHead>Title</TableHead>
-        <TableHead>Organization</TableHead>
-        <TableHead>Year</TableHead>
-        <TableHead>Description</TableHead>
-        <TableHead>Technologies</TableHead>
+        <TableHead className="hidden lg:table-cell">Organization</TableHead>
+        <TableHead className="hidden sm:table-cell">Year</TableHead>
+        <TableHead className="hidden xl:table-cell">Description</TableHead>
+        <TableHead className="hidden md:table-cell">Skills</TableHead>
         <TableHead>Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
@@ -54,27 +54,27 @@ function AdminAchievementTable({
               <TableRow>
                 <TableHead>Title</TableHead>
                 <TableHead className="hidden lg:table-cell">Organization</TableHead>
-                <TableHead>Year</TableHead>
+                <TableHead className="hidden sm:table-cell">Year</TableHead>
                 <TableHead className="hidden xl:table-cell">Description</TableHead>
-                <TableHead>Skills</TableHead>
+                <TableHead className="hidden md:table-cell">Skills</TableHead>
                 <TableHead>Featured</TableHead>
-        <TableHead>Actions</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {achievements.map((achievement) => (
                 <TableRow key={achievement.id}>
-                  <TableCell className="font-medium max-w-[13rem] truncate" title={achievement.title}>
+                  <TableCell className="font-medium max-w-[10rem] sm:max-w-[12rem] lg:max-w-[13rem] truncate" title={achievement.title}>
                     {achievement.title}
                   </TableCell>
                   <TableCell className="hidden lg:table-cell max-w-[11rem] truncate" title={achievement.organization}>
                     {achievement.organization}
                   </TableCell>
-                  <TableCell>{achievement.year}</TableCell>
+                  <TableCell className="hidden sm:table-cell">{achievement.year}</TableCell>
                   <TableCell className="hidden xl:table-cell max-w-[14rem] truncate" title={achievement.description}>
                     {achievement.description}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     <AdminChipList items={achievement.technologies} />
                   </TableCell>
                   <TableCell>
