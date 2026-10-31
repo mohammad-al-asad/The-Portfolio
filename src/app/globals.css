@@ -79,7 +79,7 @@
 
 /* Midnight Aurora: deep ink-indigo with blue-violet light, instead of neutral grey */
 .dark {
-  --background: oklch(0.155 0.028 276);          /* #0B0D1A */
+  --background: oklch(0.145 0 0);                /* plain near-black, as before */
   --foreground: oklch(0.935 0.018 276);          /* #E6E8F5 */
   --card: oklch(0.195 0.038 276);                /* #12152A */
   --card-foreground: oklch(0.935 0.018 276);
@@ -192,73 +192,6 @@ html {
 
 /* ---------- Midnight Aurora effects (dark theme only) ---------- */
 @layer components {
-  /* Slow-drifting aurora + faint starfield behind every page */
-  .aurora {
-    position: fixed;
-    inset: 0;
-    z-index: -10;
-    pointer-events: none;
-    overflow: hidden;
-    display: none;
-  }
-  .dark .aurora { display: block; }
-  .aurora::before,
-  .aurora::after {
-    content: "";
-    position: absolute;
-    width: 60vmax;
-    height: 60vmax;
-    border-radius: 9999px;
-    filter: blur(90px);
-    opacity: 0.32;
-    will-change: transform;
-  }
-  .aurora::before {
-    top: -22vmax;
-    left: -14vmax;
-    background: radial-gradient(circle, oklch(0.6 0.2 262) 0%, transparent 65%);
-    animation: aurora-drift-a 26s ease-in-out infinite alternate;
-  }
-  .aurora::after {
-    bottom: -26vmax;
-    right: -16vmax;
-    background: radial-gradient(circle, oklch(0.58 0.24 300) 0%, transparent 65%);
-    animation: aurora-drift-b 32s ease-in-out infinite alternate;
-  }
-  .aurora .aurora-mid {
-    position: absolute;
-    top: 35%;
-    left: 40%;
-    width: 40vmax;
-    height: 40vmax;
-    border-radius: 9999px;
-    background: radial-gradient(circle, oklch(0.62 0.15 230) 0%, transparent 65%);
-    filter: blur(100px);
-    opacity: 0.16;
-    animation: aurora-drift-c 38s ease-in-out infinite alternate;
-  }
-  .aurora .stars {
-    position: absolute;
-    inset: 0;
-    opacity: 0.35;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 72% 12%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 38% 64%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 88% 52%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 22% 86%, #fff 50%, transparent 51%),
-      radial-gradient(1px 1px at 56% 34%, #fff 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 64% 82%, #c4b5fd 50%, transparent 51%),
-      radial-gradient(1.5px 1.5px at 6% 48%, #93c5fd 50%, transparent 51%);
-    background-size: 420px 420px;
-  }
-  @keyframes aurora-drift-a { to { transform: translate(14vmax, 10vmax) scale(1.12); } }
-  @keyframes aurora-drift-b { to { transform: translate(-12vmax, -8vmax) scale(1.08); } }
-  @keyframes aurora-drift-c { to { transform: translate(-10vmax, 6vmax) scale(1.2); } }
-  @media (prefers-reduced-motion: reduce) {
-    .aurora::before, .aurora::after, .aurora .aurora-mid { animation: none; }
-  }
-
   /* Glass cards with a thin blue-violet gradient edge that lights up on hover */
   .dark [data-slot="card"],
   .dark .glow-edge {

@@ -45,11 +45,6 @@ export default function RootLayout({
       <body className={`${inter.variable} ${inter.className}`}>
         <SessionProvider>
           <ThemeProvider>
-            {/* Dark theme backdrop: drifting aurora and faint stars (hidden in light) */}
-            <div className="aurora" aria-hidden="true">
-              <div className="aurora-mid" />
-              <div className="stars" />
-            </div>
             <div className="min-h-screen text-gray-900 dark:text-foreground">
               <Navbar />
               <main className="page-container">{children}</main>
