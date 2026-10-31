@@ -18,7 +18,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div id='home' className="space-y-24 px-4 md:px-11 py-8 pt-20 md:pt-40">
+    <div id='home' className="space-y-24 px-4 md:px-[45px] py-8 pt-20 md:pt-40">
       <Hero resumeUrl={resume?.resumeUrl} />
       <Stats />
       <EducationAndAchievements educations={educations} achievements={achievements} />
