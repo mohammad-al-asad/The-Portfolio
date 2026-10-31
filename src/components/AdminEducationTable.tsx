@@ -29,11 +29,11 @@ function AdminEducationTable({
     return (
       <AdminTableSkeleton title="Educations List">
         <TableHead>Institution</TableHead>
-        <TableHead>Degree</TableHead>
-        <TableHead>Period</TableHead>
-        <TableHead>Location</TableHead>
-        <TableHead>GPA</TableHead>
-        <TableHead>Courses</TableHead>
+        <TableHead className="hidden md:table-cell">Degree</TableHead>
+        <TableHead className="hidden sm:table-cell">Period</TableHead>
+        <TableHead className="hidden xl:table-cell">Location</TableHead>
+        <TableHead className="hidden sm:table-cell">GPA</TableHead>
+        <TableHead className="hidden lg:table-cell">Courses</TableHead>
         <TableHead>Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
@@ -55,29 +55,29 @@ function AdminEducationTable({
               <TableRow>
                 <TableHead>Institution</TableHead>
                 <TableHead className="hidden md:table-cell">Degree</TableHead>
-                <TableHead>Period</TableHead>
+                <TableHead className="hidden sm:table-cell">Period</TableHead>
                 <TableHead className="hidden xl:table-cell">Location</TableHead>
-                <TableHead>GPA</TableHead>
-                <TableHead>Courses</TableHead>
+                <TableHead className="hidden sm:table-cell">GPA</TableHead>
+                <TableHead className="hidden lg:table-cell">Courses</TableHead>
                 <TableHead>Featured</TableHead>
-        <TableHead>Actions</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {educations.map((education) => (
                 <TableRow key={education.id}>
-                  <TableCell className="font-medium max-w-[13rem] truncate" title={education.institution}>
+                  <TableCell className="font-medium max-w-[9rem] sm:max-w-[11rem] lg:max-w-[13rem] truncate" title={education.institution}>
                     {education.institution}
                   </TableCell>
-                  <TableCell className="hidden md:table-cell max-w-[14rem] truncate" title={education.degree}>
+                  <TableCell className="hidden md:table-cell max-w-[11rem] lg:max-w-[14rem] truncate" title={education.degree}>
                     {education.degree}
                   </TableCell>
-                  <TableCell>{education.period}</TableCell>
+                  <TableCell className="hidden sm:table-cell whitespace-nowrap">{education.period}</TableCell>
                   <TableCell className="hidden xl:table-cell max-w-[9rem] truncate" title={education.location}>
                     {education.location}
                   </TableCell>
-                  <TableCell>{education.gpa || "-"}</TableCell>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">{education.gpa || "-"}</TableCell>
+                  <TableCell className="hidden lg:table-cell">
                     <AdminChipList items={education.courses} />
                   </TableCell>
                   <TableCell>

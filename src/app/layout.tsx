@@ -47,7 +47,7 @@ export default function RootLayout({
           <ThemeProvider>
             <div className="min-h-screen text-gray-900 dark:text-white">
               <Navbar />
-              <main className="container mx-auto">{children}</main>
+              <main className="page-container">{children}</main>
               <Toaster />
               <VisitTracker />
             </div>

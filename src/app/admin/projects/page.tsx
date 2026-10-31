@@ -64,7 +64,7 @@ export default function AdminProjectsPage() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="page-container">
       <PageHeader>
         <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
           <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">

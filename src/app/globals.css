@@ -181,3 +181,10 @@ html {
     animation: pulse-slow 3s ease-in-out infinite;
   }
 }
+/* Grows smoothly with the screen up to 96rem, instead of Tailwind's
+   `container`, which jumps between fixed widths and leaves wide side gaps */
+@utility page-container {
+  width: 100%;
+  max-width: 96rem;
+  margin-inline: auto;
+}
