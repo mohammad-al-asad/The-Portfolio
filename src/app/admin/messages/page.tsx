@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { MessageRowSkeleton } from "@/components/CardSkeletons";
+import MessagesLocked from "@/components/MessagesLocked";
 import { cn } from "@/lib/utils";
 
 type Filter = "all" | "unread";
@@ -37,6 +38,11 @@ export default function AdminMessagesPage() {
 
   useEffect(() => {
     if (status === "loading") return;
+    // Only the admin can read messages
+    if (status !== "authenticated") {
+      setLoading(false);
+      return;
+    }
     // Open a specific message when linked from the dashboard
     const id = new URLSearchParams(window.location.search).get("id");
     fetchMessages().then((data) => {
@@ -82,8 +88,9 @@ export default function AdminMessagesPage() {
     }
   };
 
-  // Viewing is open to everyone; changing read state or deleting needs the admin login
+  // Reading, marking read and deleting all need the admin login
   const canEdit = status === "authenticated";
+  const locked = status === "unauthenticated";
 
   const select = (id: string | null, list = messages) => {
     setSelectedId(id);
@@ -144,7 +151,7 @@ export default function AdminMessagesPage() {
             variant="outline"
             size="sm"
             onClick={refresh}
-            disabled={refreshing || loading}
+            disabled={refreshing || loading || locked}
           >
             <RefreshCw
               className={cn("h-4 w-4", refreshing && "animate-spin")}
@@ -155,6 +162,11 @@ export default function AdminMessagesPage() {
       </PageHeader>
 
       {/* Fixed-height box: fits the viewport (layout top padding 5rem / 10rem + mt-8 + pb-24 = 13rem / 18rem); only the panes inside scroll */}
+      {locked ? (
+        <div className="mt-8 rounded-xl border bg-card shadow-sm h-[calc(100dvh-13rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
+          <MessagesLocked />
+        </div>
+      ) : (
       <div className="mt-8 rounded-xl border bg-card shadow-sm overflow-hidden grid grid-cols-1 grid-rows-[minmax(0,1fr)] lg:grid-cols-[24rem_1fr] h-[calc(100dvh-13rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
         {/* List pane */}
         <section
@@ -360,6 +372,7 @@ export default function AdminMessagesPage() {
           )}
         </section>
       </div>
+      )}
     </div>
   );
 }

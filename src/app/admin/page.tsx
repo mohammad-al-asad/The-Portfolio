@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import moment from "moment";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
+import MessagesLocked from "@/components/MessagesLocked";
 
 type DashboardStats = {
   visitors: { total: number; thisMonth: number; today: number; changePercent: number | null };
@@ -52,7 +53,7 @@ export default function AdminDashboard() {
   const [statsLoading, setStatsLoading] = useState(true);
 
   const { edgestore } = useEdgeStore();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   // ---------------- Resume ----------------
@@ -109,9 +110,15 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
-    fetchMessages();
     fetchStats();
   }, []);
+
+  // Message contents are admin-only; everyone else sees a lock panel
+  useEffect(() => {
+    if (status === "loading") return;
+    if (status === "authenticated") fetchMessages();
+    else setMessagesLoading(false);
+  }, [status]);
 
   const unreadCount = stats?.messages.unread ?? 0;
 
@@ -241,15 +248,19 @@ export default function AdminDashboard() {
                 </span>
               )}
             </div>
-            <Link
-              href="/admin/messages"
-              className="text-sm text-blue-500 hover:underline"
-            >
-              View all
-            </Link>
+            {status === "authenticated" && (
+              <Link
+                href="/admin/messages"
+                className="text-sm text-blue-500 hover:underline"
+              >
+                View all
+              </Link>
+            )}
           </CardHeader>
           <CardContent className="px-0">
-            {messagesLoading ? (
+            {status === "unauthenticated" ? (
+              <MessagesLocked compact />
+            ) : messagesLoading ? (
               <div className="divide-y">
                 {[0, 1, 2, 3].map((i) => (
                   <MessageRowSkeleton key={i} compact />

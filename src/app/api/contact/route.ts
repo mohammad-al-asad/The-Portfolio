@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
 const LIMITS = { name: 100, email: 200, subject: 200, message: 5000 };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -80,7 +82,13 @@ export async function POST(req: Request) {
   }
 }
 
+// Messages hold visitors' names and emails, so only the admin can read them
 export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (session?.user.role !== "admin") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const messages = await prisma.contactMessage.findMany({
       orderBy: { createdAt: "desc" },
