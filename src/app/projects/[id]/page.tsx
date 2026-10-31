@@ -66,7 +66,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           </div>
         </PageHeader>
 
-        <article className="max-w-5xl mx-auto px-4 md:px-10 pt-28 md:pt-56 pb-16 space-y-10">
+        <article className="max-w-5xl mx-auto px-4 md:px-11 pt-28 md:pt-56 pb-16 space-y-10">
           {/* Title & summary */}
           <header className="space-y-4">
             {categories.length > 0 && (

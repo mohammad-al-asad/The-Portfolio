@@ -11,7 +11,7 @@ export default function AdminLayout({
 }) {
   return (
     <EdgeStoreProvider>
-      <div className="px-4 md:px-10 py-8 pt-20 md:pt-40 pb-24">
+      <div className="px-4 md:px-11 py-8 pt-20 md:pt-40 pb-24">
         {children}
         <AdminSessionPill />
       </div>

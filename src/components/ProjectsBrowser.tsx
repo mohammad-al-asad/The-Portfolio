@@ -111,7 +111,7 @@ export default function ProjectsBrowser({
           </div>
         </PageHeader>
 
-          <div className="pt-28 md:pt-56 px-4 md:px-10 pb-24 space-y-8">
+          <div className="pt-28 md:pt-56 px-4 md:px-11 pb-24 space-y-8">
             {/* Filters */}
             <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
               {usedCategories.length > 0 && (
