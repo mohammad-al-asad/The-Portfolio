@@ -148,8 +148,6 @@ export default function AdminMessagesPage() {
             )}
           </div>
           <Button
-            variant="outline"
-            size="sm"
             onClick={refresh}
             disabled={refreshing || loading || locked}
           >
