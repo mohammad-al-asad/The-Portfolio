@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { UploaderProvider, UploadFn } from "./upload/uploader-provider";
+import type { ImageBucket } from "@/lib/edgestoreBucket";
 
 interface EdgestoreUploaderProps {
   value: string;
@@ -16,6 +17,8 @@ interface EdgestoreUploaderProps {
   disabled?: boolean;
   /** Show the whole image (letterboxed) instead of a cropped 12rem strip */
   fit?: "cover" | "contain";
+  /** EdgeStore bucket to upload into */
+  bucket: ImageBucket;
 }
 
 export function EdgestoreUploader({
@@ -24,6 +27,7 @@ export function EdgestoreUploader({
   onRemove,
   disabled = false,
   fit = "cover",
+  bucket,
 }: EdgestoreUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -43,7 +47,7 @@ export function EdgestoreUploader({
       setProgress(0);
 
       try {
-        const res = await edgestore.projectImages.upload({
+        const res = await edgestore[bucket].upload({
           file,
           options: {
             temporary: false,
@@ -66,7 +70,7 @@ export function EdgestoreUploader({
         setProgress(0);
       }
     },
-    [edgestore]
+    [edgestore, bucket]
   );
 
   if (value) {

@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { EdgestoreUploader } from "@/components/EdgestoreUploader";
+import { edgeStoreBucket } from "@/lib/edgestoreBucket";
 import { Checkbox } from "@/components/ui/checkbox";
 import { X } from "lucide-react";
 import {
@@ -94,9 +95,10 @@ export default function EducationForm({
     }
     if (!confirm("Are you sure you want to delete this image?")) return;
     const imageUrl = form.getValues("imageUrl");
-    if (imageUrl) {
+    const bucket = edgeStoreBucket(imageUrl);
+    if (bucket) {
       try {
-        await edgestore.qualificationImages.delete({
+        await edgestore[bucket].delete({
           url: imageUrl,
         });
       } catch (error) {
@@ -148,6 +150,7 @@ export default function EducationForm({
                     <FormControl>
                       <EdgestoreUploader
                         fit="contain"
+                        bucket="qualificationImages"
                         value={field.value}
                         onChange={(url, path) => {
                           field.onChange(url);

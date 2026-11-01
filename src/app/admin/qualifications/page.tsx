@@ -12,6 +12,7 @@ import PageHeader from "@/components/PageHeader";
 import { achievements, educations } from "../../../../generated/prisma";
 import AdminEducationTable from "@/components/AdminEducationTable";
 import AdminAchievementTable from "@/components/AdminAchievementTable";
+import { edgeStoreBucket } from "@/lib/edgestoreBucket";
 
 type Tab = "education" | "achievement";
 
@@ -66,8 +67,9 @@ export default function AdminQualificationsPage() {
       const itemResponse = await fetch(`/api/${resource}/${id}`);
       if (itemResponse.ok) {
         const item = await itemResponse.json();
-        if (item.imagePath) {
-          await edgestore.qualificationImages.delete({ url: item.imageUrl });
+        const bucket = edgeStoreBucket(item.imageUrl);
+        if (bucket) {
+          await edgestore[bucket].delete({ url: item.imageUrl });
         }
         const deleteResponse = await fetch(`/api/${resource}/${id}`, {
           method: "DELETE",
