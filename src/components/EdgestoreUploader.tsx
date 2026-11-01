@@ -79,16 +79,18 @@ export function EdgestoreUploader({
         <div
           className={
             fit === "contain"
-              ? "relative aspect-[4/3] w-full overflow-hidden rounded-lg border bg-muted"
+              ? "relative aspect-[4/3] w-full overflow-hidden rounded-lg border bg-white"
               : "relative h-48 w-full overflow-hidden rounded-lg border"
           }
         >
-          <Image
-            src={value}
-            fill
-            alt="Project preview"
-            className={fit === "contain" ? "object-contain" : "h-full w-full object-cover"}
-          />
+          {fit === "contain" ? (
+            // White margin like the public certificate frame, so tight crops don't touch the edges
+            <div className="absolute inset-4">
+              <Image src={value} fill alt="Image preview" className="object-contain" />
+            </div>
+          ) : (
+            <Image src={value} fill alt="Image preview" className="h-full w-full object-cover" />
+          )}
           <Button
             type="button"
             variant="destructive"
