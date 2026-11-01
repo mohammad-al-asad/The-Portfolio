@@ -132,13 +132,16 @@ export default function QualificationDetail({
                     rel="noopener noreferrer"
                     className="block relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white hover:opacity-90 transition-opacity"
                   >
-                    <Image
-                      src={imageUrl}
-                      alt={`${title} certificate`}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 400px"
-                      className="object-contain"
-                    />
+                    {/* White margin inside the frame, so tightly cropped certificates don't touch the edges */}
+                    <div className="absolute inset-4">
+                      <Image
+                        src={imageUrl}
+                        alt={`${title} certificate`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 400px"
+                        className="object-contain"
+                      />
+                    </div>
                   </a>
                   <p className="text-xs text-gray-500 dark:text-gray-400">
                     Click to open full size
