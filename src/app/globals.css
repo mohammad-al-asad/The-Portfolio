@@ -230,13 +230,19 @@ html {
   }
 }
 
-@keyframes hero-arc-wave {
-  from {
-    transform: translateX(0) scale(1);
-    opacity: 0.9;
+@keyframes hero-arc-light {
+  0% {
+    stroke-dashoffset: -78;
+    opacity: 0;
   }
-  to {
-    transform: translateX(-14px) scale(1.14);
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -264;
     opacity: 0;
   }
 }
@@ -245,18 +251,17 @@ html {
   animation: hero-arc-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
 
-.hero-arc-wave {
+.hero-arc-light {
   opacity: 0;
-  transform-box: view-box;
-  transform-origin: 100px 100px;
-  animation: hero-arc-wave 3.6s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+  filter: drop-shadow(0 0 3px rgb(168 85 247 / 0.9));
+  animation: hero-arc-light 5s ease-in-out 1.8s infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-arc-draw {
     animation: none;
   }
-  .hero-arc-wave {
+  .hero-arc-light {
     display: none;
   }
 }
