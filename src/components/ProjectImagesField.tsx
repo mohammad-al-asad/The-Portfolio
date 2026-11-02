@@ -124,10 +124,14 @@ export default function ProjectImagesField({
                       type="button"
                       size="sm"
                       variant="secondary"
-                      className="h-7 px-2 text-xs"
+                      className="h-7 px-2 text-xs max-sm:w-7 max-sm:px-0"
+                      aria-label="Make primary"
+                      title="Make primary"
                       onClick={() => onChange(images, img.url)}
                     >
-                      <Star className="h-3.5 w-3.5" /> Make primary
+                      {/* Small screens: star only, the tiles are too narrow for the label */}
+                      <Star className="h-3.5 w-3.5" />
+                      <span className="max-sm:hidden">Make primary</span>
                     </Button>
                   )}
                   <Button
