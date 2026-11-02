@@ -27,7 +27,7 @@ export default function AdminSessionPill() {
           <Button
             size="sm"
             variant="ghost"
-            className="rounded-lg"
+            className="rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-500/10 dark:hover:text-red-300"
             onClick={() => signOut({ callbackUrl: "/admin" })}
           >
             <LogOut className="h-4 w-4" />
