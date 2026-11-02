@@ -49,7 +49,7 @@ function SingleProject({ project }: { project: projects }) {
           </h3>
           <span
             aria-hidden
-            className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-gray-200 text-gray-500 transition-all duration-300 group-hover:rotate-45 group-hover:border-transparent group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-purple-600 group-hover:text-white dark:border-gray-700 dark:text-gray-400"
+            className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-gray-200 text-gray-500 transition-all duration-300 group-hover:rotate-45 dark:border-gray-700 dark:text-gray-400"
           >
             <ArrowUpRight className="h-4 w-4" />
           </span>
