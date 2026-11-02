@@ -33,7 +33,7 @@ function SingleProject({ project }: { project: projects }) {
           alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-          className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+          className="object-contain"
           onLoad={(e) => setImageBg(edgeColor(e.currentTarget))}
         />
 
