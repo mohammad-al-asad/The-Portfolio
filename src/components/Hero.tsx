@@ -61,7 +61,7 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
           {/* Shifted left a little on phones so the icon arc on the right stays on screen */}
           <div className="relative order-2 flex justify-center animate-in fade-in duration-1000 -translate-x-6 sm:translate-x-0">
             {/* --r: how far the icon arc sits from the photo's centre, leaving a clear gap from the frame */}
-            <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 [--r:182px] sm:[--r:198px] lg:[--r:238px]">
+            <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 [--r:178px] sm:[--r:194px] lg:[--r:232px]">
               {/* Soft glow behind the whole frame: photo and icon arc */}
               <div
                 aria-hidden
@@ -89,9 +89,9 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                     <span className="block animate-float" style={{ animationDelay: `${index * -0.8}s` }}>
                       <span
                         style={{ animationDelay: `${300 + index * 90}ms`, animationFillMode: "backwards" }}
-                        className={`animate-in zoom-in-50 fade-in duration-500 w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
+                        className={`animate-in zoom-in-50 fade-in duration-500 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
                       >
-                        <Icon className="size-5 lg:size-6" />
+                        <Icon className="size-4 lg:size-5" />
                       </span>
                     </span>
                   </a>
