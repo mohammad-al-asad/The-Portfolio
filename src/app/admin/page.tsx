@@ -164,7 +164,7 @@ export default function AdminDashboard() {
       <PageHeader pill>
         <div className={`flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
           <h1 className={`text-xl md:text-2xl font-bold flex items-center gap-2 ${PILL_TITLE}`}>
-            <Settings size={23} />
+            <Settings size={23} className="max-md:hidden" />
             Dashboard
           </h1>
           <Button onClick={() => setIsDialogOpen(true)} className={`${PILL_BUTTON} max-md:order-first`} aria-label="Upload resume">
