@@ -188,7 +188,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between text-sm text-gray-500">
+        <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between max-md:items-center max-md:text-center text-sm text-gray-500">
           <p>© {new Date().getFullYear()} Mohammad Al Asad</p>
           <p>Crafted with Next.js & Tailwind CSS</p>
         </div>
