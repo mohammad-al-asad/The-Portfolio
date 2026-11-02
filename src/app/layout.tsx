@@ -45,7 +45,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${inter.className}`}>
         <SessionProvider>
           <ThemeProvider>
-            <div className="min-h-screen text-gray-900 dark:text-white">
+            <div className="min-h-dvh text-gray-900 dark:text-white">
               <Navbar />
               <main className="page-container">{children}</main>
               <Toaster />

@@ -92,7 +92,7 @@ export default function ProjectsBrowser({
   const hasFilters = Boolean(category || technology);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       <div className="page-container">
         {/* Header - With Gradient Accent */}
         <PageHeader pill>
