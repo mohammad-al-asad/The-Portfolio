@@ -98,20 +98,24 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                   strokeDashoffset="-78"
                   className="hero-arc-draw"
                 />
-                {/* A soft light that keeps travelling up the arc */}
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="100"
-                  fill="none"
-                  stroke="#a78bfa"
-                  strokeWidth="2.6"
-                  strokeLinecap="round"
-                  pathLength="360"
-                  strokeDasharray="18 342"
-                  strokeDashoffset="-78"
-                  className="hero-arc-light"
-                />
+                {/* Copies of the arc that keep rippling outward to the left and fading */}
+                {[0, 1, 2].map((i) => (
+                  <circle
+                    key={i}
+                    cx="100"
+                    cy="100"
+                    r="100"
+                    fill="none"
+                    stroke="url(#hero-arc)"
+                    strokeWidth="0.9"
+                    strokeLinecap="round"
+                    pathLength="360"
+                    strokeDasharray="204 156"
+                    strokeDashoffset="-78"
+                    className="hero-arc-wave"
+                    style={{ animationDelay: `${1.6 + i * 1.2}s` }}
+                  />
+                ))}
               </svg>
 
               {/* Social icons on a half orbit along the right side, leaving the photo clear */}
