@@ -75,7 +75,7 @@ export default async function QualificationsPage() {
 
         <div className="max-w-6xl mx-auto px-4 md:px-[47px] pt-20 md:pt-56 pb-20 space-y-20">
           {/* Intro */}
-          <header className="max-w-2xl space-y-4">
+          <header className="max-w-2xl space-y-4 max-md:pl-9">
             <p className="text-gray-600 dark:text-gray-400 text-lg">
               My academic background and the competitions and recognitions
               I&apos;ve earned along the way.

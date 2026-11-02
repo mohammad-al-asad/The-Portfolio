@@ -114,7 +114,7 @@ export default function ProjectsBrowser({
 
           <div className="pt-20 md:pt-56 px-4 md:px-[47px] pb-24 space-y-8">
             {/* Filters */}
-            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
+            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 max-md:pl-9 md:p-6">
               {usedCategories.length > 0 && (
                 <div className="flex flex-col md:flex-row md:items-start gap-3">
                   <span className="text-sm font-semibold text-gray-900 dark:text-white md:w-28 md:pt-1 shrink-0">

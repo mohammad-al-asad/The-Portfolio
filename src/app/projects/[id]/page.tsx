@@ -69,7 +69,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
         <article className="max-w-5xl mx-auto px-4 md:px-[47px] pt-20 md:pt-56 pb-16 space-y-10">
           {/* Title & summary */}
-          <header className="space-y-4">
+          <header className="space-y-4 max-md:pl-9">
             {categories.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {categories.map((c) => (
