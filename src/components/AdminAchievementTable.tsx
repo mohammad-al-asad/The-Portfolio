@@ -33,7 +33,7 @@ function AdminAchievementTable({
         <TableHead className="hidden sm:table-cell">Year</TableHead>
         <TableHead className="hidden xl:table-cell">Description</TableHead>
         <TableHead className="hidden md:table-cell">Skills</TableHead>
-        <TableHead>Featured</TableHead>
+        <TableHead className="hidden sm:table-cell">Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
@@ -57,7 +57,7 @@ function AdminAchievementTable({
                 <TableHead className="hidden sm:table-cell">Year</TableHead>
                 <TableHead className="hidden xl:table-cell">Description</TableHead>
                 <TableHead className="hidden md:table-cell">Skills</TableHead>
-                <TableHead>Featured</TableHead>
+                <TableHead className="hidden sm:table-cell">Featured</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -77,7 +77,7 @@ function AdminAchievementTable({
                   <TableCell className="hidden md:table-cell">
                     <AdminChipList items={achievement.technologies} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     {achievement.featured ? (
                       <Badge variant="default">Featured</Badge>
                     ) : (
