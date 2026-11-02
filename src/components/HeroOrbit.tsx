@@ -17,8 +17,8 @@ const HOVER: Record<string, string> = {
 const LIT: Record<string, string> = {
   GitHub: "bg-gray-500 border-gray-500",
   LinkedIn: "bg-blue-500 border-blue-500",
-  Instagram:
-    "border-transparent bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600",
+  // No border at all, exactly like the hover state (a transparent border leaves a faint ring)
+  Instagram: "border-none bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600",
   Facebook: "bg-blue-500 border-blue-500",
   X: "bg-black border-black dark:border-white",
 };
