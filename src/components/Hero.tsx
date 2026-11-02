@@ -116,14 +116,11 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                     }}
                     aria-label={label}
                   >
-                    {/* Gentle float, staggered so the icons don't move in step */}
-                    <span className="block animate-float" style={{ animationDelay: `${index * -0.8}s` }}>
-                      <span
-                        style={{ animationDelay: `${300 + index * 90}ms`, animationFillMode: "backwards" }}
-                        className={`animate-in zoom-in-50 fade-in duration-500 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
-                      >
-                        <Icon className="size-4 lg:size-5" />
-                      </span>
+                    <span
+                      style={{ animationDelay: `${300 + index * 90}ms`, animationFillMode: "backwards" }}
+                      className={`animate-in zoom-in-50 fade-in duration-500 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
+                    >
+                      <Icon className="size-4 lg:size-5" />
                     </span>
                   </a>
                 );
