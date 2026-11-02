@@ -136,8 +136,8 @@ export default function AdminQualificationsPage() {
         {tabTriggers}
       </TabsList>
       {/* Tab bar ends ~100px from the top (12px + 46px pill + 6px + 36px tabs); the layout
-          already pads 10vh, so this starts the table ~8px below the tabs on any phone */}
-      <div className="max-md:mt-[calc(6.75rem-10vh)]">
+          already pads 10vh, so this starts the table ~20px below the tabs on any phone */}
+      <div className="max-md:mt-[calc(7.5rem-10vh)]">
         <TabsContent value="education">
           <AdminEducationTable
             loading={loading}
