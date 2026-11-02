@@ -34,13 +34,13 @@ function AdminEducationTable({
         <TableHead className="hidden xl:table-cell">Location</TableHead>
         <TableHead className="hidden sm:table-cell">GPA</TableHead>
         <TableHead className="hidden lg:table-cell">Courses</TableHead>
-        <TableHead>Featured</TableHead>
+        <TableHead className="hidden sm:table-cell">Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
   }
   return (
-    <Card className="mt-[10%] md:mt-[3%]">
+    <Card className="md:mt-[3%]">
       <CardHeader>
         <CardTitle>Educations List</CardTitle>
       </CardHeader>
@@ -59,7 +59,7 @@ function AdminEducationTable({
                 <TableHead className="hidden xl:table-cell">Location</TableHead>
                 <TableHead className="hidden sm:table-cell">GPA</TableHead>
                 <TableHead className="hidden lg:table-cell">Courses</TableHead>
-                <TableHead>Featured</TableHead>
+                <TableHead className="hidden sm:table-cell">Featured</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -80,7 +80,7 @@ function AdminEducationTable({
                   <TableCell className="hidden lg:table-cell">
                     <AdminChipList items={education.courses} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     {education.featured ? (
                       <Badge variant="default">Featured</Badge>
                     ) : (

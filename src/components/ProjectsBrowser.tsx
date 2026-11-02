@@ -9,6 +9,7 @@ import SingleProject from "@/components/SingleProject";
 import { ArrowLeft, X } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { TECH_FILTERS, getProjectCategoryIds, usesTech } from "@/lib/project";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 function FilterChip({
   active,
@@ -91,29 +92,29 @@ export default function ProjectsBrowser({
   const hasFilters = Boolean(category || technology);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       <div className="page-container">
         {/* Header - With Gradient Accent */}
-        <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <PageHeader pill>
+          <div className={`flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+              className={`flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors ${PILL_BUTTON}`}
             >
               <Link href="/" aria-label="Back to home">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white">
+            <h1 className={`text-base sm:text-lg self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white ${PILL_TITLE}`}>
               Project Gallery
             </h1>
           </div>
         </PageHeader>
 
-          <div className="pt-28 md:pt-56 px-4 md:px-[47px] pb-24 space-y-8">
+          <div className="pt-20 md:pt-56 px-4 md:px-[47px] pb-24 space-y-8">
             {/* Filters */}
-            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 md:p-6">
+            <div className="space-y-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 max-md:pl-9 md:p-6">
               {usedCategories.length > 0 && (
                 <div className="flex flex-col md:flex-row md:items-start gap-3">
                   <span className="text-sm font-semibold text-gray-900 dark:text-white md:w-28 md:pt-1 shrink-0">

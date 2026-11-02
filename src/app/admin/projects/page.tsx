@@ -10,6 +10,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import AdminProjectTable from "@/components/AdminProjectTable";
 import { projects } from "../../../../generated/prisma";
 import PageHeader from "@/components/PageHeader";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 export default function AdminProjectsPage() {
   const { data: session } = useSession();
@@ -65,15 +66,15 @@ export default function AdminProjectsPage() {
 
   return (
     <div className="page-container">
-      <PageHeader>
-        <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
+      <PageHeader pill>
+        <div className={`flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
+          <h1 className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white truncate ${PILL_TITLE}`}>
             Manage Projects
           </h1>
-          <Button asChild>
-            <Link href="/admin/projects/new">
+          <Button asChild className={`${PILL_BUTTON} max-md:order-first`}>
+            <Link href="/admin/projects/new" aria-label="Add new project">
               <Plus className="h-4 w-4" />
-              Add <span className="hidden md:block">New Project</span>
+              <span className="hidden md:inline">Add New Project</span>
             </Link>
           </Button>
         </div>

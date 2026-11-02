@@ -6,13 +6,14 @@ export default function AdminTableSkeleton({children,title}:{children:ReactNode,
   const skeletonRows = Array(5).fill(null); // show 5 skeleton rows
 
   return (
-    <Card className="mt-[10%] md:mt-[3%] animate-pulse">
+    <Card className="md:mt-[3%] animate-pulse">
       <CardHeader>
         <CardTitle>
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      {/* Placeholder only: clip instead of showing a horizontal scrollbar on small screens */}
+      <CardContent className="[&_[data-slot=table-container]]:overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -25,16 +26,16 @@ export default function AdminTableSkeleton({children,title}:{children:ReactNode,
                 <TableCell>
                   <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden sm:table-cell">
                   <div className="h-4 w-40 bg-gray-200 dark:bg-gray-700 rounded"></div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden sm:table-cell">
                   <div className="flex gap-1">
                     <div className="h-4 w-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
                     <div className="h-4 w-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden sm:table-cell">
                   <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
                 </TableCell>
                 <TableCell>

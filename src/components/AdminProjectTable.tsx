@@ -31,14 +31,14 @@ function AdminProjectTable({
         <TableHead>Title</TableHead>
         <TableHead className="hidden lg:table-cell">Description</TableHead>
         <TableHead className="hidden sm:table-cell">Tags</TableHead>
-        <TableHead>Featured</TableHead>
+        <TableHead className="hidden sm:table-cell">Featured</TableHead>
         <TableHead>Actions</TableHead>
       </AdminTableSkeleton>
     );
   }
 
   return (
-    <Card className="mt-[10%] md:mt-[3%]">
+    <Card className="md:mt-[3%]">
       <CardHeader>
         <CardTitle>Projects List</CardTitle>
       </CardHeader>
@@ -54,7 +54,7 @@ function AdminProjectTable({
                 <TableHead>Title</TableHead>
                 <TableHead className="hidden lg:table-cell">Description</TableHead>
                 <TableHead className="hidden sm:table-cell">Tags</TableHead>
-                <TableHead>Featured</TableHead>
+                <TableHead className="hidden sm:table-cell">Featured</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -70,7 +70,7 @@ function AdminProjectTable({
                   <TableCell className="hidden sm:table-cell">
                     <AdminChipList items={project.tags} />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     {project.featured ? (
                       <Badge variant="default">Featured</Badge>
                     ) : (

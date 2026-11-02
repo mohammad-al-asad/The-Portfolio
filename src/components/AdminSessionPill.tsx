@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { Eye, LogIn, LogOut } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Floating status pill on admin pages: view-only + log in, or signed in + log out
+// Floating pill on admin pages: your name + Log out, or just Log in to edit
 export default function AdminSessionPill() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
@@ -16,49 +16,36 @@ export default function AdminSessionPill() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <div className="flex items-center gap-3 rounded-full border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1.5 pl-4 pr-1.5 shadow-lg">
-        {status === "loading" ? (
-          <>
-            <Skeleton className="h-4 w-28" />
-            <Skeleton className="h-8 w-20 rounded-full" />
-          </>
-        ) : session ? (
-          <>
-            <span className="flex items-center gap-2 text-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              <span className="text-muted-foreground hidden sm:inline">Editing as</span>
-              <span className="font-medium max-w-[10rem] truncate">
-                {session.user.name || session.user.email}
-              </span>
-            </span>
-            <Button
-              size="sm"
-              variant="outline"
-              className="rounded-full"
-              onClick={() => signOut({ callbackUrl: "/admin" })}
-            >
-              <LogOut className="h-4 w-4" />
-              Log out
-            </Button>
-          </>
-        ) : (
-          <>
-            <span className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Eye className="h-4 w-4" />
-              View only
-            </span>
-            <Button asChild size="sm" className="rounded-full">
-              <Link href={`/admin/login?callbackUrl=${encodeURIComponent(pathname)}`}>
-                <LogIn className="h-4 w-4" />
-                Log in to edit
-              </Link>
-            </Button>
-          </>
-        )}
-      </div>
+      {status === "loading" ? (
+        <Skeleton className="h-9 w-32 rounded-xl" />
+      ) : session ? (
+        // One pill: name + a plain Log out (no second border inside)
+        <div className="flex items-center gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1 pl-4 pr-1 shadow-lg">
+          <span className="max-w-[10rem] truncate text-sm font-medium">
+            {session.user.name || session.user.email}
+          </span>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-500/10 dark:hover:text-red-300"
+            onClick={() => signOut({ callbackUrl: "/admin" })}
+          >
+            <LogOut className="h-4 w-4" />
+            Log out
+          </Button>
+        </div>
+      ) : (
+        // Logged out: just the button, same frosted look as the signed-in pill
+        <Button
+          asChild
+          className="h-10 rounded-xl border border-gray-200 bg-background/85 px-4 text-foreground shadow-lg backdrop-blur-md hover:bg-muted dark:border-gray-700"
+        >
+          <Link href={`/admin/login?callbackUrl=${encodeURIComponent(pathname)}`}>
+            <LogIn className="h-4 w-4" />
+            Log in to edit
+          </Link>
+        </Button>
+      )}
     </div>
   );
 }

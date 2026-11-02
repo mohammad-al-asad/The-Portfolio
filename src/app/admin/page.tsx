@@ -31,6 +31,7 @@ import moment from "moment";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
 import MessagesLocked from "@/components/MessagesLocked";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 type DashboardStats = {
   visitors: { total: number; thisMonth: number; today: number; changePercent: number | null };
@@ -160,21 +161,21 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <PageHeader>
-        <div className="flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-            <Settings size={23} />
+      <PageHeader pill>
+        <div className={`flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
+          <h1 className={`text-xl md:text-2xl font-bold flex items-center gap-2 ${PILL_TITLE}`}>
+            <Settings size={23} className="max-md:hidden" />
             Dashboard
           </h1>
-          <Button onClick={() => setIsDialogOpen(true)}>
+          <Button onClick={() => setIsDialogOpen(true)} className={`${PILL_BUTTON} max-md:order-first`} aria-label="Upload resume">
             <Plus className="h-4 w-4" />
-            <span className="hidden md:block">Upload</span> Resume
+            <span className="hidden md:inline">Upload Resume</span>
           </Button>
         </div>
       </PageHeader>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-[10%] md:mt-[3%]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:mt-[3%]">
         {statsLoading
           ? [0, 1, 2, 3].map((i) => (
               <Card key={i} className="border border-gray-700" aria-hidden>
@@ -326,7 +327,8 @@ export default function AdminDashboard() {
 
       {/* Resume Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar">
+        {/* Keeps a 1rem gap from the screen edges on phones; minmax(0,1fr) stops long file names widening it */}
+        <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-2xl grid-cols-[minmax(0,1fr)] rounded-xl max-h-[90vh] overflow-y-auto no-scrollbar">
           <DialogHeader>
             <DialogTitle>Upload Your Resume</DialogTitle>
             <DialogDescription>

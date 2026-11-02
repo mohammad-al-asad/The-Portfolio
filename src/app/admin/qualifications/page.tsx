@@ -13,6 +13,7 @@ import { achievements, educations } from "../../../../generated/prisma";
 import AdminEducationTable from "@/components/AdminEducationTable";
 import AdminAchievementTable from "@/components/AdminAchievementTable";
 import { edgeStoreBucket } from "@/lib/edgestoreBucket";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 type Tab = "education" | "achievement";
 
@@ -56,7 +57,7 @@ export default function AdminQualificationsPage() {
   // Deletes the record and its certificate image
   const deleteItem = async (
     resource: "educations" | "achievements",
-    id: string
+    id: string,
   ) => {
     if (!session) {
       return router.push("/admin/login");
@@ -87,28 +88,56 @@ export default function AdminQualificationsPage() {
       ? "/admin/educations/new"
       : "/admin/achievements/new";
 
+  const tabTriggers = (
+    <>
+      <TabsTrigger value="education">Educations</TabsTrigger>
+      <TabsTrigger value="achievement">Achievements</TabsTrigger>
+    </>
+  );
+
   return (
-    <div className="page-container">
-      <PageHeader>
-        <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px]">
-            Manage Qualifications
-          </h1>
-          <Button asChild>
-            <Link href={newHref}>
-              <Plus className="h-4 w-4" />
-              Add {activeTab === "education" ? "Education" : "Achievement"}
-            </Link>
-          </Button>
-        </div>
+    // Tabs wraps the header too, so the small-screen tab bar can live inside it
+    <Tabs
+      value={activeTab}
+      onValueChange={(v) => setActiveTab(v as Tab)}
+      className="page-container"
+    >
+      <PageHeader pill>
+        <>
+          <div
+            className={`flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}
+          >
+            <h1
+              className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px] truncate ${PILL_TITLE}`}
+            >
+              Manage Qualifications
+            </h1>
+            <Button asChild className={`${PILL_BUTTON} max-md:order-first`}>
+              <Link
+                href={newHref}
+                aria-label={`Add ${activeTab === "education" ? "education" : "achievement"}`}
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden md:inline">
+                  Add {activeTab === "education" ? "Education" : "Achievement"}
+                </span>
+              </Link>
+            </Button>
+          </div>
+          {/* Small screens: the tabs sit right under the pill, fixed with the header */}
+          <TabsList className="md:hidden pointer-events-auto mx-auto mt-1.5 flex justify-center backdrop-blur-md">
+            {tabTriggers}
+          </TabsList>
+        </>
       </PageHeader>
 
-      {/* Tabs for Education / Achievement */}
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
-        <TabsList className="mt-6 mx-auto flex justify-center">
-          <TabsTrigger value="education">Educations</TabsTrigger>
-          <TabsTrigger value="achievement">Achievements</TabsTrigger>
-        </TabsList>
+      {/* md+: tabs in the page; small screens: content starts below the fixed tab bar */}
+      <TabsList className="max-md:hidden md:mt-6 mx-auto flex justify-center">
+        {tabTriggers}
+      </TabsList>
+      {/* Tab bar ends ~100px from the top (12px + 46px pill + 6px + 36px tabs); the layout
+          already pads 10vh, so this starts the table ~20px below the tabs on any phone */}
+      <div className="max-md:mt-[calc(7.5rem-10vh)]">
         <TabsContent value="education">
           <AdminEducationTable
             loading={loading}
@@ -130,7 +159,7 @@ export default function AdminQualificationsPage() {
             }
           />
         </TabsContent>
-      </Tabs>
-    </div>
+      </div>
+    </Tabs>
   );
 }

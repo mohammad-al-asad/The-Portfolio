@@ -13,6 +13,7 @@ import { prisma } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/PageHeader";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 // Served from cache; admin edits refresh it right away (see lib/revalidate)
 export const revalidate = 3600;
@@ -53,28 +54,28 @@ export default async function QualificationsPage() {
   ]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       <div className="page-container">
-        <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <PageHeader pill>
+          <div className={`flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+              className={`flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors ${PILL_BUTTON}`}
             >
               <Link href="/#qualifications">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white">
+            <h1 className={`text-base sm:text-lg self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white ${PILL_TITLE}`}>
               Qualifications
             </h1>
           </div>
         </PageHeader>
 
-        <div className="max-w-6xl mx-auto px-4 md:px-[47px] pt-28 md:pt-56 pb-20 space-y-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-[47px] pt-20 md:pt-56 pb-20 space-y-20">
           {/* Intro */}
-          <header className="max-w-2xl space-y-4">
+          <header className="max-w-2xl space-y-4 max-md:pl-9">
             <p className="text-gray-600 dark:text-gray-400 text-lg">
               My academic background and the competitions and recognitions
               I&apos;ve earned along the way.

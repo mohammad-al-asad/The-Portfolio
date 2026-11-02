@@ -105,8 +105,8 @@ export default function EducationForm({
         console.error("Error deleting image:", error);
       }
     }
-    form.setValue("imageUrl", "");
-    form.setValue("imagePath", "");
+    form.setValue("imageUrl", "", { shouldDirty: true });
+    form.setValue("imagePath", "", { shouldDirty: true });
   };
 
   const addCourse = () => {
@@ -114,7 +114,7 @@ export default function EducationForm({
     if (!course) return;
     const current = form.getValues("courses");
     if (!current.includes(course)) {
-      form.setValue("courses", [...current, course], { shouldValidate: true });
+      form.setValue("courses", [...current, course], { shouldValidate: true, shouldDirty: true });
     }
     setCourseInput("");
   };
@@ -124,7 +124,7 @@ export default function EducationForm({
     form.setValue(
       "courses",
       current.filter((c) => c !== course),
-      { shouldValidate: true }
+      { shouldValidate: true, shouldDirty: true }
     );
   };
 
@@ -135,6 +135,7 @@ export default function EducationForm({
           title={education ? "Edit Education" : "Add New Education"}
           backHref={BACK_URL}
           saving={saving}
+          dirty={form.formState.isDirty}
           saveLabel={education ? "Update" : "Create"}
           sidebar={
             <>
@@ -154,7 +155,7 @@ export default function EducationForm({
                         value={field.value}
                         onChange={(url, path) => {
                           field.onChange(url);
-                          form.setValue("imagePath", path);
+                          form.setValue("imagePath", path, { shouldDirty: true });
                         }}
                         onRemove={removeImage}
                       />

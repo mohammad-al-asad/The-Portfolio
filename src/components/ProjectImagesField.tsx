@@ -114,7 +114,8 @@ export default function ProjectImagesField({
                   className="object-contain"
                 />
                 {primary && (
-                  <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
+                  // Bottom-left, where "Make primary" sits on the other tiles, so it never meets the size label
+                  <span className="absolute bottom-2 left-2 z-10 inline-flex h-7 items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
                     <Star className="h-3 w-3 fill-current" /> Primary
                   </span>
                 )}
@@ -124,10 +125,14 @@ export default function ProjectImagesField({
                       type="button"
                       size="sm"
                       variant="secondary"
-                      className="h-7 px-2 text-xs"
+                      className="h-7 px-2 text-xs max-sm:w-7 max-sm:px-0"
+                      aria-label="Make primary"
+                      title="Make primary"
                       onClick={() => onChange(images, img.url)}
                     >
-                      <Star className="h-3.5 w-3.5" /> Make primary
+                      {/* Small screens: star only, the tiles are too narrow for the label */}
+                      <Star className="h-3.5 w-3.5" />
+                      <span className="max-sm:hidden">Make primary</span>
                     </Button>
                   )}
                   <Button
@@ -177,7 +182,8 @@ export default function ProjectImagesField({
               <span className="font-medium text-foreground">
                 {isDragActive ? "Drop to upload" : "Add images"}
               </span>
-              <span>Drag & drop or click · up to 50 MB each</span>
+              {/* Drag & drop hint is for desktop only */}
+              <span className="max-md:hidden">Drag & drop or click · up to 50 MB each</span>
             </>
           )}
         </div>

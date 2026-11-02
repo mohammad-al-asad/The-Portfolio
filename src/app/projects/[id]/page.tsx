@@ -13,6 +13,7 @@ import {
   getProjectLinks,
   linkMeta,
 } from "@/lib/project";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 // Served from cache; admin edits refresh it right away (see lib/revalidate)
 export const revalidate = 3600;
@@ -47,28 +48,28 @@ export default async function ProjectDetailPage({ params }: Props) {
   });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       <div className="page-container">
-        <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <PageHeader pill>
+          <div className={`flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+              className={`flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors ${PILL_BUTTON}`}
             >
               <Link href="/projects">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white truncate">
+            <h1 className={`text-base sm:text-lg self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white truncate ${PILL_TITLE}`}>
               Project Details
             </h1>
           </div>
         </PageHeader>
 
-        <article className="max-w-5xl mx-auto px-4 md:px-[47px] pt-28 md:pt-56 pb-16 space-y-10">
+        <article className="max-w-5xl mx-auto px-4 md:px-[47px] pt-20 md:pt-56 pb-16 space-y-10">
           {/* Title & summary */}
-          <header className="space-y-4">
+          <header className="space-y-4 max-md:pl-9">
             {categories.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {categories.map((c) => (
