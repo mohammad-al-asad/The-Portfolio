@@ -162,13 +162,13 @@ export default function AdminMessagesPage() {
         </div>
       </PageHeader>
 
-      {/* Fixed-height box: fits the viewport (layout top padding 5rem / 10rem + mt-8 + pb-24 = 13rem / 18rem); only the panes inside scroll */}
+      {/* Fixed-height box: fits the viewport (small screens: 10vh top padding + pb-24; md+: 10rem + mt-8 + pb-24 = 18rem); only the panes inside scroll */}
       {locked ? (
-        <div className="mt-8 rounded-xl border bg-card shadow-sm h-[calc(100dvh-13rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
+        <div className="md:mt-8 rounded-xl border bg-card shadow-sm h-[calc(90dvh-6rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
           <MessagesLocked />
         </div>
       ) : (
-      <div className="mt-8 rounded-xl border bg-card shadow-sm overflow-hidden grid grid-cols-1 grid-rows-[minmax(0,1fr)] lg:grid-cols-[24rem_1fr] h-[calc(100dvh-13rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
+      <div className="md:mt-8 rounded-xl border bg-card shadow-sm overflow-hidden grid grid-cols-1 grid-rows-[minmax(0,1fr)] lg:grid-cols-[24rem_1fr] h-[calc(90dvh-6rem)] md:h-[calc(100dvh-18rem)] min-h-[24rem]">
         {/* List pane */}
         <section
           className={cn(

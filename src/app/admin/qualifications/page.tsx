@@ -108,7 +108,7 @@ export default function AdminQualificationsPage() {
 
       {/* Tabs for Education / Achievement */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
-        <TabsList className="mt-6 mx-auto flex justify-center">
+        <TabsList className="md:mt-6 mx-auto flex justify-center">
           <TabsTrigger value="education">Educations</TabsTrigger>
           <TabsTrigger value="achievement">Achievements</TabsTrigger>
         </TabsList>
