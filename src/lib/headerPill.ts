@@ -9,5 +9,7 @@ export const PILL_BAR =
 export const PILL_TITLE =
   "max-md:flex max-md:h-10 max-md:min-w-0 max-md:items-center max-md:rounded-md max-md:bg-gradient-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:px-4 max-md:text-base max-md:backdrop-blur-2xl";
 
-// Buttons next to the title (back, add, save...): 40px tall, like the nav buttons
-export const PILL_BUTTON = "max-md:h-10 max-md:min-w-10 max-md:shrink-0 max-md:px-3";
+// Buttons next to the title (back, add, save...): 40px tall, and the same light
+// outline style as the nav buttons instead of the solid black default
+export const PILL_BUTTON =
+  "max-md:h-10 max-md:min-w-10 max-md:shrink-0 max-md:px-3 max-md:border max-md:bg-transparent max-md:bg-gradient-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:text-foreground max-md:shadow-xs max-md:backdrop-blur-2xl max-md:hover:bg-gray-200 dark:max-md:border-input dark:max-md:hover:bg-input/50";
