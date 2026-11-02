@@ -175,7 +175,7 @@ export default function AdminDashboard() {
       </PageHeader>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-[10%] md:mt-[3%]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:mt-[3%]">
         {statsLoading
           ? [0, 1, 2, 3].map((i) => (
               <Card key={i} className="border border-gray-700" aria-hidden>

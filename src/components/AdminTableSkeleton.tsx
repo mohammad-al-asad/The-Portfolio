@@ -6,7 +6,7 @@ export default function AdminTableSkeleton({children,title}:{children:ReactNode,
   const skeletonRows = Array(5).fill(null); // show 5 skeleton rows
 
   return (
-    <Card className="mt-[10%] md:mt-[3%] animate-pulse">
+    <Card className="md:mt-[3%] animate-pulse">
       <CardHeader>
         <CardTitle>
           {title}

@@ -39,7 +39,7 @@ function AdminAchievementTable({
     );
   }
   return (
-    <Card className="mt-[10%] md:mt-[3%]">
+    <Card className="md:mt-[3%]">
       <CardHeader>
         <CardTitle>Achievements List</CardTitle>
       </CardHeader>

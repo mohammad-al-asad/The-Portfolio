@@ -38,7 +38,7 @@ function AdminProjectTable({
   }
 
   return (
-    <Card className="mt-[10%] md:mt-[3%]">
+    <Card className="md:mt-[3%]">
       <CardHeader>
         <CardTitle>Projects List</CardTitle>
       </CardHeader>

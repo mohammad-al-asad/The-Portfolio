@@ -74,7 +74,7 @@ export default function EditorLayout({
       </PageHeader>
 
       <div
-        className={`mt-[10%] md:mt-[3%] grid grid-cols-1 gap-6 items-start ${
+        className={`md:mt-[3%] grid grid-cols-1 gap-6 items-start ${
           sidebar ? "lg:grid-cols-3" : "max-w-4xl mx-auto"
         }`}
       >
