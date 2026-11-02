@@ -99,6 +99,41 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                 />
               </svg>
 
+              {/* Two chips on the left side of the orbit to balance the icons on the right.
+                  Hidden on phones, where the photo shifts left and there's no room. */}
+              {[
+                {
+                  angle: 232, // upper left
+                  delay: 900,
+                  content: (
+                    <>
+                      <span className="relative flex size-2">
+                        <span className="absolute inline-flex size-full rounded-full bg-green-500 opacity-60 animate-ping" />
+                        <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+                      </span>
+                      Available for work
+                    </>
+                  ),
+                },
+                { angle: 128, delay: 1050, content: <>📱 4 apps live</> }, // lower left
+              ].map(({ angle, delay, content }) => (
+                <div
+                  key={angle}
+                  className="absolute left-1/2 top-1/2 z-20 hidden sm:block"
+                  style={{
+                    // Just outside the orbit line so the chips stay clear of the photo frame
+                    transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(calc(var(--r) + 24px)) rotate(${-angle}deg)`,
+                  }}
+                >
+                  <div
+                    style={{ animationDelay: `${delay}ms`, animationFillMode: "backwards" }}
+                    className="animate-in fade-in zoom-in-90 duration-700 flex items-center gap-2 whitespace-nowrap rounded-full border border-blue-400/30 bg-background/80 px-3.5 py-1.5 text-sm font-medium text-foreground shadow-lg backdrop-blur-sm"
+                  >
+                    {content}
+                  </div>
+                </div>
+              ))}
+
               {/* Social icons on a half orbit along the right side, leaving the photo clear */}
               {SOCIAL_LINKS.map(({ label, href, Icon }, index) => {
                 const spread = 128; // degrees covered by the arc
