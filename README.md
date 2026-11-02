@@ -12,7 +12,19 @@
 
 [![Live site](https://img.shields.io/badge/Live_site-mohammad--al--asad.vercel.app-7c3aed?style=for-the-badge&logo=vercel&logoColor=white)](https://mohammad-al-asad.vercel.app)
 
-<img src="./.github/assets/spacer.svg" width="1" height="6" alt="" />
+<img src="./.github/assets/spacer.svg" width="1" height="28" alt="" />
+
+<a href="https://mohammad-al-asad.vercel.app">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/home-dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="./.github/assets/home-light.png" />
+    <img src="./.github/assets/home-light.png" width="100%" alt="Portfolio home page" />
+  </picture>
+</a>
+
+<sub>The screenshot follows your GitHub theme. Switch between light and dark to see both looks.</sub>
+
+<img src="./.github/assets/spacer.svg" width="1" height="14" alt="" />
 
 ![Next.js](https://img.shields.io/badge/Next.js_15-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
@@ -24,18 +36,6 @@
 ![NextAuth](https://img.shields.io/badge/NextAuth-7c3aed?style=flat-square&logo=auth0&logoColor=white)
 ![Resend](https://img.shields.io/badge/Resend-000000?style=flat-square&logo=resend&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
-
-<img src="./.github/assets/spacer.svg" width="1" height="40" alt="" />
-
-<a href="https://mohammad-al-asad.vercel.app">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/home-dark.png" />
-    <source media="(prefers-color-scheme: light)" srcset="./.github/assets/home-light.png" />
-    <img src="./.github/assets/home-light.png" width="100%" alt="Portfolio home page" />
-  </picture>
-</a>
-
-<sub>The screenshot follows your GitHub theme. Switch between light and dark to see both looks.</sub>
 
 </div>
 
