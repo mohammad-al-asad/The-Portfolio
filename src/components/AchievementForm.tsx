@@ -103,8 +103,8 @@ export default function AchievementForm({
         console.error("Error deleting image:", error);
       }
     }
-    form.setValue("imageUrl", "");
-    form.setValue("imagePath", "");
+    form.setValue("imageUrl", "", { shouldDirty: true });
+    form.setValue("imagePath", "", { shouldDirty: true });
   };
 
   const addTech = () => {
@@ -114,6 +114,7 @@ export default function AchievementForm({
     if (!current.includes(tech)) {
       form.setValue("technologies", [...current, tech], {
         shouldValidate: true,
+        shouldDirty: true,
       });
     }
     setTechInput("");
@@ -124,7 +125,7 @@ export default function AchievementForm({
     form.setValue(
       "technologies",
       current.filter((t) => t !== tech),
-      { shouldValidate: true }
+      { shouldValidate: true, shouldDirty: true }
     );
   };
 
@@ -135,6 +136,7 @@ export default function AchievementForm({
           title={achievement ? "Edit Achievement" : "Add New Achievement"}
           backHref={BACK_URL}
           saving={saving}
+          dirty={form.formState.isDirty}
           saveLabel={achievement ? "Update" : "Create"}
           sidebar={
             <>
@@ -154,7 +156,7 @@ export default function AchievementForm({
                         value={field.value}
                         onChange={(url, path) => {
                           field.onChange(url);
-                          form.setValue("imagePath", path);
+                          form.setValue("imagePath", path, { shouldDirty: true });
                         }}
                         onRemove={removeImage}
                       />

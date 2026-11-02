@@ -19,6 +19,7 @@ export default function EditorLayout({
   title,
   backHref,
   saving,
+  dirty = true,
   saveLabel,
   sidebar,
   children,
@@ -26,6 +27,8 @@ export default function EditorLayout({
   title: string;
   backHref: string;
   saving: boolean;
+  /** Whether the form has unsaved changes; Save stays disabled until it does */
+  dirty?: boolean;
   saveLabel: string;
   sidebar?: React.ReactNode;
   children: React.ReactNode;
@@ -59,7 +62,13 @@ export default function EditorLayout({
             >
               <Link href={backHref}>Cancel</Link>
             </Button>
-            <Button type="submit" disabled={saving} className={PILL_BUTTON} aria-label={saveLabel}>
+            <Button
+              type="submit"
+              disabled={saving || !dirty}
+              className={PILL_BUTTON}
+              aria-label={saveLabel}
+              title={dirty ? undefined : "No changes to save"}
+            >
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (

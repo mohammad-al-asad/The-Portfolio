@@ -90,7 +90,7 @@ export default function ProjectForm({ project }: { project?: projects }) {
     form.setValue(
       "categoryIds",
       current.includes(id) ? current.filter((c) => c !== id) : [...current, id],
-      { shouldValidate: true }
+      { shouldValidate: true, shouldDirty: true }
     );
   };
 
@@ -206,7 +206,7 @@ export default function ProjectForm({ project }: { project?: projects }) {
     if (!item) return;
     const current = form.getValues(name) ?? [];
     if (!current.includes(item)) {
-      form.setValue(name, [...current, item], { shouldValidate: true });
+      form.setValue(name, [...current, item], { shouldValidate: true, shouldDirty: true });
     }
     clear();
   };
@@ -219,7 +219,7 @@ export default function ProjectForm({ project }: { project?: projects }) {
     form.setValue(
       name,
       current.filter((x) => x !== value),
-      { shouldValidate: true }
+      { shouldValidate: true, shouldDirty: true }
     );
   };
 
@@ -283,6 +283,7 @@ export default function ProjectForm({ project }: { project?: projects }) {
           title={project ? "Edit Project" : "Add New Project"}
           backHref="/admin/projects"
           saving={saving}
+          dirty={form.formState.isDirty}
           saveLabel={project ? "Update" : "Create"}
           sidebar={
             <>
@@ -403,7 +404,7 @@ export default function ProjectForm({ project }: { project?: projects }) {
                     primaryUrl={form.watch("imageUrl")}
                     onChange={(images, primaryUrl) => {
                       field.onChange(images);
-                      form.setValue("imageUrl", primaryUrl, { shouldValidate: true });
+                      form.setValue("imageUrl", primaryUrl, { shouldValidate: true, shouldDirty: true });
                     }}
                     onDelete={deleteImage}
                   />
