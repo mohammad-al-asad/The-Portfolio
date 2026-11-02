@@ -66,6 +66,14 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.id = user.id;
+      } else if (token.id) {
+        // Keep the name in step with the database, so renaming the admin
+        // shows up straight away instead of only after logging in again
+        const admin = await prisma.admins.findUnique({
+          where: { id: token.id as string },
+          select: { name: true },
+        });
+        if (admin?.name) token.name = admin.name;
       }
       return token;
     },
