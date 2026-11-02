@@ -114,7 +114,8 @@ export default function ProjectImagesField({
                   className="object-contain"
                 />
                 {primary && (
-                  <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
+                  // Bottom-left, where "Make primary" sits on the other tiles, so it never meets the size label
+                  <span className="absolute bottom-2 left-2 z-10 inline-flex h-7 items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
                     <Star className="h-3 w-3 fill-current" /> Primary
                   </span>
                 )}
