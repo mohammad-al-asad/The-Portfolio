@@ -68,6 +68,37 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                 className="pointer-events-none absolute -inset-16 sm:-inset-20 -z-20 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),rgba(147,51,234,0.16)_55%,transparent)] blur-2xl animate-pulse-slow"
               />
 
+              {/* Thin arc on the empty left side, on the same orbit as the icons */}
+              <svg
+                aria-hidden
+                viewBox="0 0 200 200"
+                className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible"
+                style={{ width: "calc(var(--r) * 2)", height: "calc(var(--r) * 2)" }}
+              >
+                <defs>
+                  <linearGradient id="hero-arc" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stopColor="#60a5fa" stopOpacity="0" />
+                    <stop offset="0.25" stopColor="#60a5fa" stopOpacity="0.7" />
+                    <stop offset="0.75" stopColor="#a855f7" stopOpacity="0.7" />
+                    <stop offset="1" stopColor="#a855f7" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {/* Circle path starts at 3 o'clock and runs clockwise; draw 78° to 282°,
+                    the side opposite the icons (which sit between -64° and 64°) */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="100"
+                  fill="none"
+                  stroke="url(#hero-arc)"
+                  strokeWidth="0.9"
+                  strokeLinecap="round"
+                  pathLength="360"
+                  strokeDasharray="204 156"
+                  strokeDashoffset="-78"
+                />
+              </svg>
+
               {/* Social icons on a half orbit along the right side, leaving the photo clear */}
               {SOCIAL_LINKS.map(({ label, href, Icon }, index) => {
                 const spread = 128; // degrees covered by the arc
