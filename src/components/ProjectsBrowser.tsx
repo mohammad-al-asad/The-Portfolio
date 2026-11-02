@@ -99,13 +99,13 @@ export default function ProjectsBrowser({
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors max-md:size-8 max-md:shrink-0 max-md:rounded-xl max-md:bg-background/85 max-md:shadow-lg max-md:backdrop-blur-md"
+              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors max-md:size-9 max-md:shrink-0"
             >
               <Link href="/" aria-label="Back to home">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-sm sm:text-base self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white max-md:rounded-xl max-md:border max-md:border-gray-200 dark:max-md:border-gray-700 max-md:bg-background/85 max-md:bg-gradient-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:px-4 max-md:py-1.5 max-md:shadow-lg max-md:backdrop-blur-md">
+            <h1 className="text-sm sm:text-base self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white max-md:flex max-md:h-9 max-md:items-center max-md:rounded-md max-md:border max-md:bg-gradient-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:px-4 max-md:shadow-xs max-md:backdrop-blur-2xl dark:max-md:border-input">
               Project Gallery
             </h1>
           </div>
