@@ -125,7 +125,7 @@ export default function AdminQualificationsPage() {
             </Button>
           </div>
           {/* Small screens: the tabs sit right under the pill, fixed with the header */}
-          <TabsList className="md:hidden pointer-events-auto mx-auto mt-0 flex justify-center backdrop-blur-md">
+          <TabsList className="md:hidden pointer-events-auto mx-auto mt-1.5 flex justify-center backdrop-blur-md">
             {tabTriggers}
           </TabsList>
         </>
@@ -135,7 +135,9 @@ export default function AdminQualificationsPage() {
       <TabsList className="max-md:hidden md:mt-6 mx-auto flex justify-center">
         {tabTriggers}
       </TabsList>
-      <div className="max-md:mt-10">
+      {/* Tab bar ends ~100px from the top (12px + 46px pill + 6px + 36px tabs); the layout
+          already pads 10vh, so this starts the table ~8px below the tabs on any phone */}
+      <div className="max-md:mt-[calc(6.75rem-10vh)]">
         <TabsContent value="education">
           <AdminEducationTable
             loading={loading}
