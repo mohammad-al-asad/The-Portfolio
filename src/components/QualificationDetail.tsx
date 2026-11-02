@@ -56,7 +56,7 @@ export default function QualificationDetail({
           </div>
         </PageHeader>
 
-        <article className="max-w-5xl mx-auto pl-14 pr-4 md:px-[47px] pt-20 md:pt-56 pb-16">
+        <article className="max-w-5xl mx-auto px-4 md:px-[47px] pt-20 md:pt-56 pb-16">
           <header className="space-y-3 border-b border-gray-200 dark:border-gray-700 pb-8">
             <p className={`text-sm font-semibold uppercase tracking-wider ${accentText}`}>
               {kind}
