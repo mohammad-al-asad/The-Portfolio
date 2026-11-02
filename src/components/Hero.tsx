@@ -58,14 +58,14 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
           </div>
 
           {/* Image Side */}
-          <div className="relative order-2 flex justify-center animate-in fade-in duration-1000">
-            <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-              {/* Floating Social Icons */}
+          {/* Shifted left a little on phones so the icon arc on the right stays on screen */}
+          <div className="relative order-2 flex justify-center animate-in fade-in duration-1000 -translate-x-6 sm:translate-x-0">
+            {/* --r: how far the icon arc sits from the photo's centre */}
+            <div className="relative w-80 h-80 lg:w-96 lg:h-96 [--r:174px] lg:[--r:214px]">
+              {/* Social icons on a half orbit along the right side, leaving the photo clear */}
               {SOCIAL_LINKS.map(({ label, href, Icon }, index) => {
-                const angle = (index * 360) / SOCIAL_LINKS.length;
-                const radius = 175; // Distance from center
-                const x = Math.cos((angle * Math.PI) / 180) * radius;
-                const y = Math.sin((angle * Math.PI) / 180) * radius;
+                const spread = 128; // degrees covered by the arc
+                const angle = -spread / 2 + (index * spread) / (SOCIAL_LINKS.length - 1);
 
                 return (
                   <a
@@ -73,16 +73,17 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute left-[56%] top-[56%] -translate-x-1/2 -translate-y-1/2 z-20 group"
+                    className="absolute left-1/2 top-1/2 z-20 group"
                     style={{
-                      transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                      transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(var(--r)) rotate(${-angle}deg)`,
                     }}
                     aria-label={label}
                   >
                     <div
-                      className={`animate-in zoom-in-50 fade-in duration-500 w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
+                      style={{ animationDelay: `${300 + index * 90}ms`, animationFillMode: "backwards" }}
+                      className={`animate-in zoom-in-50 fade-in duration-500 w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
                     >
-                      <Icon size={24} />
+                      <Icon className="size-5 lg:size-6" />
                     </div>
                   </a>
                 );
@@ -114,7 +115,8 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                 </div>
 
                 {/* Floating elements */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full animate-bounce" />
+                {/* Top-left, so it doesn't crowd the icon arc on the right */}
+                <div className="absolute -top-2 -left-2 w-6 h-6 bg-blue-500 rounded-full animate-bounce" />
                 <div
                   className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-500 rounded-full animate-bounce"
                   style={{ animationDelay: "0.5s" }}
