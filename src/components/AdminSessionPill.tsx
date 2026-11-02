@@ -35,8 +35,11 @@ export default function AdminSessionPill() {
           </Button>
         </div>
       ) : (
-        // Logged out: just the button, no container around it
-        <Button asChild className="h-10 rounded-xl px-4 shadow-lg">
+        // Logged out: just the button, same frosted look as the signed-in pill
+        <Button
+          asChild
+          className="h-10 rounded-xl border border-gray-200 bg-background/85 px-4 text-foreground shadow-lg backdrop-blur-md hover:bg-muted dark:border-gray-700"
+        >
           <Link href={`/admin/login?callbackUrl=${encodeURIComponent(pathname)}`}>
             <LogIn className="h-4 w-4" />
             Log in to edit

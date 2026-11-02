@@ -108,7 +108,9 @@ export default function AdminQualificationsPage() {
 
       {/* Tabs for Education / Achievement */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
-        <TabsList className="md:mt-6 mx-auto flex justify-center">
+        {/* Small screens: centred on the screen (the page has 56px left / 16px right padding,
+            hence the 20px shift) and sticks just below the header pill when scrolling */}
+        <TabsList className="md:mt-6 mx-auto flex justify-center max-md:sticky max-md:top-16 max-md:z-20 max-md:-translate-x-5 max-md:backdrop-blur-md">
           <TabsTrigger value="education">Educations</TabsTrigger>
           <TabsTrigger value="achievement">Achievements</TabsTrigger>
         </TabsList>
