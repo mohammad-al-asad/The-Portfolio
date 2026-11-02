@@ -2,17 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { SOCIAL_LINKS } from "@/lib/socials";
-
-// Brand colour each icon takes on hover
-const HOVER: Record<string, string> = {
-  GitHub: "group-hover:bg-gray-500 group-hover:border-gray-500",
-  LinkedIn: "group-hover:border-blue-500 group-hover:bg-blue-500",
-  Instagram:
-    "group-hover:border-none hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600",
-  Facebook: "group-hover:border-blue-500 group-hover:bg-blue-500",
-  X: "dark:group-hover:border-white hover:border-black group-hover:bg-black",
-};
+import HeroOrbit from "@/components/HeroOrbit";
 
 export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
   return (
@@ -68,84 +58,8 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                 className="pointer-events-none absolute -inset-16 sm:-inset-20 -z-20 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),rgba(147,51,234,0.16)_55%,transparent)] blur-2xl animate-pulse-slow"
               />
 
-              {/* Thin arc on the empty left side, on the same orbit as the icons */}
-              <svg
-                aria-hidden
-                viewBox="0 0 200 200"
-                className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible"
-                style={{ width: "calc(var(--r) * 2)", height: "calc(var(--r) * 2)" }}
-              >
-                <defs>
-                  <linearGradient id="hero-arc" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor="#60a5fa" stopOpacity="0" />
-                    <stop offset="0.25" stopColor="#60a5fa" stopOpacity="0.7" />
-                    <stop offset="0.75" stopColor="#a855f7" stopOpacity="0.7" />
-                    <stop offset="1" stopColor="#a855f7" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                {/* Circle path starts at 3 o'clock and runs clockwise; draw 78° to 282°,
-                    the side opposite the icons (which sit between -64° and 64°) */}
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="100"
-                  fill="none"
-                  stroke="url(#hero-arc)"
-                  strokeWidth="0.9"
-                  strokeLinecap="round"
-                  pathLength="360"
-                  strokeDasharray="204 156"
-                  strokeDashoffset="-78"
-                  className="hero-arc-draw"
-                />
-                {/* A soft light that keeps travelling up the arc */}
-                <circle
-                  cx="100"
-                  cy="100"
-                  r="100"
-                  fill="none"
-                  stroke="#a78bfa"
-                  strokeWidth="2.6"
-                  strokeLinecap="round"
-                  pathLength="360"
-                  strokeDasharray="18 342"
-                  strokeDashoffset="-78"
-                  className="hero-arc-light"
-                />
-              </svg>
-
-              {/* Social icons on a half orbit along the right side, leaving the photo clear */}
-              {SOCIAL_LINKS.map(({ label, href, Icon }, index) => {
-                const spread = 128; // degrees covered by the arc
-                const angle = -spread / 2 + (index * spread) / (SOCIAL_LINKS.length - 1);
-
-                return (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute left-1/2 top-1/2 z-20 group animate-orbit-spread"
-                    // All icons start stacked on the bottom one and fan out up the arc
-                    style={
-                      {
-                        "--orbit-start": `${spread / 2}deg`,
-                        "--orbit-end": `${angle}deg`,
-                        "--orbit-angle": `${angle}deg`,
-                        transform:
-                          "translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--r)) rotate(calc(-1 * var(--orbit-angle)))",
-                      } as React.CSSProperties
-                    }
-                    aria-label={label}
-                  >
-                    <span
-                      className={`w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
-                    >
-                      <Icon className="size-4 lg:size-5" />
-                    </span>
-                  </a>
-                );
-              })}
+              {/* Orbit line, travelling light and social icons */}
+              <HeroOrbit />
 
               {/* Gradient Orbits */}
               <div className="absolute inset-0 rounded-full border-2 border-blue-400/10 animate-pulse-slow" />

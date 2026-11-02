@@ -220,7 +220,7 @@ html {
   }
 }
 
-/* Hero orbit line: draws itself from the bottom on load, then a light travels along it */
+/* Hero orbit line: draws itself from the bottom on load, then a light laps the whole orbit */
 @keyframes hero-arc-draw {
   from {
     stroke-dasharray: 0 360;
@@ -230,20 +230,15 @@ html {
   }
 }
 
+/* One full lap of the orbit; the icons light up as it passes (see HeroOrbit.tsx) */
 @keyframes hero-arc-light {
-  0% {
+  from {
     stroke-dashoffset: -78;
-    opacity: 0;
-  }
-  15% {
     opacity: 1;
   }
-  85% {
+  to {
+    stroke-dashoffset: -438;
     opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: -264;
-    opacity: 0;
   }
 }
 
@@ -252,9 +247,9 @@ html {
 }
 
 .hero-arc-light {
-  opacity: 0;
+  opacity: 0; /* hidden until the lap starts */
   filter: drop-shadow(0 0 3px rgb(168 85 247 / 0.9));
-  animation: hero-arc-light 5s ease-in-out 1.8s infinite;
+  animation: hero-arc-light 8s linear 1.8s infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
