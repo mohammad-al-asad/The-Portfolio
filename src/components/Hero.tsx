@@ -96,6 +96,21 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                   pathLength="360"
                   strokeDasharray="204 156"
                   strokeDashoffset="-78"
+                  className="hero-arc-draw"
+                />
+                {/* A soft light that keeps travelling up the arc */}
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="100"
+                  fill="none"
+                  stroke="#a78bfa"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                  pathLength="360"
+                  strokeDasharray="18 342"
+                  strokeDashoffset="-78"
+                  className="hero-arc-light"
                 />
               </svg>
 
