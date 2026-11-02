@@ -327,7 +327,8 @@ export default function AdminDashboard() {
 
       {/* Resume Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar">
+        {/* Keeps a 1rem gap from the screen edges on phones; minmax(0,1fr) stops long file names widening it */}
+        <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-2xl grid-cols-[minmax(0,1fr)] rounded-xl max-h-[90vh] overflow-y-auto no-scrollbar">
           <DialogHeader>
             <DialogTitle>Upload Your Resume</DialogTitle>
             <DialogDescription>

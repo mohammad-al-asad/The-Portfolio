@@ -140,7 +140,7 @@ export function EdgestoreCVUploader({
             <div className="flex-shrink-0">
               <FileText className="h-12 w-12 text-green-600" />
             </div>
-            <div className="flex-1 text-center min-w-0">
+            <div className="flex-1 w-full text-center min-w-0">
               <p className="text-sm font-medium text-green-900 dark:text-green-100">
                 CV Uploaded Successfully
               </p>
