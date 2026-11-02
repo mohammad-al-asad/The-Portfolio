@@ -53,8 +53,6 @@ export default function HeroOrbit() {
     SOCIAL_LINKS.map(() => 0),
   );
   const lastLit = useRef<number | null>(null);
-  // True while the light is running along the left line, which then thickens
-  const [onLine, setOnLine] = useState(false);
 
   useEffect(() => {
     const el = lightRef.current;
@@ -69,7 +67,6 @@ export default function HeroOrbit() {
       if (!anim || time < 0) {
         lastLit.current = null;
         setLit(null);
-        setOnLine(false);
         return;
       }
 
@@ -79,8 +76,6 @@ export default function HeroOrbit() {
           ((time % LIGHT_PERIOD_MS) / LIGHT_PERIOD_MS) * 360 +
           LIGHT_LENGTH / 2) %
         360;
-      // The line covers 78° to 282° (see the arc below)
-      setOnLine(head > 78 && head < 282);
       const gap = (a: number) =>
         Math.abs(((((head - a) % 360) + 540) % 360) - 180);
       const index = ANGLES.findIndex((a) => gap(a) < LIT_RANGE);
@@ -121,15 +116,12 @@ export default function HeroOrbit() {
           r="100"
           fill="none"
           stroke="url(#hero-arc)"
+          strokeWidth="0.9"
           strokeLinecap="round"
           pathLength="360"
           strokeDasharray="204 156"
           strokeDashoffset="-78"
           className="hero-arc-draw"
-          style={{
-            strokeWidth: onLine ? 1.8 : 0.9,
-            transition: "stroke-width 600ms ease",
-          }}
         />
         <circle
           ref={lightRef}
