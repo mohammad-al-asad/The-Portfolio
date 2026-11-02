@@ -30,7 +30,7 @@ const ANGLES = SOCIAL_LINKS.map(
 // Keep in sync with .hero-arc-light in globals.css
 const LIGHT_PERIOD_MS = 8000;
 const LIGHT_DELAY_MS = 1800;
-const LIGHT_LENGTH = 18; // degrees
+const LIGHT_LENGTH = 9; // degrees: shorter than an icon, so it hides fully behind each one
 const LIGHT_START = 78; // starts at the bottom end of the line, then runs up the left side
 const LIT_RANGE = 9; // how close (degrees) the light must be to light an icon
 
