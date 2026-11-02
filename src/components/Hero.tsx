@@ -2,17 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { SOCIAL_LINKS } from "@/lib/socials";
-
-// Brand colour each icon takes on hover
-const HOVER: Record<string, string> = {
-  GitHub: "group-hover:bg-gray-500 group-hover:border-gray-500",
-  LinkedIn: "group-hover:border-blue-500 group-hover:bg-blue-500",
-  Instagram:
-    "group-hover:border-none hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600",
-  Facebook: "group-hover:border-blue-500 group-hover:bg-blue-500",
-  X: "dark:group-hover:border-white hover:border-black group-hover:bg-black",
-};
+import HeroOrbit from "@/components/HeroOrbit";
 
 export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
   return (
@@ -58,35 +48,18 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
           </div>
 
           {/* Image Side */}
-          <div className="relative order-2 flex justify-center animate-in fade-in duration-1000">
-            <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-              {/* Floating Social Icons */}
-              {SOCIAL_LINKS.map(({ label, href, Icon }, index) => {
-                const angle = (index * 360) / SOCIAL_LINKS.length;
-                const radius = 175; // Distance from center
-                const x = Math.cos((angle * Math.PI) / 180) * radius;
-                const y = Math.sin((angle * Math.PI) / 180) * radius;
+          {/* Shifted left a little on phones so the icon arc on the right stays on screen */}
+          <div className="relative order-2 flex justify-center animate-in fade-in duration-1000 -translate-x-6 sm:translate-x-0">
+            {/* --r: how far the icon arc sits from the photo's centre, leaving a clear gap from the frame */}
+            <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 [--r:178px] sm:[--r:194px] lg:[--r:232px]">
+              {/* Soft glow behind the whole frame: photo and icon arc */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -inset-16 sm:-inset-20 -z-20 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),rgba(147,51,234,0.16)_55%,transparent)] blur-2xl animate-pulse-slow"
+              />
 
-                return (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute left-[56%] top-[56%] -translate-x-1/2 -translate-y-1/2 z-20 group"
-                    style={{
-                      transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                    }}
-                    aria-label={label}
-                  >
-                    <div
-                      className={`animate-in zoom-in-50 fade-in duration-500 w-14 h-14 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white  shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
-                    >
-                      <Icon size={24} />
-                    </div>
-                  </a>
-                );
-              })}
+              {/* Orbit line, travelling light and social icons */}
+              <HeroOrbit />
 
               {/* Gradient Orbits */}
               <div className="absolute inset-0 rounded-full border-2 border-blue-400/10 animate-pulse-slow" />
@@ -106,19 +79,12 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                     alt="Mohammad Al Asad at his desk"
                     fill
                     // The 4:3 photo is drawn 4/3 wider than the circle to fill it
-                    // (320px / 384px circle -> 427px / 512px wide), so request that width
+                    // (288px / 320px / 384px circle -> up to 427px / 512px wide), so request that width
                     sizes="(max-width: 1024px) 427px, 512px"
                     className="object-cover object-[45%_50%]"
                     priority
                   />
                 </div>
-
-                {/* Floating elements */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full animate-bounce" />
-                <div
-                  className="absolute -bottom-2 -left-2 w-4 h-4 bg-purple-500 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.5s" }}
-                />
               </div>
 
               {/* Background Glow */}
