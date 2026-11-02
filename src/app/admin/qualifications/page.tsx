@@ -125,7 +125,7 @@ export default function AdminQualificationsPage() {
             </Button>
           </div>
           {/* Small screens: the tabs sit right under the pill, fixed with the header */}
-          <TabsList className="md:hidden pointer-events-auto mx-auto mt-1.5 flex justify-center backdrop-blur-md">
+          <TabsList className="md:hidden pointer-events-auto mx-auto mt-0 flex justify-center backdrop-blur-md">
             {tabTriggers}
           </TabsList>
         </>
