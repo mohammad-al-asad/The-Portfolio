@@ -8,25 +8,28 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
   return (
     <section className="pb-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Phones and tablets: heading, then photo, then buttons.
-            Desktop: heading and buttons on the left, photo on the right. */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-[1fr_auto_auto_1fr] items-center gap-x-8 gap-y-6 lg:gap-y-8">
-          {/* Text Content Side: CSS fade starts on first paint (no JS wait) */}
-          <div className="text-center lg:text-left order-1 lg:col-start-1 lg:row-start-2 animate-in fade-in duration-1000">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+        {/* Phones and tablets: heading, photo, description, buttons.
+            Desktop: heading, description and buttons on the left, photo on the right. */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-[1fr_auto_auto_auto_1fr] items-center gap-x-8 gap-y-6 lg:gap-y-0">
+          {/* Text: CSS fade starts on first paint (no JS wait) */}
+          <div className="text-center lg:text-left order-1 lg:col-start-1 lg:row-start-2 lg:mb-6 animate-in fade-in duration-1000">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Crafting{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
                 Digital Experiences
               </span>{" "}
               That Inspire
             </h1>
+          </div>
+
+          <div className="text-center lg:text-left order-3 lg:col-start-1 lg:row-start-3 lg:mb-8 animate-in fade-in duration-1000">
             <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
               Full-stack & React Native developer building fast, polished apps
               for mobile and the web, from the first idea to the store listing.
             </p>
           </div>
 
-          <div className="order-3 lg:col-start-1 lg:row-start-3 animate-in fade-in duration-1000">
+          <div className="order-4 lg:col-start-1 lg:row-start-4 animate-in fade-in duration-1000">
             <div className="flex flex-col justify-center lg:justify-start sm:flex-row gap-4">
               <Button
                 asChild
@@ -53,7 +56,7 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
           </div>
 
           {/* Image Side. Vertical padding leaves room for the orbit, which reaches past the photo */}
-          <div className="relative order-2 lg:col-start-2 lg:row-start-1 lg:row-span-4 flex justify-center py-12 lg:py-0 animate-in fade-in duration-1000">
+          <div className="relative order-2 lg:col-start-2 lg:row-start-1 lg:row-span-5 flex justify-center py-12 lg:py-0 animate-in fade-in duration-1000">
             {/* --r: how far the icon arc sits from the photo's centre, leaving a clear gap from the frame.
                 Phones: 224px photo, so the whole orbit fits a 360px-wide screen. */}
             <div className="relative w-56 h-56 sm:w-80 sm:h-80 lg:w-96 lg:h-96 [--r:146px] sm:[--r:194px] lg:[--r:232px]">
