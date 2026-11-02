@@ -94,18 +94,18 @@ export default function ProjectsBrowser({
     <div className="min-h-screen">
       <div className="page-container">
         {/* Header - With Gradient Accent */}
-        <PageHeader>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+        <PageHeader pill>
+          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 max-md:pointer-events-auto max-md:mx-auto max-md:w-fit max-md:max-w-[calc(100%-7rem)] max-md:items-center max-md:gap-3 max-md:rounded-full max-md:py-1.5 max-md:pl-1.5 max-md:pr-5 max-md:bg-background/85 max-md:shadow-lg max-md:backdrop-blur-md">
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors"
+              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors max-md:size-9 max-md:shrink-0 max-md:rounded-full"
             >
               <Link href="/" aria-label="Back to home">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-xl self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white">
+            <h1 className="text-base sm:text-lg self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white">
               Project Gallery
             </h1>
           </div>
