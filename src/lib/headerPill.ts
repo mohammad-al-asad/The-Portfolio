@@ -1,17 +1,17 @@
 // Small-screen "pill" header styles, shared by every page that uses <PageHeader pill>.
 // From md up these classes do nothing and the regular full-width bar shows.
+// Looks like the side nav: one gradient pill holding plain icon buttons and the title.
 
-// The bar itself: drops its background and becomes a centred row of pills
+// The parent pill: centred, nav-style gradient, holds the buttons and the title
 export const PILL_BAR =
-  "max-md:pointer-events-auto max-md:mx-auto max-md:w-fit max-md:max-w-[calc(100%-7rem)] max-md:items-center max-md:justify-center max-md:gap-2 max-md:p-0 max-md:border-0 max-md:bg-none max-md:bg-transparent";
+  "max-md:pointer-events-auto max-md:mx-auto max-md:w-fit max-md:max-w-[calc(100%-7rem)] max-md:items-center max-md:justify-center max-md:gap-1 max-md:rounded-xl max-md:border-0 max-md:p-1 max-md:bg-transparent max-md:bg-linear-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 dark:max-md:from-blue-400/15 dark:max-md:to-purple-600/15 max-md:shadow-sm max-md:backdrop-blur-md";
 
-// The title: a label, not a button (same height and tint, no border or shadow)
-export const PILL_TITLE =
-  "max-md:flex max-md:h-10 max-md:min-w-0 max-md:items-center max-md:rounded-md max-md:bg-gradient-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:px-4 max-md:text-base max-md:backdrop-blur-2xl";
+// The title: plain text inside the parent pill
+export const PILL_TITLE = "max-md:min-w-0 max-md:px-2.5 max-md:text-base";
 
-// Buttons next to the title (back, add, save...): 40px tall, and the same light
-// outline style as the nav buttons instead of the solid black default.
-// Uses bg-linear-to-r (not bg-gradient-to-r): the Button's class merger reads the
-// old name as a background colour and would drop bg-transparent, leaving it dark.
+// Buttons inside the pill (back, add, save...): plain icon buttons like the nav's.
+// bg-transparent + bg-none clear both the solid default and the outline gradient on
+// small screens. (Use bg-linear-* names, not bg-gradient-*, in anything passed to
+// <Button>: its class merger reads bg-gradient-* as a colour and drops bg-transparent.)
 export const PILL_BUTTON =
-  "max-md:h-10 max-md:min-w-10 max-md:shrink-0 max-md:px-3 max-md:border max-md:bg-transparent max-md:bg-linear-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:text-foreground max-md:shadow-xs max-md:backdrop-blur-2xl max-md:hover:bg-gray-200 dark:max-md:border-input dark:max-md:hover:bg-input/50";
+  "max-md:size-9 max-md:shrink-0 max-md:rounded-xl max-md:border-0 max-md:bg-transparent max-md:bg-none max-md:px-0 max-md:text-foreground max-md:shadow-none max-md:hover:bg-gray-200/60 dark:max-md:hover:bg-input/50";

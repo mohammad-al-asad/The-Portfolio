@@ -9,6 +9,7 @@ import SingleProject from "@/components/SingleProject";
 import { ArrowLeft, X } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { TECH_FILTERS, getProjectCategoryIds, usesTech } from "@/lib/project";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 function FilterChip({
   active,
@@ -95,17 +96,17 @@ export default function ProjectsBrowser({
       <div className="page-container">
         {/* Header - With Gradient Accent */}
         <PageHeader pill>
-          <div className="flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 max-md:pointer-events-auto max-md:mx-auto max-md:w-fit max-md:max-w-[calc(100%-7rem)] max-md:items-center max-md:gap-2 max-md:p-0 max-md:border-0 max-md:bg-none max-md:bg-transparent">
+          <div className={`flex py-4 px-6 md:px-16 gap-4 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
             <Button
               asChild
               variant="outline"
-              className="flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors max-md:size-10 max-md:shrink-0"
+              className={`flex items-center border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800 transition-colors ${PILL_BUTTON}`}
             >
               <Link href="/" aria-label="Back to home">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-base sm:text-lg self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white max-md:flex max-md:h-10 max-md:items-center max-md:rounded-md max-md:bg-gradient-to-r max-md:from-blue-400/15 max-md:to-purple-600/15 max-md:px-4 max-md:backdrop-blur-2xl">
+            <h1 className={`text-base sm:text-lg self-center md:text-2xl [word-spacing:3px] font-bold text-gray-900 dark:text-white ${PILL_TITLE}`}>
               Project Gallery
             </h1>
           </div>
