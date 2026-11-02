@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-// pill: on small screens the header becomes centred floating pills at the bottom of the screen
+// pill: on small screens the header shrinks to a centred floating pill (public pages)
 function PageHeader({
   children,
   pill = false,
@@ -12,7 +12,7 @@ function PageHeader({
 }) {
   // Only the scroll position needs JS; screen width is handled with CSS
   const [scrolled, setScrolled] = useState(false);
-  // Pill mode on small screens: slide away while scrolling down, back on scroll up
+  // Pill mode on small screens: hide while scrolling down, show again on scroll up
   const [tucked, setTucked] = useState(false);
   useEffect(() => {
     let lastY = window.scrollY;
@@ -33,8 +33,8 @@ function PageHeader({
     <div
       className={`md:mb-10 mb-8 z-20 fixed left-0 top-0 bg-background shadow dark:shadow-blue-600 transition-all duration-300 w-full ${
         scrolled ? "" : "md:pt-24"
-      } ${pill ? "max-md:top-auto max-md:bottom-0 max-md:mb-0 max-md:pb-[max(0.75rem,env(safe-area-inset-bottom))] max-md:bg-transparent max-md:shadow-none max-md:pointer-events-none" : ""} ${
-        pill && tucked ? "max-md:translate-y-[150%] max-md:opacity-0" : ""
+      } ${pill ? "max-md:pt-3 max-md:bg-transparent max-md:shadow-none max-md:pointer-events-none" : ""} ${
+        pill && tucked ? "max-md:-translate-y-[150%] max-md:opacity-0" : ""
       }`}
     >
       {children}

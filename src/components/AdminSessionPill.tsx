@@ -14,9 +14,8 @@ export default function AdminSessionPill() {
 
   if (pathname === "/admin/login") return null;
 
-  // On small screens it sits above the bottom header pills
   return (
-    <div className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
+    <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
       <div className="flex items-center gap-3 rounded-full border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1.5 pl-4 pr-1.5 shadow-lg">
         {status === "loading" ? (
           <>
