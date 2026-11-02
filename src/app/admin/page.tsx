@@ -127,8 +127,8 @@ export default function AdminDashboard() {
   const statCards = stats
     ? [
         {
-          // Lifetime total (starting count + every visitor tracked since)
-          title: "Lifetime Visitors",
+          // Total since launch (starting count + every visitor tracked since)
+          title: "Visitors",
           value: formatCount(stats.visitors.total),
           icon: <Users className="h-6 w-6" />,
           note: `+${stats.visitors.thisMonth} this month · ${stats.visitors.today} today`,

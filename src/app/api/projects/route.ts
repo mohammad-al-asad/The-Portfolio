@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/auth";
 import { prisma } from "@/lib/db";
+import { sortByCompletion } from "@/lib/sortProjects";
 import { refreshPublicPages } from "@/lib/revalidate";
 
 // GET all projects
 export async function GET() {
   try {
-    const projects = await prisma.projects.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    const projects = sortByCompletion(await prisma.projects.findMany());
 
     return NextResponse.json(projects);
   } catch {
