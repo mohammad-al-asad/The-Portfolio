@@ -110,15 +110,21 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute left-1/2 top-1/2 z-20 group"
-                    style={{
-                      transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(var(--r)) rotate(${-angle}deg)`,
-                    }}
+                    className="absolute left-1/2 top-1/2 z-20 group animate-orbit-spread"
+                    // All icons start stacked on the bottom one and fan out up the arc
+                    style={
+                      {
+                        "--orbit-start": `${spread / 2}deg`,
+                        "--orbit-end": `${angle}deg`,
+                        "--orbit-angle": `${angle}deg`,
+                        transform:
+                          "translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--r)) rotate(calc(-1 * var(--orbit-angle)))",
+                      } as React.CSSProperties
+                    }
                     aria-label={label}
                   >
                     <span
-                      style={{ animationDelay: `${300 + index * 90}ms`, animationFillMode: "backwards" }}
-                      className={`animate-in zoom-in-50 fade-in duration-500 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
+                      className={`w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-background/80 backdrop-blur-sm border-2 border-blue-400/30 rounded-full text-xl text-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-white shadow-lg hover:shadow-xl ${HOVER[label] ?? ""}`}
                     >
                       <Icon className="size-4 lg:size-5" />
                     </span>
