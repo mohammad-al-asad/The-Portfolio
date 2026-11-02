@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import PageHeader from "@/components/PageHeader";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 // Shared shell for the admin create/edit screens. Render it inside the <form>
 // so the header Save button submits the form.
@@ -31,20 +32,20 @@ export default function EditorLayout({
 }) {
   return (
     <div className="page-container">
-      <PageHeader>
-        <div className="flex items-center justify-between gap-4 md:px-16 px-4 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-3 min-w-0">
+      <PageHeader pill>
+        <div className={`flex items-center justify-between gap-4 md:px-16 px-4 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
+          <div className="flex items-center gap-3 min-w-0 max-md:gap-2">
             <Button
               asChild
               variant="outline"
               size="icon"
-              className="shrink-0 border-gray-300 dark:border-gray-600"
+              className={`shrink-0 border-gray-300 dark:border-gray-600 ${PILL_BUTTON}`}
             >
               <Link href={backHref} aria-label="Back">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate">
+            <h1 className={`text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate ${PILL_TITLE}`}>
               {title}
             </h1>
           </div>
@@ -57,7 +58,7 @@ export default function EditorLayout({
             >
               <Link href={backHref}>Cancel</Link>
             </Button>
-            <Button type="submit" disabled={saving}>
+            <Button type="submit" disabled={saving} className={PILL_BUTTON} aria-label={saveLabel}>
               {saving ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (

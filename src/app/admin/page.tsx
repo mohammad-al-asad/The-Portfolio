@@ -31,6 +31,7 @@ import moment from "moment";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
 import MessagesLocked from "@/components/MessagesLocked";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 type DashboardStats = {
   visitors: { total: number; thisMonth: number; today: number; changePercent: number | null };
@@ -160,15 +161,15 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <PageHeader>
-        <div className="flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+      <PageHeader pill>
+        <div className={`flex md:px-16 px-6 py-3.5 justify-between items-center bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
+          <h1 className={`text-xl md:text-2xl font-bold flex items-center gap-2 ${PILL_TITLE}`}>
             <Settings size={23} />
             Dashboard
           </h1>
-          <Button onClick={() => setIsDialogOpen(true)}>
+          <Button onClick={() => setIsDialogOpen(true)} className={PILL_BUTTON} aria-label="Upload resume">
             <Plus className="h-4 w-4" />
-            <span className="hidden md:block">Upload</span> Resume
+            <span className="hidden md:inline">Upload Resume</span>
           </Button>
         </div>
       </PageHeader>

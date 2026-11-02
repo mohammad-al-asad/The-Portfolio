@@ -23,6 +23,7 @@ import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import MessagesLocked from "@/components/MessagesLocked";
 import { cn } from "@/lib/utils";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 type Filter = "all" | "unread";
 
@@ -139,17 +140,19 @@ export default function AdminMessagesPage() {
 
   return (
     <div className="page-container">
-      <PageHeader>
-        <div className="flex items-center justify-between gap-4 md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
+      <PageHeader pill>
+        <div className={`flex items-center justify-between gap-4 md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
           <div className="flex items-center gap-3">
-            <h1 className="text-xl md:text-2xl font-bold">Messages</h1>
+            <h1 className={`text-xl md:text-2xl font-bold ${PILL_TITLE}`}>Messages</h1>
             {unreadCount > 0 && (
-              <Badge className="bg-blue-600 text-white">{unreadCount} unread</Badge>
+              <Badge className="bg-blue-600 text-white max-md:hidden">{unreadCount} unread</Badge>
             )}
           </div>
           <Button
             onClick={refresh}
             disabled={refreshing || loading || locked}
+            className={PILL_BUTTON}
+            aria-label="Refresh"
           >
             <RefreshCw
               className={cn("h-4 w-4", refreshing && "animate-spin")}

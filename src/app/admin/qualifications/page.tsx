@@ -13,6 +13,7 @@ import { achievements, educations } from "../../../../generated/prisma";
 import AdminEducationTable from "@/components/AdminEducationTable";
 import AdminAchievementTable from "@/components/AdminAchievementTable";
 import { edgeStoreBucket } from "@/lib/edgestoreBucket";
+import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
 
 type Tab = "education" | "achievement";
 
@@ -89,15 +90,17 @@ export default function AdminQualificationsPage() {
 
   return (
     <div className="page-container">
-      <PageHeader>
-        <div className="flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px]">
+      <PageHeader pill>
+        <div className={`flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
+          <h1 className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px] truncate ${PILL_TITLE}`}>
             Manage Qualifications
           </h1>
-          <Button asChild>
-            <Link href={newHref}>
+          <Button asChild className={PILL_BUTTON}>
+            <Link href={newHref} aria-label={`Add ${activeTab === "education" ? "education" : "achievement"}`}>
               <Plus className="h-4 w-4" />
-              Add {activeTab === "education" ? "Education" : "Achievement"}
+              <span className="hidden md:inline">
+                Add {activeTab === "education" ? "Education" : "Achievement"}
+              </span>
             </Link>
           </Button>
         </div>
