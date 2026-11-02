@@ -136,7 +136,7 @@ export function EdgestoreCVUploader({
     return (
       <div className="space-y-4">
         <div className="relative border-2 border-green-200 dark:border-green-800 rounded-lg p-6 bg-green-50 dark:bg-green-950/20">
-          <div className="flex flex-col gap-3 items-center space-x-4">
+          <div className="flex flex-col gap-3 items-center">
             <div className="flex-shrink-0">
               <FileText className="h-12 w-12 text-green-600" />
             </div>
