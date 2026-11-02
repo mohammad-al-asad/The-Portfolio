@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/db";
+import { sortByCompletion } from "@/lib/sortProjects";
 import ProjectsBrowser from "@/components/ProjectsBrowser";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export const revalidate = 3600;
 
 export default async function ProjectsPage() {
   const [allProjects, allCategories] = await Promise.all([
-    prisma.projects.findMany({ orderBy: { createdAt: "desc" } }),
+    prisma.projects.findMany().then(sortByCompletion),
     prisma.categories.findMany(),
   ]);
 

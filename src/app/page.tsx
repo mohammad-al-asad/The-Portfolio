@@ -5,13 +5,14 @@ import Stats from '@/components/Stats';
 import EducationAndAchievements from '@/components/Qualification';
 import Contact from '@/components/Footer';
 import { prisma } from '@/lib/db';
+import { sortByCompletion } from '@/lib/sortProjects';
 
 // Served from cache; admin edits refresh it right away (see lib/revalidate)
 export const revalidate = 3600;
 
 export default async function Home() {
   const [featured, educations, achievements, resume] = await Promise.all([
-    prisma.projects.findMany({ where: { featured: true }, orderBy: { createdAt: 'desc' } }),
+    prisma.projects.findMany({ where: { featured: true } }).then(sortByCompletion),
     prisma.educations.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.achievements.findMany({ orderBy: { createdAt: 'desc' } }),
     prisma.resumes.findFirst(),
