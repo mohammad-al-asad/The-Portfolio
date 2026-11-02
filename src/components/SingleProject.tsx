@@ -3,14 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { projects } from "../../generated/prisma";
 import { getProjectLinks, linkMeta } from "@/lib/project";
 import { edgeColor, tagsThatFit } from "@/lib/edgeColor";
 
 // Framed screenshot on top, title with an arrow that turns on hover, short
-// summary, then tags as small mono labels. The whole card opens the project;
-// the store/GitHub/live links float on the image.
+// summary, tags as small mono labels, then View Details and the link buttons.
+// The whole card opens the project.
 function SingleProject({ project }: { project: projects }) {
   const href = `/projects/${project.id}`;
   const links = getProjectLinks(project);
@@ -36,27 +37,6 @@ function SingleProject({ project }: { project: projects }) {
           onLoad={(e) => setImageBg(edgeColor(e.currentTarget))}
         />
 
-        {links.length > 0 && (
-          <div className="absolute right-2 top-2 z-10 flex gap-1.5">
-            {links.map((link, i) => {
-              const { label, icon: Icon } = linkMeta(link.type);
-              const name = link.label || label;
-              return (
-                <a
-                  key={i}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={name}
-                  aria-label={`${name} for ${project.title}`}
-                  className="grid size-8 place-items-center rounded-full border border-white/40 bg-white/80 text-gray-800 shadow-sm backdrop-blur-md transition-colors hover:bg-white dark:border-white/10 dark:bg-gray-900/70 dark:text-gray-100 dark:hover:bg-gray-900"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       <div className="flex flex-1 flex-col px-3 pb-3 pt-4">
@@ -93,6 +73,43 @@ function SingleProject({ project }: { project: projects }) {
             {hiddenTags > 0 && <span className="shrink-0">+{hiddenTags}</span>}
           </div>
         )}
+
+        {/* Same footer as before: View Details, then an icon button per link */}
+        <div className="mt-4 flex gap-2">
+          <Button
+            asChild
+            variant="outline"
+            className="relative z-10 flex-1 border-gray-300 dark:border-gray-600"
+          >
+            <Link href={href}>
+              <ExternalLink className="h-4 w-4" />
+              View Details
+            </Link>
+          </Button>
+          {links.map((link, i) => {
+            const { label, icon: Icon } = linkMeta(link.type);
+            const name = link.label || label;
+            return (
+              <Button
+                key={i}
+                asChild
+                variant="outline"
+                size="icon"
+                className="relative z-10 shrink-0 border-gray-300 dark:border-gray-600"
+              >
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={name}
+                  aria-label={`${name} for ${project.title}`}
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              </Button>
+            );
+          })}
+        </div>
       </div>
     </article>
   );
