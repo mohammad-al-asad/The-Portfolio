@@ -24,6 +24,15 @@ const LIT: Record<string, string> = {
   X: "bg-black border-black dark:border-white",
 };
 
+// Colour of the water-ripple rings each icon sends out when the light reaches it
+const RIPPLE: Record<string, string> = {
+  GitHub: "border-gray-500",
+  LinkedIn: "border-blue-500",
+  Instagram: "border-pink-500",
+  Facebook: "border-blue-500",
+  X: "border-foreground",
+};
+
 const SPREAD = 128; // degrees of the orbit covered by the icons
 const ANGLES = SOCIAL_LINKS.map(
   (_, i) => -SPREAD / 2 + (i * SPREAD) / (SOCIAL_LINKS.length - 1),
@@ -39,6 +48,11 @@ const LIT_RANGE = 9; // how close (degrees) the light must be to light an icon
 export default function HeroOrbit() {
   const lightRef = useRef<SVGCircleElement>(null);
   const [lit, setLit] = useState<number | null>(null);
+  // How many times each icon has been reached; a new value restarts its ripple
+  const [splashes, setSplashes] = useState<number[]>(() =>
+    SOCIAL_LINKS.map(() => 0),
+  );
+  const lastLit = useRef<number | null>(null);
 
   useEffect(() => {
     const el = lightRef.current;
@@ -51,6 +65,7 @@ export default function HeroOrbit() {
         .find((a) => (a as CSSAnimation).animationName === "hero-arc-light");
       const time = Number(anim?.currentTime ?? -1) - LIGHT_DELAY_MS;
       if (!anim || time < 0) {
+        lastLit.current = null;
         setLit(null);
         return;
       }
@@ -64,7 +79,13 @@ export default function HeroOrbit() {
       const gap = (a: number) =>
         Math.abs(((((head - a) % 360) + 540) % 360) - 180);
       const index = ANGLES.findIndex((a) => gap(a) < LIT_RANGE);
-      setLit(index === -1 ? null : index);
+      const next = index === -1 ? null : index;
+      // The moment the light reaches a new icon, drop a ripple there
+      if (next !== null && next !== lastLit.current) {
+        setSplashes((s) => s.map((n, i) => (i === next ? n + 1 : n)));
+      }
+      lastLit.current = next;
+      setLit(next);
     }, 40);
 
     return () => window.clearInterval(id);
@@ -142,8 +163,24 @@ export default function HeroOrbit() {
             }
             aria-label={label}
           >
+            {/* Water ripple: two rings spreading out from the icon, restarted on each pass */}
+            {splashes[index] > 0 && (
+              <span
+                key={splashes[index]}
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+              >
+                <span
+                  className={`icon-ripple absolute inset-0 rounded-full border-2 ${RIPPLE[label] ?? ""}`}
+                />
+                <span
+                  className={`icon-ripple absolute inset-0 rounded-full border-2 ${RIPPLE[label] ?? ""}`}
+                  style={{ animationDelay: "0.22s" }}
+                />
+              </span>
+            )}
             <span
-              className={`w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center backdrop-blur-sm border-2 rounded-full text-xl transition-all duration-500 shadow-lg hover:shadow-xl ${
+              className={`relative w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center backdrop-blur-sm border-2 rounded-full text-xl transition-all duration-500 shadow-lg hover:shadow-xl ${
                 isLit
                   ? `${LIT[label] ?? ""} scale-110 text-white shadow-xl`
                   : `bg-background/80 border-blue-400/30 text-foreground group-hover:scale-110 group-hover:text-white ${HOVER[label] ?? ""}`
