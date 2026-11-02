@@ -34,22 +34,23 @@ export default function EditorLayout({
     <div className="page-container">
       <PageHeader pill>
         <div className={`flex items-center justify-between gap-4 md:px-16 px-4 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
-          <div className="flex items-center gap-3 min-w-0 max-md:gap-2">
+          {/* Small screens: back and save side by side, then the title */}
+          <div className="flex items-center gap-3 min-w-0 max-md:contents">
             <Button
               asChild
               variant="outline"
               size="icon"
-              className={`shrink-0 border-gray-300 dark:border-gray-600 ${PILL_BUTTON}`}
+              className={`shrink-0 border-gray-300 dark:border-gray-600 ${PILL_BUTTON} max-md:order-1`}
             >
               <Link href={backHref} aria-label="Back">
                 <ArrowLeft className="h-4 w-4" />
               </Link>
             </Button>
-            <h1 className={`text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate ${PILL_TITLE}`}>
+            <h1 className={`text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate ${PILL_TITLE} max-md:order-3`}>
               {title}
             </h1>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 max-md:order-2">
             <Button
               asChild
               type="button"

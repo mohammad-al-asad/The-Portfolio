@@ -95,7 +95,7 @@ export default function AdminQualificationsPage() {
           <h1 className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px] truncate ${PILL_TITLE}`}>
             Manage Qualifications
           </h1>
-          <Button asChild className={PILL_BUTTON}>
+          <Button asChild className={`${PILL_BUTTON} max-md:order-first`}>
             <Link href={newHref} aria-label={`Add ${activeTab === "education" ? "education" : "achievement"}`}>
               <Plus className="h-4 w-4" />
               <span className="hidden md:inline">

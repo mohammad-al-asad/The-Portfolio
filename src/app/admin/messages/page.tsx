@@ -151,7 +151,7 @@ export default function AdminMessagesPage() {
           <Button
             onClick={refresh}
             disabled={refreshing || loading || locked}
-            className={PILL_BUTTON}
+            className={`${PILL_BUTTON} max-md:order-first`}
             aria-label="Refresh"
           >
             <RefreshCw

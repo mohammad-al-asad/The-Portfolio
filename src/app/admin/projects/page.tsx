@@ -71,7 +71,7 @@ export default function AdminProjectsPage() {
           <h1 className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white truncate ${PILL_TITLE}`}>
             Manage Projects
           </h1>
-          <Button asChild className={PILL_BUTTON}>
+          <Button asChild className={`${PILL_BUTTON} max-md:order-first`}>
             <Link href="/admin/projects/new" aria-label="Add new project">
               <Plus className="h-4 w-4" />
               <span className="hidden md:inline">Add New Project</span>

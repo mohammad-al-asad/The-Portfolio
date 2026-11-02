@@ -167,7 +167,7 @@ export default function AdminDashboard() {
             <Settings size={23} />
             Dashboard
           </h1>
-          <Button onClick={() => setIsDialogOpen(true)} className={PILL_BUTTON} aria-label="Upload resume">
+          <Button onClick={() => setIsDialogOpen(true)} className={`${PILL_BUTTON} max-md:order-first`} aria-label="Upload resume">
             <Plus className="h-4 w-4" />
             <span className="hidden md:inline">Upload Resume</span>
           </Button>
