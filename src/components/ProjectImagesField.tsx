@@ -177,7 +177,8 @@ export default function ProjectImagesField({
               <span className="font-medium text-foreground">
                 {isDragActive ? "Drop to upload" : "Add images"}
               </span>
-              <span>Drag & drop or click · up to 50 MB each</span>
+              {/* Drag & drop hint is for desktop only */}
+              <span className="max-md:hidden">Drag & drop or click · up to 50 MB each</span>
             </>
           )}
         </div>
