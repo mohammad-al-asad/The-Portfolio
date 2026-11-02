@@ -18,7 +18,8 @@ const LIT: Record<string, string> = {
   GitHub: "bg-gray-500 border-gray-500",
   LinkedIn: "bg-blue-500 border-blue-500",
   // No border at all, exactly like the hover state (a transparent border leaves a faint ring)
-  Instagram: "border-none bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600",
+  Instagram:
+    "border-none bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600",
   Facebook: "bg-blue-500 border-blue-500",
   X: "bg-black border-black dark:border-white",
 };
@@ -34,12 +35,10 @@ const LIGHT_DELAY_MS = 1800;
 const LIGHT_LENGTH = 9; // degrees: shorter than an icon, so it hides fully behind each one
 const LIGHT_START = 78; // starts at the bottom end of the line, then runs up the left side
 const LIT_RANGE = 9; // how close (degrees) the light must be to light an icon
-const HIDE_RANGE = 13; // hide the light while it overlaps an icon, glow included
 
 export default function HeroOrbit() {
   const lightRef = useRef<SVGCircleElement>(null);
   const [lit, setLit] = useState<number | null>(null);
-  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     const el = lightRef.current;
@@ -53,7 +52,6 @@ export default function HeroOrbit() {
       const time = Number(anim?.currentTime ?? -1) - LIGHT_DELAY_MS;
       if (!anim || time < 0) {
         setLit(null);
-        setHidden(false);
         return;
       }
 
@@ -67,8 +65,6 @@ export default function HeroOrbit() {
         Math.abs(((((head - a) % 360) + 540) % 360) - 180);
       const index = ANGLES.findIndex((a) => gap(a) < LIT_RANGE);
       setLit(index === -1 ? null : index);
-      // Fade the light out while it's behind an icon, so no part of it shows around the edges
-      setHidden(ANGLES.some((a) => gap(a) < HIDE_RANGE));
     }, 40);
 
     return () => window.clearInterval(id);
@@ -106,24 +102,20 @@ export default function HeroOrbit() {
           strokeDashoffset="-78"
           className="hero-arc-draw"
         />
-        <g
-          style={{ opacity: hidden ? 0 : 1, transition: "opacity 120ms ease" }}
-        >
-          <circle
-            ref={lightRef}
-            cx="100"
-            cy="100"
-            r="100"
-            fill="none"
-            stroke="#a78bfa"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            pathLength="360"
-            strokeDasharray={`${LIGHT_LENGTH} ${360 - LIGHT_LENGTH}`}
-            strokeDashoffset={-LIGHT_START}
-            className="hero-arc-light"
-          />
-        </g>
+        <circle
+          ref={lightRef}
+          cx="100"
+          cy="100"
+          r="100"
+          fill="none"
+          stroke="#a78bfa"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          pathLength="360"
+          strokeDasharray={`${LIGHT_LENGTH} ${360 - LIGHT_LENGTH}`}
+          strokeDashoffset={-LIGHT_START}
+          className="hero-arc-light"
+        />
       </svg>
 
       {/* Social icons on a half orbit along the right side, leaving the photo clear */}
