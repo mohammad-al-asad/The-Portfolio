@@ -257,13 +257,18 @@ export default function ProjectForm({ project }: { project?: projects }) {
           </div>
           <div className="flex flex-wrap gap-2 empty:hidden">
             {field.value?.map((item, i) => (
-              <Badge key={i} variant="secondary" className="gap-1 pr-1">
-                {item}
+              <Badge
+                key={i}
+                variant="secondary"
+                className="h-auto max-w-full gap-1 pr-1 whitespace-normal break-words text-left"
+              >
+                {/* Long items (features are sentences) wrap instead of widening the page */}
+                <span className="min-w-0">{item}</span>
                 <button
                   type="button"
                   onClick={() => removeFromList(name, item)}
                   aria-label={`Remove ${item}`}
-                  className="p-0.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
+                  className="shrink-0 self-start p-0.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer"
                 >
                   <X className="h-3 w-3" />
                 </button>

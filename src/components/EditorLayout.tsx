@@ -87,11 +87,11 @@ export default function EditorLayout({
           sidebar ? "lg:grid-cols-3" : "max-w-4xl mx-auto"
         }`}
       >
-        <div className={`space-y-6 ${sidebar ? "lg:col-span-2" : ""}`}>
+        <div className={`min-w-0 space-y-6 ${sidebar ? "lg:col-span-2" : ""}`}>
           {children}
         </div>
         {sidebar && (
-          <aside className="space-y-6 lg:sticky lg:top-28">{sidebar}</aside>
+          <aside className="min-w-0 space-y-6 lg:sticky lg:top-28">{sidebar}</aside>
         )}
       </div>
     </div>
