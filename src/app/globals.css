@@ -234,10 +234,18 @@ html {
 @keyframes hero-arc-light {
   from {
     stroke-dashoffset: -78;
-    opacity: 1;
   }
   to {
     stroke-dashoffset: -438;
+  }
+}
+
+/* Gentle fade-in for the light's first appearance */
+@keyframes hero-arc-light-in {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
 }
@@ -247,9 +255,10 @@ html {
 }
 
 .hero-arc-light {
-  opacity: 0; /* hidden until the lap starts */
   filter: drop-shadow(0 0 3px rgb(168 85 247 / 0.9));
-  animation: hero-arc-light 8s linear 1.8s infinite;
+  animation:
+    hero-arc-light 8s linear 1.8s infinite,
+    hero-arc-light-in 1.4s ease-out 1.8s both;
 }
 
 @media (prefers-reduced-motion: reduce) {
