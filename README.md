@@ -202,7 +202,7 @@ Open [http://localhost:3000](http://localhost:3000). The admin panel is at [/adm
 
 ---
 
-## 🚀 Deployment
+## ☁️ Deployment
 
 Deployed on **Vercel**. Every push to `main` builds and goes live automatically, and pull requests get preview deployments. Content changes don't need a deploy at all, because they go through the admin panel and refresh the cache instantly.
 
