@@ -4,11 +4,15 @@
   <img src="./.github/assets/banner.svg" width="100%" alt="Mohammad Al Asad: Full-stack & React Native developer" />
 </a>
 
-<br />
+<img src="./.github/assets/spacer.svg" width="1" height="18" alt="" />
 
 **My personal portfolio and the admin panel that runs it, so new work goes live in seconds without touching code.**
 
+<img src="./.github/assets/spacer.svg" width="1" height="10" alt="" />
+
 [![Live site](https://img.shields.io/badge/Live_site-mohammad--al--asad.vercel.app-7c3aed?style=for-the-badge&logo=vercel&logoColor=white)](https://mohammad-al-asad.vercel.app)
+
+<img src="./.github/assets/spacer.svg" width="1" height="6" alt="" />
 
 ![Next.js](https://img.shields.io/badge/Next.js_15-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
@@ -21,7 +25,7 @@
 ![Resend](https://img.shields.io/badge/Resend-000000?style=flat-square&logo=resend&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
 
-<br />
+<img src="./.github/assets/spacer.svg" width="1" height="40" alt="" />
 
 <a href="https://mohammad-al-asad.vercel.app">
   <picture>
@@ -35,7 +39,7 @@
 
 </div>
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## 🧭 What's inside
 
@@ -68,7 +72,7 @@
 </tr>
 </table>
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## ⚡ Built to be fast
 
@@ -81,7 +85,7 @@
 | **Light dependencies** | Animations are pure CSS. Framer Motion and other heavy libraries were removed. |
 | **Optimised images** | `next/image` serves correctly sized, modern formats from EdgeStore's CDN. |
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## 🔐 Built to be safe
 
@@ -91,7 +95,7 @@
 - **Search engines stay out of private routes:** `robots.txt` blocks `/admin` and `/api`. The sitemap lists only public pages.
 - **Privacy-friendly visitor stats:** one anonymous cookie, bots filtered out, and no third-party trackers.
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## 🏗️ Architecture
 
@@ -132,7 +136,7 @@ erDiagram
     admins { string email  string password }
 ```
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## 📂 Project structure
 
@@ -157,7 +161,7 @@ The-Portfolio/
     └── middleware.ts           # Sends signed-in admins past the login page
 ```
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## 💻 Run it locally
 
@@ -200,7 +204,7 @@ Open [http://localhost:3000](http://localhost:3000). The admin panel is at [/adm
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint |
 
----
+<img src="./.github/assets/spacer.svg" width="1" height="36" alt="" />
 
 ## ☁️ Deployment
 
