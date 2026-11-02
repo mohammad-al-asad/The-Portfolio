@@ -57,7 +57,7 @@ export default function AdminQualificationsPage() {
   // Deletes the record and its certificate image
   const deleteItem = async (
     resource: "educations" | "achievements",
-    id: string
+    id: string,
   ) => {
     if (!session) {
       return router.push("/admin/login");
@@ -88,32 +88,54 @@ export default function AdminQualificationsPage() {
       ? "/admin/educations/new"
       : "/admin/achievements/new";
 
+  const tabTriggers = (
+    <>
+      <TabsTrigger value="education">Educations</TabsTrigger>
+      <TabsTrigger value="achievement">Achievements</TabsTrigger>
+    </>
+  );
+
   return (
-    <div className="page-container">
+    // Tabs wraps the header too, so the small-screen tab bar can live inside it
+    <Tabs
+      value={activeTab}
+      onValueChange={(v) => setActiveTab(v as Tab)}
+      className="page-container"
+    >
       <PageHeader pill>
-        <div className={`flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}>
-          <h1 className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px] truncate ${PILL_TITLE}`}>
-            Manage Qualifications
-          </h1>
-          <Button asChild className={`${PILL_BUTTON} max-md:order-first`}>
-            <Link href={newHref} aria-label={`Add ${activeTab === "education" ? "education" : "achievement"}`}>
-              <Plus className="h-4 w-4" />
-              <span className="hidden md:inline">
-                Add {activeTab === "education" ? "Education" : "Achievement"}
-              </span>
-            </Link>
-          </Button>
-        </div>
+        <>
+          <div
+            className={`flex justify-between items-center md:px-16 px-6 py-3.5 bg-gradient-to-r from-blue-400/15 to-purple-600/15 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 ${PILL_BAR}`}
+          >
+            <h1
+              className={`text-xl md:text-2xl font-bold text-gray-900 dark:text-white [word-spacing:3px] truncate ${PILL_TITLE}`}
+            >
+              Manage Qualifications
+            </h1>
+            <Button asChild className={`${PILL_BUTTON} max-md:order-first`}>
+              <Link
+                href={newHref}
+                aria-label={`Add ${activeTab === "education" ? "education" : "achievement"}`}
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden md:inline">
+                  Add {activeTab === "education" ? "Education" : "Achievement"}
+                </span>
+              </Link>
+            </Button>
+          </div>
+          {/* Small screens: the tabs sit right under the pill, fixed with the header */}
+          <TabsList className="md:hidden pointer-events-auto mx-auto mt-1.5 flex justify-center backdrop-blur-md">
+            {tabTriggers}
+          </TabsList>
+        </>
       </PageHeader>
 
-      {/* Tabs for Education / Achievement */}
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Tab)}>
-        {/* Small screens: centred on the screen (the page has 56px left / 16px right padding,
-            hence the 20px shift) and sticks just below the header pill when scrolling */}
-        <TabsList className="md:mt-6 mx-auto flex justify-center max-md:sticky max-md:top-16 max-md:z-20 max-md:-translate-x-5 max-md:backdrop-blur-md">
-          <TabsTrigger value="education">Educations</TabsTrigger>
-          <TabsTrigger value="achievement">Achievements</TabsTrigger>
-        </TabsList>
+      {/* md+: tabs in the page; small screens: content starts below the fixed tab bar */}
+      <TabsList className="max-md:hidden md:mt-6 mx-auto flex justify-center">
+        {tabTriggers}
+      </TabsList>
+      <div className="max-md:mt-10">
         <TabsContent value="education">
           <AdminEducationTable
             loading={loading}
@@ -135,7 +157,7 @@ export default function AdminQualificationsPage() {
             }
           />
         </TabsContent>
-      </Tabs>
-    </div>
+      </div>
+    </Tabs>
   );
 }
