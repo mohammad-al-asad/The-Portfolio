@@ -52,7 +52,8 @@ export default function ProjectGallery({
     >
       {/* Stage: fixed size (primary image's aspect ratio, capped at 70vh) */}
       <div
-        className="group relative rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 p-2 sm:p-4 transition-colors duration-300"
+        // No inner padding: the image reaches the edges, filling at least one axis of the box
+        className="group relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 transition-colors duration-300"
         style={bgByUrl[current.url] ? { backgroundColor: bgByUrl[current.url] } : undefined}
       >
         <a
@@ -70,7 +71,7 @@ export default function ProjectGallery({
             fill
             priority={index === 0}
             sizes="(max-width: 1024px) 100vw, 1024px"
-            className="object-contain rounded-lg animate-in fade-in duration-300"
+            className="object-contain animate-in fade-in duration-300"
             onLoad={(e) => {
               const color = edgeColor(e.currentTarget);
               if (color) setBgByUrl((prev) => ({ ...prev, [current.url]: color }));
