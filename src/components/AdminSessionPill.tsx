@@ -15,44 +15,44 @@ export default function AdminSessionPill() {
   if (pathname === "/admin/login") return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <div className="flex items-center gap-3 rounded-full border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1.5 pl-4 pr-1.5 shadow-lg">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
+      <div className="flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1 pl-3 pr-1 shadow-lg">
         {status === "loading" ? (
           <>
-            <Skeleton className="h-4 w-28" />
-            <Skeleton className="h-8 w-20 rounded-full" />
+            <Skeleton className="h-3.5 w-20" />
+            <Skeleton className="h-7 w-16 rounded-md" />
           </>
         ) : session ? (
           <>
-            <span className="flex items-center gap-2 text-sm">
+            <span className="flex items-center gap-1.5 text-xs">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
               </span>
               <span className="text-muted-foreground hidden sm:inline">Editing as</span>
-              <span className="font-medium max-w-[10rem] truncate">
+              <span className="font-medium max-w-[8rem] truncate">
                 {session.user.name || session.user.email}
               </span>
             </span>
             <Button
               size="sm"
               variant="outline"
-              className="rounded-full"
+              className="h-7 gap-1 rounded-md px-2 text-xs has-[>svg]:px-2"
               onClick={() => signOut({ callbackUrl: "/admin" })}
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-3.5 w-3.5" />
               Log out
             </Button>
           </>
         ) : (
           <>
-            <span className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Eye className="h-4 w-4" />
+            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Eye className="h-3.5 w-3.5" />
               View only
             </span>
-            <Button asChild size="sm" className="rounded-full">
+            <Button asChild size="sm" className="h-7 gap-1 rounded-md px-2 text-xs has-[>svg]:px-2">
               <Link href={`/admin/login?callbackUrl=${encodeURIComponent(pathname)}`}>
-                <LogIn className="h-4 w-4" />
+                <LogIn className="h-3.5 w-3.5" />
                 Log in to edit
               </Link>
             </Button>
