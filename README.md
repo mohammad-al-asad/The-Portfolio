@@ -43,7 +43,7 @@
 <tr>
 <td width="50%" valign="top">
 
-### 🌐 The public site
+### The public site
 - **Hero** with my photo, social links in an orbit around it, and a one-click CV download
 - **Qualifications:** education and achievements, each with its own page and certificate
 - **Skills** with bars that fill as you scroll to them
@@ -55,7 +55,7 @@
 </td>
 <td width="50%" valign="top">
 
-### 🛠️ The admin panel
+### The admin panel
 - **Dashboard:** visitors, page views, a monthly chart, and the latest messages
 - **Projects:** create, edit, and feature projects with multi-image uploads, always sorted by completion date
 - **Qualifications:** education and achievements with certificate uploads
