@@ -143,43 +143,6 @@ html {
     /* Firefox */
   }
 
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-
-    33% {
-      transform: translateY(-8px) rotate(2deg);
-    }
-
-    66% {
-      transform: translateY(4px) rotate(-2deg);
-    }
-  }
-
-  @keyframes pulse-slow {
-
-    0%,
-    100% {
-      opacity: 0.2;
-      transform: scale(1);
-    }
-
-    50% {
-      opacity: 0.5;
-      transform: scale(1.1);
-    }
-  }
-
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
-
-  .animate-pulse-slow {
-    animation: pulse-slow 3s ease-in-out infinite;
-  }
 }
 /* Grows smoothly with the screen up to 96rem, instead of Tailwind's
    `container`, which jumps between fixed widths and leaves wide side gaps */
@@ -220,7 +183,7 @@ html {
   }
 }
 
-/* Hero orbit line: draws itself from the bottom on load, then a light laps the whole orbit */
+/* Hero orbit line: draws itself from the bottom on load */
 @keyframes hero-arc-draw {
   from {
     stroke-dasharray: 0 360;
@@ -230,18 +193,19 @@ html {
   }
 }
 
-/* One full lap of the orbit; the icons light up as it passes (see HeroOrbit.tsx) */
-@keyframes hero-arc-light {
-  from {
-    stroke-dashoffset: -78;
-  }
+.hero-arc-draw {
+  animation: hero-arc-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+/* The orbit light: one lap per 8s, done by rotating its layer (transform only,
+   composited on the GPU). Timings are mirrored in HeroOrbit.tsx. */
+@keyframes hero-arc-spin {
   to {
-    stroke-dashoffset: -438;
+    transform: rotate(360deg);
   }
 }
 
-/* Gentle fade-in for the light's first appearance */
-@keyframes hero-arc-light-in {
+@keyframes hero-fade-in {
   from {
     opacity: 0;
   }
@@ -250,43 +214,108 @@ html {
   }
 }
 
-.hero-arc-draw {
-  animation: hero-arc-draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
-}
-
 .hero-arc-light {
-  filter: drop-shadow(0 0 3px rgb(168 85 247 / 0.9));
+  will-change: transform;
   animation:
-    hero-arc-light 8s linear 1.8s infinite,
-    hero-arc-light-in 1.4s ease-out 1.8s both;
+    hero-arc-spin 8s linear 1.8s infinite,
+    hero-fade-in 1.4s ease-out 1.8s both;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-arc-draw {
-    animation: none;
+/* Icon lit by the passing light: an overlay that fades in and out once per lap.
+   The light covers an icon for 0.4s of the 8s lap (5%); the fade-out lingers a bit. */
+@keyframes icon-lit {
+  0% {
+    opacity: 0;
   }
-  .hero-arc-light {
-    display: none;
+  4%,
+  6% {
+    opacity: 1;
+  }
+  12%,
+  100% {
+    opacity: 0;
   }
 }
 
-/* Water ripple when the orbit light reaches a hero icon */
+@keyframes icon-lit-scale {
+  0% {
+    transform: scale(1);
+  }
+  4%,
+  6% {
+    transform: scale(1.1);
+  }
+  12%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Water ripple when the light reaches an icon: 1.2s of the 8s lap (15%) */
 @keyframes icon-ripple {
-  from {
+  /* Starts invisible so the rings stay hidden while waiting for the first lap */
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  0.1% {
     transform: scale(1);
     opacity: 0.75;
   }
-  to {
+  15% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+  100% {
     transform: scale(2.1);
     opacity: 0;
   }
 }
 
+/* Delays are set per icon in HeroOrbit.tsx; "backwards" keeps them hidden until then */
+.icon-lit {
+  opacity: 0;
+  animation: icon-lit 8s ease-in-out infinite backwards;
+}
+.icon-lit-scale {
+  animation: icon-lit-scale 8s ease-in-out infinite backwards;
+}
 .icon-ripple {
-  animation: icon-ripple 1.2s cubic-bezier(0.2, 0.6, 0.35, 1) both;
+  opacity: 0;
+  animation: icon-ripple 8s cubic-bezier(0.2, 0.6, 0.35, 1) infinite backwards;
+}
+
+/* The soft glow behind the photo: a plain radial gradient (no blur filter)
+   that only breathes in opacity */
+@keyframes hero-glow {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hero-glow {
+  animation: hero-glow 6s ease-in-out infinite;
+}
+
+/* HeroOrbit sets this while the hero is off screen, so nothing animates unseen */
+[data-motion-paused] *,
+[data-motion-paused] *::before,
+[data-motion-paused] *::after {
+  animation-play-state: paused !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-arc-draw,
+  .hero-glow,
+  .icon-lit-scale {
+    animation: none;
+  }
+  .hero-arc-light,
+  .icon-lit,
   .icon-ripple {
     display: none;
   }

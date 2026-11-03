@@ -60,21 +60,19 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
             {/* --r: how far the icon arc sits from the photo's centre, leaving a clear gap from the frame.
                 Phones: 224px photo, so the whole orbit fits a 360px-wide screen. */}
             <div className="relative w-56 h-56 sm:w-80 sm:h-80 lg:w-96 lg:h-96 [--r:146px] sm:[--r:194px] lg:[--r:232px]">
-              {/* Soft glow behind the whole frame: photo and icon arc */}
+              {/* Soft glow behind the whole frame: one radial gradient (already soft,
+                  so no blur filter) that gently breathes in opacity */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute -inset-12 sm:-inset-20 -z-20 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),rgba(147,51,234,0.16)_55%,transparent)] blur-2xl animate-pulse-slow"
+                className="hero-glow pointer-events-none absolute -inset-12 sm:-inset-20 -z-20 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.22),rgba(147,51,234,0.16)_55%,transparent)]"
               />
 
               {/* Orbit line, travelling light and social icons */}
               <HeroOrbit />
 
-              {/* Gradient Orbits */}
-              <div className="absolute inset-0 rounded-full border-2 border-blue-400/10 animate-pulse-slow" />
-              <div
-                className="absolute inset-4 rounded-full border-2 border-purple-400/10 animate-pulse-slow"
-                style={{ animationDelay: "1s" }}
-              />
+              {/* Two faint still rings around the photo */}
+              <div className="absolute inset-0 rounded-full border-2 border-blue-400/10" />
+              <div className="absolute inset-4 rounded-full border-2 border-purple-400/10" />
 
               {/* Main Image Container */}
               <div className="relative w-full h-full rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-4 shadow-2xl">
@@ -95,8 +93,6 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                 </div>
               </div>
 
-              {/* Background Glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl -z-10 animate-pulse" />
             </div>
           </div>
         </div>
