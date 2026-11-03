@@ -292,26 +292,8 @@ html {
   animation: icon-ripple 8s cubic-bezier(0.2, 0.6, 0.35, 1) infinite backwards;
 }
 
-/* The soft glow behind the photo: a plain radial gradient (no blur filter)
-   that only breathes in opacity */
-@keyframes hero-glow {
-  0%,
-  100% {
-    opacity: 0.65;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.hero-glow {
-  animation: hero-glow 6s ease-in-out infinite;
-}
-
-/* Rings around the photo: grow a little and brighten, then settle. Only
-   transform and opacity change and the rings aren't blurred, so the GPU
-   handles it without repainting. */
-@keyframes hero-ring {
+/* Original hero pulse: the glows and the rings around the photo */
+@keyframes pulse-slow {
   0%,
   100% {
     opacity: 0.2;
@@ -323,8 +305,8 @@ html {
   }
 }
 
-.hero-ring {
-  animation: hero-ring 3s ease-in-out infinite;
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
 }
 
 /* HeroOrbit sets this while the hero is off screen, so nothing animates unseen */
@@ -336,8 +318,7 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-arc-draw,
-  .hero-glow,
-  .hero-ring,
+  .animate-pulse-slow,
   .icon-lit-scale {
     animation: none;
   }
