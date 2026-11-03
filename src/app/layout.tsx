@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
-import { SessionProvider } from "@/components/SessionProvider";
 import VisitTracker from "@/components/VisitTracker";
 import { SITE_URL } from "@/lib/site";
 
@@ -33,8 +32,8 @@ export const metadata: Metadata = {
   },
 };
 
-// The session is fetched in the browser (only the admin area needs it), so
-// public pages stay static and are served straight from the cache
+// The session is only loaded inside the admin area (see admin/layout), so
+// public pages stay static and visitors never fetch it
 export default function RootLayout({
   children,
 }: {
@@ -43,16 +42,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="no-scrollbar" suppressHydrationWarning>
       <body className={`${inter.variable} ${inter.className}`}>
-        <SessionProvider>
-          <ThemeProvider>
-            <div className="min-h-dvh text-gray-900 dark:text-white">
-              <Navbar />
-              <main className="page-container">{children}</main>
-              <Toaster />
-              <VisitTracker />
-            </div>
-          </ThemeProvider>
-        </SessionProvider>
+        <ThemeProvider>
+          <div className="min-h-dvh text-gray-900 dark:text-white">
+            <Navbar />
+            <main className="page-container">{children}</main>
+            <Toaster />
+            <VisitTracker />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

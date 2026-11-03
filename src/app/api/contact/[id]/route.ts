@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
+import { isAdmin } from "@/lib/apiAuth";
 import { prisma } from "@/lib/db";
-
-async function isAdmin() {
-  const session = await getServerSession(authOptions);
-  return session?.user.role === "admin";
-}
 
 // Mark a message read / unread
 export async function PATCH(

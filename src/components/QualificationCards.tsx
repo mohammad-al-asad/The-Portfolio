@@ -43,12 +43,12 @@ function QualificationCard({
   const Icon = k.icon;
   return (
     <article
-      className={`group relative isolate overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 pl-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl md:p-6 md:pl-7 dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none ${k.hover}`}
+      className={`group relative isolate overflow-hidden surface p-5 pl-6 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl md:p-6 md:pl-7 ${k.hover}`}
     >
       {/* Accent bar; widens a little on hover */}
       <span
         aria-hidden
-        className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b transition-all duration-300 group-hover:w-1.5 ${k.bar}`}
+        className={`absolute inset-y-0 left-0 w-1 bg-gradient-to-b transition-[width] duration-300 group-hover:w-1.5 ${k.bar}`}
       />
       {/* Oversized faint icon in the corner, behind the text (isolate + -z-10) */}
       <Icon

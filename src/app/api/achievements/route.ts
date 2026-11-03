@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
+import { requireAdmin } from "@/lib/apiAuth";
 import { prisma } from "@/lib/db";
 import { refreshPublicPages } from "@/lib/revalidate";
 
@@ -13,7 +12,7 @@ export async function GET() {
 
     return NextResponse.json(achievements);
   } catch (error) {
-    console.error(error);
+    console.error("GET /api/achievements failed:", error);
     return NextResponse.json(
       { error: "Failed to fetch achievements" },
       { status: 500 }
@@ -24,11 +23,8 @@ export async function GET() {
 // POST a new achievement
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const denied = await requireAdmin();
+    if (denied) return denied;
 
     const body = await request.json();
 
@@ -41,7 +37,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error(error);
+    console.error("POST /api/achievements failed:", error);
     return NextResponse.json(
       { error: "Failed to create achievement" },
       { status: 500 }

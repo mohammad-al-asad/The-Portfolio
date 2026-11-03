@@ -2,10 +2,13 @@ import Hero from '@/components/Hero';
 import Skills from '@/components/Skills';
 import FeaturedProjects from '@/components/FeaturedProjects';
 import Stats from '@/components/Stats';
+import About from '@/components/About';
 import EducationAndAchievements from '@/components/Qualification';
 import Contact from '@/components/Footer';
 import { prisma } from '@/lib/db';
 import { sortByCompletion } from '@/lib/sortProjects';
+import JsonLd from '@/components/JsonLd';
+import { personJsonLd, websiteJsonLd } from '@/lib/person';
 
 // Served from cache; admin edits refresh it right away (see lib/revalidate)
 export const revalidate = 3600;
@@ -20,8 +23,11 @@ export default async function Home() {
 
   return (
     <div id='home' className="space-y-24 px-4 md:px-[47px] py-8 pt-20 md:pt-40">
+      <JsonLd data={personJsonLd} />
+      <JsonLd data={websiteJsonLd} />
       <Hero resumeUrl={resume?.resumeUrl} />
       <Stats />
+      <About />
       <EducationAndAchievements educations={educations} achievements={achievements} />
       <Skills />
       <FeaturedProjects projects={featured} />

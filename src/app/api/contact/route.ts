@@ -1,10 +1,19 @@
 import { prisma } from "@/lib/db";
+import { allow, clientIp } from "@/lib/rateLimit";
+import { requireAdmin } from "@/lib/apiAuth";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 
 const LIMITS = { name: 100, email: 200, subject: 200, message: 5000 };
+// Per IP: 5 messages per 10 minutes. Per email address: 3 per hour (checked in the DB).
+const IP_LIMIT = { count: 5, windowMs: 10 * 60 * 1000 };
+const EMAIL_LIMIT = { count: 3, windowMs: 60 * 60 * 1000 };
+const TOO_MANY = () =>
+  NextResponse.json(
+    { error: "Too many messages. Please try again a little later." },
+    { status: 429 }
+  );
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Visitor input goes into an HTML email, so escape it first
@@ -13,6 +22,10 @@ const escapeHtml = (text: string) =>
 
 export async function POST(req: Request) {
   try {
+    if (!allow(`contact:${clientIp(req)}`, IP_LIMIT.count, IP_LIMIT.windowMs)) {
+      return TOO_MANY();
+    }
+
     const body = await req.json();
 
     // Honeypot: real visitors never see or fill this field, bots do
@@ -48,6 +61,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const recentFromEmail = await prisma.contactMessage.count({
+      where: {
+        email,
+        createdAt: { gte: new Date(Date.now() - EMAIL_LIMIT.windowMs) },
+      },
+    });
+    if (recentFromEmail >= EMAIL_LIMIT.count) return TOO_MANY();
+
     // 1. Save to database
     await prisma.contactMessage.create({
       data: { name, email, subject, message },
@@ -74,7 +95,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(error);
+    console.error("POST /api/contact failed:", error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }
@@ -84,10 +105,8 @@ export async function POST(req: Request) {
 
 // Messages hold visitors' names and emails, so only the admin can read them
 export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (session?.user.role !== "admin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   try {
     const messages = await prisma.contactMessage.findMany({

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import moment from "moment";
+import { timeSince, formatDate, formatTime } from "@/lib/time";
 import {
   ArrowLeft,
   Copy,
@@ -19,6 +19,7 @@ import PageHeader from "@/components/PageHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import MessagesLocked from "@/components/MessagesLocked";
@@ -186,26 +187,17 @@ export default function AdminMessagesPage() {
                 className="pl-9"
               />
             </div>
-            <div className="flex gap-1 rounded-lg bg-muted p-1 text-sm">
-              {(["all", "unread"] as const).map((f) => (
-                <button
-                  key={f}
-                  type="button"
-                  onClick={() => setFilter(f)}
-                  className={cn(
-                    "flex-1 rounded-md px-3 py-1.5 font-medium transition-colors cursor-pointer",
-                    filter === f
-                      ? "bg-background shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  {f === "all" ? `All (${messages.length})` : `Unread (${unreadCount})`}
-                </button>
-              ))}
-            </div>
+            {/* Same tabs as the qualifications page */}
+            <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>
+              <TabsList className="w-full">
+                <TabsTrigger value="all">All ({messages.length})</TabsTrigger>
+                <TabsTrigger value="unread">Unread ({unreadCount})</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          {/* While loading, clip the placeholder rows instead of showing a scrollbar */}
+          <div className={loading ? "flex-1 overflow-hidden" : "flex-1 overflow-y-auto"}>
             {loading ? (
               <div className="divide-y" aria-busy="true">
                 {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -245,7 +237,7 @@ export default function AdminMessagesPage() {
                             {msg.name}
                           </span>
                           <span className="shrink-0 text-xs text-muted-foreground">
-                            {moment(msg.createdAt).fromNow(true)}
+                            {timeSince(msg.createdAt)}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -344,9 +336,9 @@ export default function AdminMessagesPage() {
                     dateTime={selected.createdAt}
                     className="shrink-0 text-xs text-muted-foreground text-right"
                   >
-                    {moment(selected.createdAt).format("MMM D, YYYY")}
+                    {formatDate(selected.createdAt)}
                     <br />
-                    {moment(selected.createdAt).format("h:mm A")}
+                    {formatTime(selected.createdAt)}
                   </time>
                 </div>
 

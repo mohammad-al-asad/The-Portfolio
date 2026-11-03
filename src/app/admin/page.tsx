@@ -10,7 +10,8 @@ import {
   Plus,
   Award,
 } from "lucide-react";
-import Chart, { type ChartPoint } from "@/components/Chart";
+import dynamic from "next/dynamic";
+import type { ChartPoint } from "@/components/Chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import PageHeader from "@/components/PageHeader";
@@ -27,11 +28,17 @@ import { EdgestoreCVUploader } from "@/components/EdgeStoreResumeUploader";
 import { useEdgeStore } from "@/lib/edgestore";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import moment from "moment";
+import { timeSince } from "@/lib/time";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
 import MessagesLocked from "@/components/MessagesLocked";
 import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
+
+// chart.js is large and only this card uses it, so load it separately, after the page
+const Chart = dynamic(() => import("@/components/Chart"), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[300px] w-full" />,
+});
 
 type DashboardStats = {
   visitors: { total: number; thisMonth: number; today: number; changePercent: number | null };
@@ -178,7 +185,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:mt-[3%]">
         {statsLoading
           ? [0, 1, 2, 3].map((i) => (
-              <Card key={i} className="border border-gray-700" aria-hidden>
+              <Card key={i} aria-hidden>
                 <CardHeader className="flex flex-row items-center justify-between">
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-6 w-6 rounded-md" />
@@ -191,7 +198,7 @@ export default function AdminDashboard() {
             ))
           : statCards.map((stat) => {
               const card = (
-                <Card className="h-full border border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <Card className="h-full hover:shadow-lg hover:-translate-y-0.5 transition">
                   <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle className="text-sm font-medium">
                       {stat.title}
@@ -221,7 +228,7 @@ export default function AdminDashboard() {
 
       {/* Charts + Messages */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 border border-gray-700">
+        <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Analytics Overview</CardTitle>
           </CardHeader>
@@ -239,7 +246,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Recent Messages */}
-        <Card className="border border-gray-700 gap-0 py-0 overflow-hidden">
+        <Card className="gap-0 py-0 overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between border-b py-4">
             <div className="flex items-center gap-2">
               <CardTitle>Recent Messages</CardTitle>
@@ -296,7 +303,7 @@ export default function AdminDashboard() {
                             {msg.name}
                           </span>
                           <span className="shrink-0 text-xs text-muted-foreground">
-                            {moment(msg.createdAt).fromNow(true)}
+                            {timeSince(msg.createdAt)}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">

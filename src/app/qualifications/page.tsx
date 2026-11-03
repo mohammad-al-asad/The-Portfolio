@@ -115,7 +115,7 @@ export default async function QualificationsPage() {
                     <span className="absolute -left-[9px] top-6 h-4 w-4 rounded-full border-4 border-background bg-blue-500" />
                     <Link
                       href={`/educations/${item.id}`}
-                      className="group block rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 shadow-sm dark:shadow-none hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
+                      className="group block surface p-6 hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div>
@@ -164,7 +164,7 @@ export default async function QualificationsPage() {
                           )}
                         </div>
                       )}
-                      <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all">
+                      <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-[gap]">
                         View details <ArrowRight className="h-4 w-4" />
                       </span>
                     </Link>
@@ -190,7 +190,7 @@ export default async function QualificationsPage() {
                   <Link
                     key={item.id}
                     href={`/achievements/${item.id}`}
-                    className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 shadow-sm dark:shadow-none hover:border-amber-500 dark:hover:border-amber-400 transition-colors"
+                    className="group flex flex-col overflow-hidden surface hover:border-amber-500 dark:hover:border-amber-400 transition-colors"
                   >
                     <div className="relative aspect-[4/3] bg-white border-b border-gray-200 dark:border-gray-700">
                       {item.imageUrl ? (
@@ -220,7 +220,7 @@ export default async function QualificationsPage() {
                       <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
                         {item.description}
                       </p>
-                      <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-600 dark:text-amber-400 group-hover:gap-2 transition-all">
+                      <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-600 dark:text-amber-400 group-hover:gap-2 transition-[gap]">
                         View details <ArrowRight className="h-4 w-4" />
                       </span>
                     </div>

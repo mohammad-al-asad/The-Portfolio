@@ -70,7 +70,7 @@ export function EdgestoreCVUploader({
         setProgress(0);
       }
     },
-    [edgestore, onChange]
+    [edgestore, onChange, router, session]
   );
 
   const handleFileChange = async (
@@ -176,7 +176,7 @@ export function EdgestoreCVUploader({
     <div className="space-y-4">
       <UploaderProvider uploadFn={uploadFn} autoUpload>
         <div
-          className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 ${
+          className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors duration-200 ${
             dragActive
               ? "border-blue-400 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-600"
               : "border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600"

@@ -118,7 +118,7 @@ export default function ProjectGallery({
               aria-label={`Show image ${i + 1}`}
               aria-current={i === index}
               className={cn(
-                "shrink-0 overflow-hidden rounded-md border-2 transition-all cursor-pointer",
+                "shrink-0 overflow-hidden rounded-md border-2 transition cursor-pointer",
                 i === index
                   ? "border-purple-500"
                   : "border-transparent opacity-60 hover:opacity-100"

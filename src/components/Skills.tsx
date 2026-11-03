@@ -44,7 +44,7 @@ export default function Skills() {
         {skills.map((skill) => (
           <div
             key={skill.name}
-            className="bg-white text-foreground dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg p-6"
+            className="surface p-6"
           >
             <div className="flex justify-between items-center mb-3">
               <span className="font-medium">{skill.name}</span>

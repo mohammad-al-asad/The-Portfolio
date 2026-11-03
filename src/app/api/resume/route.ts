@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isAdmin } from "@/lib/apiAuth";
 import { prisma } from "@/lib/db";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 import { refreshPublicPages } from "@/lib/revalidate";
-
-async function isAdmin() {
-  const session = await getServerSession(authOptions);
-  return session?.user.role === "admin";
-}
 
 // Post Resume
 export async function POST(req: NextRequest) {

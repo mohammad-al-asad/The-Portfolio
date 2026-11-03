@@ -176,6 +176,8 @@ const SingleImageDropzone = React.forwardRef<
         <input ref={ref} {...getInputProps()} {...props} />
 
         {displayUrl ? (
+          // Local blob: preview of the picked file; next/image can't optimise those
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             className="h-full w-full rounded-md object-cover"
             src={displayUrl}
@@ -213,7 +215,7 @@ const SingleImageDropzone = React.forwardRef<
           fileState.status !== 'COMPLETE' && (
             <button
               type="button"
-              className="group pointer-events-auto absolute right-1 top-1 z-10 transform rounded-full border border-muted-foreground bg-background p-1 shadow-md transition-all hover:scale-110"
+              className="group pointer-events-auto absolute right-1 top-1 z-10 transform rounded-full border border-muted-foreground bg-background p-1 shadow-md transition-transform hover:scale-110"
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering dropzone click
                 if (fileState.status === 'UPLOADING') {

@@ -21,7 +21,7 @@ function PageHeader({
 
   return (
     <div
-      className={`md:mb-10 mb-8 z-20 fixed left-0 top-0 bg-background shadow dark:shadow-blue-600 transition-all duration-300 w-full ${
+      className={`md:mb-10 mb-8 z-20 fixed left-0 top-0 bg-background shadow dark:shadow-blue-600 transition-[padding] duration-300 w-full ${
         scrolled ? "" : "md:pt-24"
       } ${pill ? "max-md:pt-3 max-md:bg-transparent max-md:shadow-none max-md:pointer-events-none" : ""}`}
     >

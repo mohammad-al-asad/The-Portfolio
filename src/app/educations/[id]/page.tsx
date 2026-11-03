@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Calendar, GraduationCap, MapPin } from "lucide-react";
@@ -14,8 +15,10 @@ export async function generateStaticParams() {
 
 type Props = { params: Promise<{ id: string }> };
 
-const getEducation = (id: string) =>
-  prisma.educations.findUnique({ where: { id } });
+// cache(): metadata and the page share one database read per request
+const getEducation = cache((id: string) =>
+  prisma.educations.findUnique({ where: { id } }),
+);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const education = await getEducation((await params).id);

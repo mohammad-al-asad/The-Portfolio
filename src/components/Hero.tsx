@@ -34,7 +34,7 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
               <Button
                 asChild
                 size="lg"
-                className="text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                className="text-lg shadow-lg hover:shadow-xl transition duration-300"
               >
                 <Link href="/projects">
                   View Projects <ArrowRight className="h-4 w-4" />
@@ -45,7 +45,7 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="text-lg border-2 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+                  className="text-lg border-2 hover:bg-accent hover:text-accent-foreground transition-colors duration-300"
                 >
                   <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
                     Download CV <Download className="h-4 w-4" />

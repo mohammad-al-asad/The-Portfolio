@@ -5,20 +5,18 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 
 // Floating pill on admin pages: your name + Log out, or just Log in to edit
 export default function AdminSessionPill() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
 
-  if (pathname === "/admin/login") return null;
+  // Nothing until the session is known (no placeholder), then the right button
+  if (pathname === "/admin/login" || status === "loading") return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
-      {status === "loading" ? (
-        <Skeleton className="h-9 w-32 rounded-xl" />
-      ) : session ? (
+      {session ? (
         // One pill: name + a plain Log out (no second border inside)
         <div className="flex items-center gap-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-background/85 backdrop-blur-md py-1 pl-4 pr-1 shadow-lg">
           <span className="max-w-[10rem] truncate text-sm font-medium">
