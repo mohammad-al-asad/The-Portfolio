@@ -1,5 +1,3 @@
-"use client";
-
 const stats = [
   { value: 15, label: "Projects Completed" },
   { value: 10, label: "Happy Clients" },

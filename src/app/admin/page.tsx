@@ -10,7 +10,8 @@ import {
   Plus,
   Award,
 } from "lucide-react";
-import Chart, { type ChartPoint } from "@/components/Chart";
+import dynamic from "next/dynamic";
+import type { ChartPoint } from "@/components/Chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import PageHeader from "@/components/PageHeader";
@@ -32,6 +33,12 @@ import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
 import MessagesLocked from "@/components/MessagesLocked";
 import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
+
+// chart.js is large and only this card uses it, so load it separately, after the page
+const Chart = dynamic(() => import("@/components/Chart"), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[300px] w-full" />,
+});
 
 type DashboardStats = {
   visitors: { total: number; thisMonth: number; today: number; changePercent: number | null };
