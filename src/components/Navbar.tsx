@@ -11,6 +11,7 @@ import {
   ChartNoAxesCombined,
   GraduationCap,
   UserStar,
+  UserRound,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useEffect, useState } from "react";
@@ -32,6 +33,7 @@ const Navbar = () => {
   const navItems = [
     // Same order as the sections on the home page
     { name: "Home", path: "/", icon: <Home size={18} /> },
+    { name: "About", path: "/#about", icon: <UserRound size={18} /> },
     {
       name: "Qualifications",
       path: "/#qualifications",

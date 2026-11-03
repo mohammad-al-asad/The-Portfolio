@@ -2,6 +2,7 @@ import Hero from '@/components/Hero';
 import Skills from '@/components/Skills';
 import FeaturedProjects from '@/components/FeaturedProjects';
 import Stats from '@/components/Stats';
+import About from '@/components/About';
 import EducationAndAchievements from '@/components/Qualification';
 import Contact from '@/components/Footer';
 import { prisma } from '@/lib/db';
@@ -26,6 +27,7 @@ export default async function Home() {
       <JsonLd data={websiteJsonLd} />
       <Hero resumeUrl={resume?.resumeUrl} />
       <Stats />
+      <About />
       <EducationAndAchievements educations={educations} achievements={achievements} />
       <Skills />
       <FeaturedProjects projects={featured} />
