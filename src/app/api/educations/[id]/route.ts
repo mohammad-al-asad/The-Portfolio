@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/auth";
+import { requireAdmin } from "@/lib/apiAuth";
 import z from "zod";
 import { prisma } from "@/lib/db";
 import { refreshPublicPages } from "@/lib/revalidate";
@@ -27,7 +26,7 @@ export async function GET(
 
     return NextResponse.json(education);
   } catch (error) {
-    console.error(error);
+    console.error("GET /api/educations/[id] failed:", error);
     return NextResponse.json(
       { error: "Failed to fetch education" },
       { status: 500 }
@@ -42,11 +41,8 @@ export async function PUT(
 ) {
   const id = (await params).id;
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const denied = await requireAdmin();
+    if (denied) return denied;
 
     const body = await request.json();
 
@@ -71,7 +67,7 @@ export async function PUT(
       );
     }
 
-    console.error(error);
+    console.error("PUT /api/educations/[id] failed:", error);
     return NextResponse.json(
       { error: "Failed to update education" },
       { status: 500 }
@@ -86,11 +82,8 @@ export async function DELETE(
 ) {
   const id = (await params).id;
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const denied = await requireAdmin();
+    if (denied) return denied;
     // Delete Education
     await prisma.educations.delete({
       where: {
@@ -102,7 +95,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: "Education deleted successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("DELETE /api/educations/[id] failed:", error);
     return NextResponse.json(
       { error: "Failed to delete education" },
       { status: 500 }
