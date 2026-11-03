@@ -87,14 +87,14 @@ const Navbar = () => {
             className={`${side(
               "flex-col px-0 py-2",
               "md:flex-row md:px-2 md:py-1"
-            )} transition-all duration-500 w-fit bg-gradient-to-r from-blue-400/15 to-purple-600/15 rounded-xl backdrop-blur-sm flex space-x-1`}
+            )} transition-[padding] duration-500 w-fit bg-gradient-to-r from-blue-400/15 to-purple-600/15 rounded-xl backdrop-blur-sm flex space-x-1`}
           >
             {items.map((item) => (
               <Button
                 key={item.path}
                 asChild
                 variant="ghost"
-                className={`flex items-center transition-all duration-300 gap-2 text-foreground rounded-xl ${side(
+                className={`flex items-center transition-[width,height,color,background-color] duration-300 gap-2 text-foreground rounded-xl ${side(
                   "size-9",
                   "md:w-auto md:h-9"
                 )}`}

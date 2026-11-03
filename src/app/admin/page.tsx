@@ -198,7 +198,7 @@ export default function AdminDashboard() {
             ))
           : statCards.map((stat) => {
               const card = (
-                <Card className="h-full border border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <Card className="h-full border border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition">
                   <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle className="text-sm font-medium">
                       {stat.title}

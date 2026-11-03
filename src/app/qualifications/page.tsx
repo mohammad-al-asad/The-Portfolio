@@ -164,7 +164,7 @@ export default async function QualificationsPage() {
                           )}
                         </div>
                       )}
-                      <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-all">
+                      <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:gap-2 transition-[gap]">
                         View details <ArrowRight className="h-4 w-4" />
                       </span>
                     </Link>
@@ -220,7 +220,7 @@ export default async function QualificationsPage() {
                       <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
                         {item.description}
                       </p>
-                      <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-600 dark:text-amber-400 group-hover:gap-2 transition-all">
+                      <span className="mt-auto pt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-600 dark:text-amber-400 group-hover:gap-2 transition-[gap]">
                         View details <ArrowRight className="h-4 w-4" />
                       </span>
                     </div>

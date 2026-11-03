@@ -21,7 +21,7 @@ function SingleProject({ project }: { project: projects }) {
   const [imageBg, setImageBg] = useState<string | null>(null);
 
   return (
-    <article className="group relative flex h-full flex-col rounded-2xl border-2 border-gray-200 bg-white p-2 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/10 dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none dark:hover:border-purple-400/50">
+    <article className="group relative flex h-full flex-col rounded-2xl border-2 border-gray-200 bg-white p-2 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-purple-400/70 hover:shadow-xl hover:shadow-purple-500/10 dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none dark:hover:border-purple-400/50">
       {/* 16:9, the same shape as every project image, so nothing is letterboxed */}
       <div
         className="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 transition-colors duration-300 dark:bg-gray-800"
@@ -49,7 +49,7 @@ function SingleProject({ project }: { project: projects }) {
           </h3>
           <span
             aria-hidden
-            className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-gray-200 text-gray-500 transition-all duration-300 group-hover:rotate-45 dark:border-gray-700 dark:text-gray-400"
+            className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full border border-gray-200 text-gray-500 transition-transform duration-300 group-hover:rotate-45 dark:border-gray-700 dark:text-gray-400"
           >
             <ArrowUpRight className="h-4 w-4" />
           </span>
