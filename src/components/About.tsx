@@ -18,8 +18,8 @@ const NOW = [
   {
     icon: BookOpen,
     label: "Learning",
-    text: "Statistics and probability, on the way to neural networks and NLP",
-    detail: "After calculus and linear algebra",
+    text: "AI and machine learning, with a focus on neural networks and NLP",
+    detail: "Hands-on ML projects in Python, built on calculus and linear algebra",
   },
   {
     icon: Languages,
