@@ -205,7 +205,8 @@ export default function AdminMessagesPage() {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          {/* While loading, clip the placeholder rows instead of showing a scrollbar */}
+          <div className={loading ? "flex-1 overflow-hidden" : "flex-1 overflow-y-auto"}>
             {loading ? (
               <div className="divide-y" aria-busy="true">
                 {[0, 1, 2, 3, 4, 5].map((i) => (
