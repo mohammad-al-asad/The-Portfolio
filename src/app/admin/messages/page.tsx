@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import moment from "moment";
+import { timeSince, formatDate, formatTime } from "@/lib/time";
 import {
   ArrowLeft,
   Copy,
@@ -245,7 +245,7 @@ export default function AdminMessagesPage() {
                             {msg.name}
                           </span>
                           <span className="shrink-0 text-xs text-muted-foreground">
-                            {moment(msg.createdAt).fromNow(true)}
+                            {timeSince(msg.createdAt)}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -344,9 +344,9 @@ export default function AdminMessagesPage() {
                     dateTime={selected.createdAt}
                     className="shrink-0 text-xs text-muted-foreground text-right"
                   >
-                    {moment(selected.createdAt).format("MMM D, YYYY")}
+                    {formatDate(selected.createdAt)}
                     <br />
-                    {moment(selected.createdAt).format("h:mm A")}
+                    {formatTime(selected.createdAt)}
                   </time>
                 </div>
 

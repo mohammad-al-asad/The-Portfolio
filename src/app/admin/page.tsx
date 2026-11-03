@@ -27,7 +27,7 @@ import { EdgestoreCVUploader } from "@/components/EdgeStoreResumeUploader";
 import { useEdgeStore } from "@/lib/edgestore";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import moment from "moment";
+import { timeSince } from "@/lib/time";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { cn } from "@/lib/utils";
 import MessagesLocked from "@/components/MessagesLocked";
@@ -296,7 +296,7 @@ export default function AdminDashboard() {
                             {msg.name}
                           </span>
                           <span className="shrink-0 text-xs text-muted-foreground">
-                            {moment(msg.createdAt).fromNow(true)}
+                            {timeSince(msg.createdAt)}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">

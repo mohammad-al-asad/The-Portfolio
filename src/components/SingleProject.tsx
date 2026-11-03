@@ -27,8 +27,8 @@ function SingleProject({ project }: { project: projects }) {
         className="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-100 transition-colors duration-300 dark:bg-gray-800"
         style={imageBg ? { backgroundColor: imageBg } : undefined}
       >
+        {/* Lazy-loaded: cards sit below the fold, so they no longer compete with the hero */}
         <Image
-          priority
           src={project.imageUrl}
           alt={project.title}
           fill
