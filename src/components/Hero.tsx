@@ -96,6 +96,12 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
                 </div>
               </div>
 
+              {/* Background glow right behind the photo, softening its frame. A radial
+                  gradient is soft on its own, so no blur filter; it pulses in opacity only. */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -inset-6 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.35),rgba(147,51,234,0.3)_65%,transparent)] animate-pulse motion-reduce:animate-none"
+              />
             </div>
           </div>
         </div>
