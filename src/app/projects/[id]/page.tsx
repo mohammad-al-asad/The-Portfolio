@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -14,6 +15,9 @@ import {
   linkMeta,
 } from "@/lib/project";
 import { PILL_BAR, PILL_BUTTON, PILL_TITLE } from "@/lib/headerPill";
+import JsonLd from "@/components/JsonLd";
+import { PERSON_ID } from "@/lib/person";
+import { SITE_URL } from "@/lib/site";
 
 // Served from cache; admin edits refresh it right away (see lib/revalidate)
 export const revalidate = 3600;
@@ -25,7 +29,10 @@ export async function generateStaticParams() {
 
 type Props = { params: Promise<{ id: string }> };
 
-const getProject = (id: string) => prisma.projects.findUnique({ where: { id } });
+// cache(): metadata and the page share one database read per request
+const getProject = cache((id: string) =>
+  prisma.projects.findUnique({ where: { id } }),
+);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProject((await params).id);
@@ -33,6 +40,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? {
         title: `${project.title} | Mohammad Al Asad`,
         description: project.description,
+        alternates: { canonical: `/projects/${project.id}` },
+        openGraph: {
+          title: project.title,
+          description: project.description,
+          url: `/projects/${project.id}`,
+          images: [{ url: project.imageUrl, alt: project.title }],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: project.title,
+          description: project.description,
+          images: [project.imageUrl],
+        },
       }
     : {};
 }
@@ -67,6 +87,19 @@ export default async function ProjectDetailPage({ params }: Props) {
           </div>
         </PageHeader>
 
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: project.title,
+            description: project.description,
+            url: `${SITE_URL}/projects/${project.id}`,
+            image: getProjectImages(project).map((i) => i.url),
+            keywords: [...project.technologies, ...project.tags].join(", "),
+            ...(project.completionDate ? { dateCreated: project.completionDate } : {}),
+            author: { "@id": PERSON_ID },
+          }}
+        />
         <article className="max-w-5xl mx-auto px-4 md:px-[47px] pt-20 md:pt-56 pb-16 space-y-10">
           {/* Title & summary */}
           <header className="space-y-4 max-md:pl-9">

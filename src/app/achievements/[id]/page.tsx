@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Calendar } from "lucide-react";
@@ -14,8 +15,10 @@ export async function generateStaticParams() {
 
 type Props = { params: Promise<{ id: string }> };
 
-const getAchievement = (id: string) =>
-  prisma.achievements.findUnique({ where: { id } });
+// cache(): metadata and the page share one database read per request
+const getAchievement = cache((id: string) =>
+  prisma.achievements.findUnique({ where: { id } }),
+);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const achievement = await getAchievement((await params).id);
