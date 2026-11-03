@@ -43,7 +43,7 @@ function QualificationCard({
   const Icon = k.icon;
   return (
     <article
-      className={`group relative isolate overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 pl-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-xl md:p-6 md:pl-7 dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none ${k.hover}`}
+      className={`group relative isolate overflow-hidden surface p-5 pl-6 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl md:p-6 md:pl-7 ${k.hover}`}
     >
       {/* Accent bar; widens a little on hover */}
       <span

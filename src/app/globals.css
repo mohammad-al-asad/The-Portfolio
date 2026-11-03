@@ -80,9 +80,10 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  /* One panel colour for every card, a clear step lighter than the page (Tailwind gray-900) */
+  --card: oklch(0.21 0.034 264.665);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.21 0.034 264.665);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -144,6 +145,12 @@ html {
   }
 
 }
+/* The one card look used across the site: rounded, thin border, card colour.
+   Components add their own padding and hover colour on top. */
+@utility surface {
+  @apply rounded-2xl border border-gray-200 bg-card text-card-foreground shadow-sm dark:border-gray-800 dark:shadow-none;
+}
+
 /* Grows smoothly with the screen up to 96rem, instead of Tailwind's
    `container`, which jumps between fixed widths and leaves wide side gaps */
 @utility page-container {

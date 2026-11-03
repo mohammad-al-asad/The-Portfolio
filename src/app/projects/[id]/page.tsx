@@ -166,7 +166,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             {/* Sidebar */}
             <aside className="space-y-8">
               {(project.completionDate || project.teamSize) && (
-                <section className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 space-y-3">
+                <section className="surface p-6 space-y-3">
                   <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
                     Project Details
                   </h3>
@@ -186,7 +186,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               )}
 
               {project.technologies.length > 0 && (
-                <section className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6">
+                <section className="surface p-6">
                   <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-3">
                     Technologies
                   </h3>

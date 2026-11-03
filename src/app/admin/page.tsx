@@ -185,7 +185,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:mt-[3%]">
         {statsLoading
           ? [0, 1, 2, 3].map((i) => (
-              <Card key={i} className="border border-gray-700" aria-hidden>
+              <Card key={i} aria-hidden>
                 <CardHeader className="flex flex-row items-center justify-between">
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-6 w-6 rounded-md" />
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
             ))
           : statCards.map((stat) => {
               const card = (
-                <Card className="h-full border border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition">
+                <Card className="h-full hover:shadow-lg hover:-translate-y-0.5 transition">
                   <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle className="text-sm font-medium">
                       {stat.title}
@@ -228,7 +228,7 @@ export default function AdminDashboard() {
 
       {/* Charts + Messages */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 border border-gray-700">
+        <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Analytics Overview</CardTitle>
           </CardHeader>
@@ -246,7 +246,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Recent Messages */}
-        <Card className="border border-gray-700 gap-0 py-0 overflow-hidden">
+        <Card className="gap-0 py-0 overflow-hidden">
           <CardHeader className="flex flex-row items-center justify-between border-b py-4">
             <div className="flex items-center gap-2">
               <CardTitle>Recent Messages</CardTitle>

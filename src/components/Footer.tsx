@@ -70,7 +70,7 @@ export default function Footer() {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-gray-800/50 border rounded-xl p-6 lg:p-8">
+            <div className="surface p-6 lg:p-8">
               <h3 className="text-xl font-semibold mb-6">
                 Send me a message
               </h3>
