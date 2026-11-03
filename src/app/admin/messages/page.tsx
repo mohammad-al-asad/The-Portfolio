@@ -19,6 +19,7 @@ import PageHeader from "@/components/PageHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MessageAvatar, { type ContactMessage } from "@/components/MessageAvatar";
 import { MessageRowSkeleton } from "@/components/CardSkeletons";
 import MessagesLocked from "@/components/MessagesLocked";
@@ -186,23 +187,13 @@ export default function AdminMessagesPage() {
                 className="pl-9"
               />
             </div>
-            <div className="flex gap-1 rounded-lg bg-muted p-1 text-sm">
-              {(["all", "unread"] as const).map((f) => (
-                <button
-                  key={f}
-                  type="button"
-                  onClick={() => setFilter(f)}
-                  className={cn(
-                    "flex-1 rounded-md px-3 py-1.5 font-medium transition-colors cursor-pointer",
-                    filter === f
-                      ? "bg-background shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  {f === "all" ? `All (${messages.length})` : `Unread (${unreadCount})`}
-                </button>
-              ))}
-            </div>
+            {/* Same tabs as the qualifications page */}
+            <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>
+              <TabsList className="w-full">
+                <TabsTrigger value="all">All ({messages.length})</TabsTrigger>
+                <TabsTrigger value="unread">Unread ({unreadCount})</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
 
           {/* While loading, clip the placeholder rows instead of showing a scrollbar */}
