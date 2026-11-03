@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Expand } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/PageHeader";
@@ -131,6 +131,8 @@ export default function QualificationDetail({
                     href={imageUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Open certificate full size"
+                    title="Open full size"
                     className="block relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white hover:opacity-90 transition-opacity"
                   >
                     {/* White margin inside the frame, so tightly cropped certificates don't touch the edges */}
@@ -143,10 +145,11 @@ export default function QualificationDetail({
                         className="object-contain"
                       />
                     </div>
+                    {/* Full-screen icon instead of a "click to open" caption */}
+                    <span className="absolute right-2 top-2 rounded-md bg-black/50 p-1.5 text-white">
+                      <Expand className="h-4 w-4" />
+                    </span>
                   </a>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Click to open full size
-                  </p>
                 </div>
               </aside>
             )}

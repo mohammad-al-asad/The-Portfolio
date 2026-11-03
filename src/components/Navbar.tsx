@@ -15,6 +15,13 @@ import {
 import { ThemeToggle } from "./ThemeToggle";
 import { useEffect, useState } from "react";
 
+type NavItem = {
+  name: string;
+  path: string;
+  icon: React.ReactNode;
+  className?: string;
+};
+
 const Navbar = () => {
   // Only the scroll position needs JS; screen width is handled with CSS
   const [scrolled, setScrolled] = useState(false);
@@ -29,7 +36,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     // Same order as the sections on the home page
     { name: "Home", path: "/", icon: <Home size={18} /> },
     { name: "About", path: "/#about", icon: <Contact size={18} /> },
@@ -39,10 +46,16 @@ const Navbar = () => {
       icon: <GraduationCap size={20} />,
     },
     { name: "Projects", path: "/#projects", icon: <Briefcase size={18} /> },
-    { name: "Contact", path: "/#contact", icon: <Mail size={18} /> },
+    // Hidden on medium screens to keep the nav compact there
+    {
+      name: "Contact",
+      path: "/#contact",
+      icon: <Mail size={18} />,
+      className: "md:max-lg:hidden",
+    },
   ];
 
-  const adminNavItems = [
+  const adminNavItems: NavItem[] = [
     { name: "Dashboard", path: "/admin", icon: <Settings size={18} /> },
     {
       name: "Projects",
@@ -90,7 +103,7 @@ const Navbar = () => {
                 key={item.path}
                 asChild
                 variant="ghost"
-                className={`flex items-center transition-[width,height,color,background-color] duration-300 gap-2 text-foreground rounded-xl ${side(
+                className={`flex items-center transition-[width,height,color,background-color] duration-300 gap-2 text-foreground rounded-xl ${item.className ?? ""} ${side(
                   "size-9",
                   "md:w-auto md:h-9"
                 )}`}
