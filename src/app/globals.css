@@ -308,6 +308,25 @@ html {
   animation: hero-glow 6s ease-in-out infinite;
 }
 
+/* Rings around the photo: grow a little and brighten, then settle. Only
+   transform and opacity change and the rings aren't blurred, so the GPU
+   handles it without repainting. */
+@keyframes hero-ring {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+.hero-ring {
+  animation: hero-ring 3s ease-in-out infinite;
+}
+
 /* HeroOrbit sets this while the hero is off screen, so nothing animates unseen */
 [data-motion-paused] *,
 [data-motion-paused] *::before,
@@ -318,6 +337,7 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .hero-arc-draw,
   .hero-glow,
+  .hero-ring,
   .icon-lit-scale {
     animation: none;
   }

@@ -70,9 +70,12 @@ export default function Hero({ resumeUrl }: { resumeUrl?: string | null }) {
               {/* Orbit line, travelling light and social icons */}
               <HeroOrbit />
 
-              {/* Two faint still rings around the photo */}
-              <div className="absolute inset-0 rounded-full border-2 border-blue-400/10" />
-              <div className="absolute inset-4 rounded-full border-2 border-purple-400/10" />
+              {/* Two rings that pulse around the photo, one second apart */}
+              <div className="hero-ring absolute inset-0 rounded-full border-2 border-blue-400/10" />
+              <div
+                className="hero-ring absolute inset-4 rounded-full border-2 border-purple-400/10"
+                style={{ animationDelay: "1s" }}
+              />
 
               {/* Main Image Container */}
               <div className="relative w-full h-full rounded-full bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-4 shadow-2xl">
