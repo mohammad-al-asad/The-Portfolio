@@ -176,6 +176,8 @@ const SingleImageDropzone = React.forwardRef<
         <input ref={ref} {...getInputProps()} {...props} />
 
         {displayUrl ? (
+          // Local blob: preview of the picked file; next/image can't optimise those
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             className="h-full w-full rounded-md object-cover"
             src={displayUrl}

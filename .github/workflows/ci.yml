@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, restructure]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Regenerate the Prisma client from the schema (no database needed)
+      - run: npx prisma generate
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      # The build pre-renders pages from the database, so it only runs when a
+      # DATABASE_URL secret is set in the repo settings
+      - name: Build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DATABASE_URL secret not set; skipping build"
+          else
+            npm run build
+          fi

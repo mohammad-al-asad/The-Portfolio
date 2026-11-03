@@ -70,7 +70,7 @@ export function EdgestoreCVUploader({
         setProgress(0);
       }
     },
-    [edgestore, onChange]
+    [edgestore, onChange, router, session]
   );
 
   const handleFileChange = async (
