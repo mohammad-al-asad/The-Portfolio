@@ -49,6 +49,7 @@
 
 ### The public site
 - **Hero** with my photo, social links in an orbit around it, and a one-click CV download
+- **About** section with a short intro and what I'm working on, studying, and learning now
 - **Qualifications:** education and achievements, each with its own page and certificate
 - **Skills** with bars that fill as you scroll to them
 - **Featured projects** on the home page, plus a full **projects page** you can filter by category and technology (filters stay in the URL, so a filtered view can be shared)
@@ -89,9 +90,9 @@
 
 ## 🔐 Built to be safe
 
-- **Admin-only writes:** every create, update, and delete API checks for an admin session (NextAuth, JWT, bcrypt-hashed passwords).
+- **Admin-only writes:** every create, update, and delete API, plus every file upload and delete in storage, checks for an admin session (NextAuth, JWT, bcrypt-hashed passwords).
 - **Private messages:** only a signed-in admin can read contact messages. Anyone else sees a locked panel.
-- **Spam-resistant contact form:** a hidden honeypot field, length limits, email validation, and HTML escaping before anything is emailed.
+- **Spam-resistant contact form:** a hidden honeypot field, rate limits, length limits, email validation, and HTML escaping before anything is emailed.
 - **Search engines stay out of private routes:** `robots.txt` blocks `/admin` and `/api`. The sitemap lists only public pages.
 - **Privacy-friendly visitor stats:** one anonymous cookie, bots filtered out, and no third-party trackers.
 
@@ -146,7 +147,7 @@ The-Portfolio/
 ├── public/                     # Hero photo
 └── src/
     ├── app/
-    │   ├── page.tsx            # Home: hero, stats, qualifications, skills, featured projects, contact
+    │   ├── page.tsx            # Home: hero, stats, about, qualifications, skills, featured projects, contact
     │   ├── projects/           # Filterable project list + project pages
     │   ├── qualifications/     # All education and achievements
     │   ├── educations/[id]/    # Education detail page
