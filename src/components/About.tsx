@@ -47,7 +47,7 @@ export default function About() {
             Google Play.
           </p>
           <p>
-            I finished a four-year Diploma in Computer Science (CGPA 3.61/4) and am now
+            I finished a four-year Diploma in Engineering (Computer Science and Technology, CGPA 3.61/4) and am now
             working towards my BSc.
           </p>
         </div>
